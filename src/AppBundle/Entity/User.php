@@ -35,4 +35,20 @@ class User extends BaseUser
         parent::__construct();
         $this->offres = new ArrayCollection();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOffres()
+    {
+        return $this->offres;
+    }
+
+    /**
+     * @param mixed $offres
+     */
+    public function setOffres($offres)
+    {
+        $this->offres = $offres;
+    }
 }
