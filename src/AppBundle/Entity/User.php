@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\HttpFoundation\File\File;
-
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Yosimitso\WorkingForumBundle\Entity\UserInterface as YomiInter;
 
@@ -87,13 +87,11 @@ class User extends BaseUser implements YomiInter
      */
 
     private $competences;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=255)
-     *
-     */
 
+    /**
+     * @ORM\OneToMany(targetEntity="OffreBundle\Entity\Offre", mappedBy="user")
+     */
+    private $offres;
 
     /**
      * User constructor.
@@ -106,7 +104,7 @@ class User extends BaseUser implements YomiInter
         $this->dateInscrip = date("Y-m-d H:i:s");
         //$this->role = "ROLE_USER";
         $this->imageName =  null;
-
+        $this->offres = new ArrayCollection();
         $this->userForum= new ForumUser($this);
 
     }
@@ -387,7 +385,7 @@ class User extends BaseUser implements YomiInter
     public function isBanned()
     {
         return $this->userForum->getBanned();
-      //  return !$this->isEnabled();
+        //  return !$this->isEnabled();
     }
 
     public function getAvatarUrl()
@@ -448,5 +446,22 @@ class User extends BaseUser implements YomiInter
     public function setLastReplyDate($lastReplyDate)
     {
         $this->userForum->setLastReplyDate($lastReplyDate);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getOffres()
+    {
+        return $this->offres;
+    }
+
+    /**
+     * @param mixed $offres
+     */
+    public function setOffres($offres)
+    {
+        $this->offres = $offres;
     }
 }

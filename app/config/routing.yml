@@ -1,13 +1,15 @@
 offre:
     resource: "@OffreBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /offres
 
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 fos_user_profile:
   resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
   prefix: /profile
