@@ -19,6 +19,10 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(), new FOS\UserBundle\FOSUserBundle(),
             new EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new OffreBundle\OffreBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Yosimitso\WorkingForumBundle\YosimitsoWorkingForumBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

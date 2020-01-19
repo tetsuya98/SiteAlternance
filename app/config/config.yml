@@ -60,14 +60,24 @@ doctrine:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        resolve_target_entities:
+
+            Symfony\Component\Security\Core\User\UserInterface: AppBundle\Entity\User
+            Yosimitso\WorkingForumBundle\Entity\User: AppBundle\Entity\ForumUser
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }
+  #    transport: stmp
+  encryption: ssl
+  host: '%mailer_host%'
+  username: '%mailer_user%'
+  password: '%mailer_password%'
+  port: 465
+
+  sender_address: '%%'
+
+
+  spool: { type: memory }
 
 sensio_framework_extra:
    router:
@@ -87,3 +97,51 @@ easy_admin:
     entities:
         # change the following to the namespaces of your own entities
         - AppBundle\Entity\User
+        - Yosimitso\WorkingForumBundle\Entity\User
+        - Yosimitso\WorkingForumBundle\Entity\Forum
+        - Yosimitso\WorkingForumBundle\Entity\Rules
+        - Yosimitso\WorkingForumBundle\Entity\File
+
+
+
+yosimitso_working_forum:
+    thread_per_page: 50
+    post_per_page: 10
+    date_format: 'Y/m/d H:i:s'
+    allow_anonymous_read: false             # ALLOW OR NOT ACCESS TO ANONYMOUS USERS
+    allow_moderator_delete_thread: false
+    theme_color: dark_blue                      # GREEN OR DARK_BLUE
+    lock_thread_older_than: 0               # DAYS BETWEEN THE LAST THREAD'S POST AND THE AUTOLOCKING OF THE THREAD, 0 MEANS DISABLED
+    post_flood_sec: 30                      # SECONDS MINIMUM BETWEEN EACH POST FROM A SAME USER
+    site_title: "My website"
+    vote:
+        threshold_useful_post: 5            # NUMBER OF VOTE NEEDED FOR A POST TO BE CONSIDERED AS USEFUL
+    file_upload:
+        enable: true                        # ALLOW OR NOT USERS TO UPLOAD ENCLOSED FILES
+        max_size_ko: 10000
+        accepted_format: [image/jpg, image/jpeg, image/png, image/gif, image/tiff, application/pdf]
+        preview_file: true                  # FOR IMAGES ONLY, DISPLAY A THUMBNAIL
+    thread_subscription:                    # ALLOW OR NOT THREAD SUBSCRIPTION
+        enable: true
+knp_paginator:
+    page_range: 1                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: "@YosimitsoWorkingForum/Common/slidePagination.html.twig"     # sliding pagination controls template
+        sortable: "@KnpPaginator/Pagination/sortable_link.html.twig" # sort link template
+
+
+vich_uploader:
+  db_driver: orm # or mongodb or propel or phpcr
+  mappings:
+    product_image:
+      uri_prefix: /images/Avatar
+      upload_destination: '%kernel.project_dir%/web/images/Avatar'
+      inject_on_load: false
+      delete_on_update: true
+      delete_on_remove: true
+      namer: Vich\UploaderBundle\Naming\UniqidNamer
