@@ -82,8 +82,8 @@ class User extends BaseUser implements YomiInter
     /**
      * @var string
      *
-     * @ORM\Column(name="competences", type="array", length=255,nullable=true)
-     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Competence", inversedBy ="userComp",cascade = {"persist"})
+
      */
 
     private $competences;
@@ -196,21 +196,7 @@ class User extends BaseUser implements YomiInter
         return $this->role;
     }
 
-    /**
-     * @return string
-     */
-    public function getCompetences()
-    {
-        return $this->competences;
-    }
 
-    /**
-     * @param string $competences
-     */
-    public function setCompetences($competences)
-    {
-        $this->competences = $competences;
-    }
 
     /**
      * @return string
@@ -463,5 +449,55 @@ class User extends BaseUser implements YomiInter
     public function setOffres($offres)
     {
         $this->offres = $offres;
+    }
+
+    /**
+     * Set competences.
+     *
+     * @param \AppBundle\Entity\Competence|null $competences
+     *
+     * @return User
+     */
+    public function setCompetences(\AppBundle\Entity\Competence $competences = null)
+    {
+        $this->competences = $competences;
+
+        return $this;
+    }
+
+    /**
+     * Get competences.
+     *
+     * @return \AppBundle\Entity\Competence|null
+     */
+    public function getCompetences()
+    {
+        return $this->competences;
+    }
+
+    /**
+     * Add offre.
+     *
+     * @param \OffreBundle\Entity\Offre $offre
+     *
+     * @return User
+     */
+    public function addOffre(\OffreBundle\Entity\Offre $offre)
+    {
+        $this->offres[] = $offre;
+
+        return $this;
+    }
+
+    /**
+     * Remove offre.
+     *
+     * @param \OffreBundle\Entity\Offre $offre
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeOffre(\OffreBundle\Entity\Offre $offre)
+    {
+        return $this->offres->removeElement($offre);
     }
 }

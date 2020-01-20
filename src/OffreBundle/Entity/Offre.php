@@ -29,11 +29,16 @@ class Offre
      */
     private $user;
 
+
     /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Competence", inversedBy ="offre",cascade = {"persist"} )
      */
+
+    private $competences;
+
+
     private $titre;
 
     /**
@@ -210,5 +215,28 @@ class Offre
     {
         $this->user = $user;
     }
-}
 
+    /**
+     * Set competences.
+     *
+     * @param \AppBundle\Entity\Competence|null $competences
+     *
+     * @return Offre
+     */
+    public function setCompetences(\AppBundle\Entity\Competence $competences = null)
+    {
+        $this->competences = $competences;
+
+        return $this;
+    }
+
+    /**
+     * Get competences.
+     *
+     * @return \AppBundle\Entity\Competence|null
+     */
+    public function getCompetences()
+    {
+        return $this->competences;
+    }
+}
