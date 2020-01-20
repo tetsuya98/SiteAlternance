@@ -44,12 +44,12 @@ class Competence
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy ="competences")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy ="competences" , cascade = {"persist" , "remove"} )
      */
     private $userComp;
 
     /**
-     * @ORM\ManyToMany(targetEntity="OffreBundle\Entity\Offre", mappedBy="competences")
+     * @ORM\ManyToMany(targetEntity="OffreBundle\Entity\Offre", inversedBy = "competences" , cascade = {"persist" , "remove"})
      */
     private $offre;
 

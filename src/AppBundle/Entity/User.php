@@ -20,7 +20,6 @@ use FOS\UserBundle\Model\User as BaseUser;
 /**
  * User
  *
- *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User extends BaseUser implements YomiInter
@@ -29,7 +28,7 @@ class User extends BaseUser implements YomiInter
      * @var ForumUser
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ForumUser", inversedBy="userManager" ,cascade={"persist", "remove"})
      */
-    private $userForum;
+    protected $userForum;
 
     /**
      * @var int
@@ -44,7 +43,7 @@ class User extends BaseUser implements YomiInter
      *
      * @ORM\Column(name="dateInscrip", type="string", length=255,nullable=true)
      * */
-    private $dateInscrip;
+    protected $dateInscrip;
 
     /**
      * @var string
@@ -53,7 +52,14 @@ class User extends BaseUser implements YomiInter
      *
      */
 
-    private $role;
+    protected $role;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Status", type="string", length=255,nullable=true)
+     * */
+    protected $status;
 
 
     /**
@@ -76,22 +82,22 @@ class User extends BaseUser implements YomiInter
      *
      */
 
-    private $description;
+    protected $description;
 
 
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Competence", inversedBy ="userComp",cascade = {"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Competence", mappedBy = "userComp" )
 
      */
 
-    private $competences;
+    protected $competences;
 
     /**
      * @ORM\OneToMany(targetEntity="OffreBundle\Entity\Offre", mappedBy="user")
      */
-    private $offres;
+    protected $offres;
 
     /**
      * User constructor.
@@ -106,6 +112,7 @@ class User extends BaseUser implements YomiInter
         $this->imageName =  null;
         $this->offres = new ArrayCollection();
         $this->userForum= new ForumUser($this);
+        $this->status = "inconnu";
 
     }
 
@@ -235,28 +242,28 @@ class User extends BaseUser implements YomiInter
      *
      * @var File
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      *
      * @var string
      */
-    private $imageName;
+    protected  $imageName;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
      *
      * @var integer
      */
-    private $imageSize;
+    protected  $imageSize;
 
     /**
      * @ORM\Column(type="datetime",nullable=true)
      *
      * @var \DateTime
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -461,7 +468,7 @@ class User extends BaseUser implements YomiInter
     public function setCompetences(\AppBundle\Entity\Competence $competences = null)
     {
         $this->competences = $competences;
-
+        $this->competences->removeUserComp($this);
         return $this;
     }
 
@@ -500,4 +507,15 @@ class User extends BaseUser implements YomiInter
     {
         return $this->offres->removeElement($offre);
     }
+
+    public function getStatus(){
+        return $this->status;
+    }
+
+
+    public function setStatus(String $sting){
+        $this->status = $sting;
+    }
+
+
 }

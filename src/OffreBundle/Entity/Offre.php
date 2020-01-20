@@ -33,7 +33,7 @@ class Offre
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Competence", inversedBy ="offre",cascade = {"persist"} )
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Competence", mappedBy ="offre" )
      */
 
     private $competences;
@@ -226,7 +226,7 @@ class Offre
     public function setCompetences(\AppBundle\Entity\Competence $competences = null)
     {
         $this->competences = $competences;
-
+        $this->competences->setCompetences($this);
         return $this;
     }
 
