@@ -2,6 +2,7 @@
 
 namespace OffreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,8 +32,6 @@ class Offre
 
 
     /**
-     * @var string
-     *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Competence", mappedBy ="offre" )
      */
 
@@ -73,6 +72,10 @@ class Offre
      */
     private $nbVue;
 
+    public function __construct()
+    {
+        $this->competences = new ArrayCollection();
+    }
 
     /**
      * Get id
