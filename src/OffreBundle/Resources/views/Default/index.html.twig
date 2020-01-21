@@ -26,6 +26,7 @@
                             <p>{{ offre.description }}</p>
                             <p><b>Nombre de semaines : {{ offre.nbSemaine }}</b></p>
                             <p><i>Nombre de vues : {{ offre.nbVue }}</i></p>
+                            <a href="{{ path('offres_edit', {'offre': offre.id}) }}" class="btn btn-primary btn-lg square" role="button">Modifier</a>
                         </div>
                     </li>
                 {% endfor %}

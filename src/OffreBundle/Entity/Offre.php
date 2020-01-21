@@ -38,7 +38,11 @@ class Offre
 
     private $competences;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titre", type="string", length=255)
+     */
     private $titre;
 
     /**

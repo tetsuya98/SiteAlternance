@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=yes">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <h2>Publication d'une offre test</h2>
+
+            {{ form_start(form) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.titre) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.description) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.nbSemaine) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.submit) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
