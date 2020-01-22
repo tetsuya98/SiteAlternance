@@ -2,6 +2,7 @@
 
 namespace OffreBundle\Entity;
 
+use AppBundle\Entity\Competence;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,7 +32,7 @@ class Offre
 
 
     /**
-     * @var string
+     * @var Competence
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Competence", mappedBy ="offre" )
      */
@@ -238,5 +239,39 @@ class Offre
     public function getCompetences()
     {
         return $this->competences;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->competences = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add competence.
+     *
+     * @param \AppBundle\Entity\Competence $competence
+     *
+     * @return Offre
+     */
+    public function addCompetence(\AppBundle\Entity\Competence $competence)
+    {
+        $this->competences[] = $competence;
+        $this->competences->addOffre($this);
+        return $this;
+    }
+
+    /**
+     * Remove competence.
+     *
+     * @param \AppBundle\Entity\Competence $competence
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCompetence(\AppBundle\Entity\Competence $competence)
+    {
+        $this->competences->removeOffre($this);
+        return $this->competences->removeElement($competence);
     }
 }

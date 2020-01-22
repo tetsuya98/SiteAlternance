@@ -86,7 +86,7 @@ class User extends BaseUser implements YomiInter
 
 
     /**
-     * @var string
+     * @var Competence
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Competence", mappedBy = "userComp" )
 
@@ -505,6 +505,7 @@ class User extends BaseUser implements YomiInter
      */
     public function removeOffre(\OffreBundle\Entity\Offre $offre)
     {
+
         return $this->offres->removeElement($offre);
     }
 
@@ -518,4 +519,31 @@ class User extends BaseUser implements YomiInter
     }
 
 
+
+    /**
+     * Add competence.
+     *
+     * @param \AppBundle\Entity\Competence $competence
+     *
+     * @return User
+     */
+    public function addCompetence(\AppBundle\Entity\Competence $competence)
+    {
+        $this->competences[] = $competence;
+        $this->competences->addUserComp($this);
+        return $this;
+    }
+
+    /**
+     * Remove competence.
+     *
+     * @param \AppBundle\Entity\Competence $competence
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCompetence(\AppBundle\Entity\Competence $competence)
+    {
+        $this->competences->removeUserComp($this);
+        return $this->competences->removeElement($competence);
+    }
 }
