@@ -5,32 +5,43 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=yes">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="container">
+    <div class="my-5"></div>
     <div class="row">
-        <div class="col-md-6 form-group">
-            <h2>Vos offres publiées</h2>
-            <a href="{{ path('offres_new') }}" class="btn btn-primary btn-lg square" role="button">Publier une nouvelle offre</a>
-            <ul>
+        <div class="col-md-6 form-group side-container">
+            <div class="head">
+                <h2>Offres</h2>
+            </div>
+            <div class="body">
                 {% for offre in offres %}
-                    <li>
-                        <div class="offre">
-                            <p class="small">
-                                Publiée le {{ offre.crDate|date("d/m/Y", "Europe/Paris") }}
-                                à {{ offre.crDate|date("H:i", "Europe/Paris") }}
-                            </p>
-                            <h3>{{ offre.titre }}</h3>
-                            <p>{{ offre.description }}</p>
-                            <p><b>Nombre de semaines : {{ offre.nbSemaine }}</b></p>
-                            <p><i>Nombre de vues : {{ offre.nbVue }}</i></p>
-                            <a href="{{ path('offres_edit', {'offre': offre.id}) }}" class="btn btn-primary btn-lg square" role="button">Modifier</a>
+                    <div class="d-flex col-12 offre-element">
+                        <div class="p-2 media">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/600px-JavaScript-logo.png" alt="Generic placeholder image">
                         </div>
-                    </li>
+                        <div class="p-2 titles">
+                            <h3>{{ offre.titre }}</h3>
+                            <p class="type-contrat">Contrat en alternance (2 ans)</p>
+                            <p class="more-infos">
+                                Publié le {{ offre.crDate|date("d/m", "Europe/Paris") }} |
+                                10 vues / 5 candidatures
+                            </p>
+                        </div>
+                        <div class="ml-auto p-2 mt-auto">
+                            <a href="#" class="btn button btn-sm">Supprimer</a>
+                            <a href="{{ path('offres_edit', {'offre': offre.id}) }}"
+                               class="btn button btn-sm">Modifier</a>
+                        </div>
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
+            <div class="foot">
+                <a href="{{ path('offres_new') }}" class="btn btn-primary btn-lg square" role="button">Publier une nouvelle offre</a>
+            </div>
         </div>
     </div>
 

@@ -1,0 +1,81 @@
+div.side-container {
+    border: solid #002d59 1px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+div.side-container .head {
+    width: 100%;
+    background-color: #002d59;
+    color: #ffffff;
+    padding: 4px 3px 1px 10px;
+}
+
+a.button {
+    background-color: #002d59;
+    border-radius: 30px;
+    color: #ffffff;
+}
+
+div.side-container .head h2 {
+    font-size: 26px;
+}
+
+div.side-container .body {
+    padding: 4px;
+}
+
+div.side-container .foot {
+    width: 100%;
+    background-color: #002d59;
+    color: #ffffff;
+}
+
+div.side-container .foot a {
+    width: 100%;
+    color: #ffffff;
+    background: none;
+    height: auto;
+    padding: 0;
+    font-size: 15px;
+    margin: 2px 0;
+    text-decoration: none;
+    border: none;
+}
+
+div.offre-element {
+    background-color: #ffffff;
+    color: #002d59;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+div.offre-element img {
+    height: 66px;
+    width: 66px;
+    border: solid #002d59 1px;
+}
+
+div.offre-element div.titles {
+    margin: 0;
+    padding-top: 3px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+div.offre-element h3 {
+    font-size: 22px;
+    margin-bottom: 0;
+}
+
+div.offre-element p {
+    margin-bottom: 0;
+}
+
+div.offre-element p.type-contrat {
+    font-weight: normal;
+}
+
+div.offre-element p.more-infos {
+    font-weight: lighter;
+}
