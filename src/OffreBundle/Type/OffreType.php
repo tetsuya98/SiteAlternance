@@ -3,6 +3,8 @@ namespace OffreBundle\Type;
 
 use AppBundle\Entity\Competence;
 use AppBundle\Repository\CompetenceRepository;
+use OffreBundle\Entity\TypeContrat;
+use OffreBundle\Repository\TypeContratRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -19,7 +21,7 @@ class OffreType extends AbstractType
             ->add('titre', TextType::class, ['label' => "Titre de l'offre"])
             ->add('description', TextareaType::class, ['label' => "Description"])
             ->add('nbSemaine', NumberType::class, ['label' => "Durée du stage (en semaine)"])
-            ->add('competences', EntityType::class, [
+            ->add('competences', EntityType::class,         [
                 'label' => 'Compétences de l\'offre',
                 'class' => Competence::class,
                 'choice_label' => 'competences',
@@ -28,6 +30,15 @@ class OffreType extends AbstractType
                         ->orderBy('u.competences', 'ASC');
                 },
                 'multiple' => true,
+            ])
+            ->add('typeContrat', EntityType::class,         [
+                'label' => 'Type de contrat',
+                'class' => TypeContrat::class,
+                'choice_label' => 'titre',
+                'query_builder' => function (TypeContratRepository $rep) {
+                    return $rep->createQueryBuilder('u')
+                        ->orderBy('u.titre', 'ASC');
+                }
             ])
             ->add('submit', SubmitType::class, ['label' => "Publier l'offre"])
             ->getForm();

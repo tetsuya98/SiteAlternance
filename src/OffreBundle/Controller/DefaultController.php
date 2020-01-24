@@ -92,7 +92,7 @@ class DefaultController extends Controller
         }
 
         // Rendu de la vue
-        return $this->render('OffreBundle:Default:new.html.twig', [
+        return $this->render('OffreBundle:Default:edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -44,6 +44,13 @@ class Offre
     private $titre;
 
     /**
+     * @var TypeContrat
+     *
+     * @ORM\ManyToOne(targetEntity="OffreBundle\Entity\TypeContrat")
+     */
+    private $typeContrat;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text")
@@ -260,5 +267,21 @@ class Offre
             return;
         }
         $this->competences->removeElement($competence);
+    }
+
+    /**
+     * @return TypeContrat
+     */
+    public function getTypeContrat()
+    {
+        return $this->typeContrat;
+    }
+
+    /**
+     * @param TypeContrat $typeContrat
+     */
+    public function setTypeContrat(TypeContrat $typeContrat): void
+    {
+        $this->typeContrat = $typeContrat;
     }
 }
