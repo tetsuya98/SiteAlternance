@@ -34,7 +34,8 @@
                             </p>
                         </div>
                         <div class="ml-auto p-2 mt-auto">
-                            <a href="#" class="btn button btn-sm">Supprimer</a>
+                            <a href="{{ path('offres_remove', {'offre': offre.id}) }}"
+                               class="btn button btn-sm">Supprimer</a>
                             <a href="{{ path('offres_edit', {'offre': offre.id}) }}"
                                class="btn button btn-sm">Modifier</a>
                         </div>

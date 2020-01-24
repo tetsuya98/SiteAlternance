@@ -96,4 +96,18 @@ class DefaultController extends Controller
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/remove/{offre}", name="offres_remove")
+     * @param Offre $offre Offre à supprimer
+     * @return RedirectResponse Retour vers l'index
+     */
+    public function removeAction(Offre $offre) {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($offre);
+        $em->flush();
+        $flashbag = $this->get('session')->getFlashBag();
+        $flashbag->add('success', "L'offre a été supprimée avec succès.");
+        return $this->redirectToRoute('offres_index');
+    }
 }
