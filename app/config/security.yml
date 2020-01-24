@@ -10,7 +10,7 @@ security:
 
     providers:
         fos_userbundle:
-            id: fos_user.user_provider.username
+            id: fos_user.user_provider.username_email
 
     firewalls:
         main:
@@ -20,11 +20,15 @@ security:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
 
+
             logout:       true
             anonymous:    true
-
+            remember_me:
+                secret:     %secret%
+    provider:     in_memory
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/forum, roles: IS_AUTHENTICATED_REMEMBERED }

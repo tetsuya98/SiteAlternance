@@ -31,3 +31,6 @@ easy_admin_bundle:
     type:     annotation
     prefix:   /admin
 #assets:install --symlink
+yosimitso_working_forum:
+  resource: "@YosimitsoWorkingForumBundle/Resources/config/routing.yml"
+  prefix:   /forum

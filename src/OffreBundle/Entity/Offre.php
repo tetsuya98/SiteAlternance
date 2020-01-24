@@ -29,6 +29,13 @@ class Offre
      */
     private $user;
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Competence", mappedBy ="offre" )
+     */
+
+    private $competences;
+
     /**
      * @var string
      *
@@ -210,5 +217,62 @@ class Offre
     {
         $this->user = $user;
     }
-}
 
+    /**
+     * Set competences.
+     *
+     * @param \AppBundle\Entity\Competence|null $competences
+     *
+     * @return Offre
+     */
+    public function setCompetences(\AppBundle\Entity\Competence $competences = null)
+    {
+        $this->competences = $competences;
+        $this->competences->setCompetences($this);
+        return $this;
+    }
+
+    /**
+     * Get competences.
+     *
+     * @return \AppBundle\Entity\Competence|null
+     */
+    public function getCompetences()
+    {
+        return $this->competences;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->competences = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add competence.
+     *
+     * @param \AppBundle\Entity\Competence $competence
+     *
+     * @return Offre
+     */
+    public function addCompetence(\AppBundle\Entity\Competence $competence)
+    {
+        $this->competences[] = $competence;
+        $this->competences->addOffre($this);
+        return $this;
+    }
+
+    /**
+     * Remove competence.
+     *
+     * @param \AppBundle\Entity\Competence $competence
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCompetence(\AppBundle\Entity\Competence $competence)
+    {
+        $this->competences->removeOffre($this);
+        return $this->competences->removeElement($competence);
+    }
+}
