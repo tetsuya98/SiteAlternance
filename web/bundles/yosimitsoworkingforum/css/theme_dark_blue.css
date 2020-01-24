@@ -26,7 +26,7 @@
 
 .wf_thread h1 {
     color: white;
-    background-color: #3fa757;
+    background-color: #1925a7;
 }
 
 .wf_thread h2, h2 {
@@ -61,7 +61,7 @@
 
 .wf_new_thread h1 {
     color: white;
-    background-color: #3fa757;
+    background-color: #244ea7;
 }
 
 .wf_new_thread input[type="text"], .wf_new_thread input[type="email"], .wf_new_thread input[type="password"], .wf_new_thread select {
@@ -98,7 +98,7 @@
 #wf_forum_content h1 {
     border-bottom-color: #CCCCCC;
     background-color: #185390;
-    border-left: 5px solid #188D40;
+    border-left: 5px solid #1f458d;
     color: white;
     text-align:center;
     height: 1.3em;
@@ -111,9 +111,9 @@
 }
 
 .wf_button {
-    background-color: #00a547;
+    background-color: #465ba5;
     background-image: linear-gradient(to bottom, #51abe0 0px, #142c84 100%);
-    border-color: #00a547;
+    border-color: #194da5;
     color: #fff;
 }
 
@@ -160,7 +160,7 @@ a.wf_button {
 }
 
 .alert-success {
-    color: #3c763d;
+    color: #073976;
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
@@ -244,7 +244,7 @@ code {
 
 #wf_search {
     background-color: white;
-    border-left-color: #188d40;
+    border-left-color: #022d8d;
     border-bottom-color: silver;
 }
 
@@ -317,8 +317,8 @@ code {
 /** TEST **/
 #wf_forum_content h1 {
     border-bottom-color: #CCCCCC;
-    background-color: rgba(21, 141, 64, 0.7);
-    border-left: 5px solid #188D40;
+    background-color: rgba(54, 74, 141, 0.7);
+    border-left: 5px solid #0b448d;
     color: white;
     text-align:center;
     height: 1.3em;

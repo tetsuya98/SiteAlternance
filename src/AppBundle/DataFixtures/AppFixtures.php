@@ -78,6 +78,7 @@ class AppFixtures extends Fixture
         $user->setEmail("root@adm.fr");
         $user->getUserForum()->setBanned(1);
         $user->setPassword($password);
+        $user->setRole("ROLE_USER");
         $manager->persist($user);
 
 
