@@ -48,7 +48,7 @@ class User extends BaseUser implements YomiInter
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="string", length=255)
+     * @ORM\Column(name="role", type="string", length=255,nullable = true)
      *
      */
 
