@@ -25,6 +25,10 @@ div.side-container .body {
     padding: 4px;
 }
 
+div.side-container span.errors {
+    /*TODO*/
+}
+
 div.side-container .foot {
     width: 100%;
     background-color: #002d59;
@@ -32,6 +36,18 @@ div.side-container .foot {
 }
 
 div.side-container .foot a {
+    width: 100%;
+    color: #ffffff;
+    background: none;
+    height: auto;
+    padding: 0;
+    font-size: 15px;
+    margin: 2px 0;
+    text-decoration: none;
+    border: none;
+}
+
+div.side-container .foot button {
     width: 100%;
     color: #ffffff;
     background: none;

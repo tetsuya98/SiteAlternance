@@ -18,11 +18,11 @@ class OffreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre', TextType::class, ['label' => "Titre de l'offre"])
-            ->add('description', TextareaType::class, ['label' => "Description"])
+            ->add('titre', TextType::class, ['label' => "Intitulé de l'offre"])
+            ->add('description', TextareaType::class, ['label' => "Description de l'offre"])
             ->add('nbSemaine', NumberType::class, ['label' => "Durée du stage (en semaine)"])
             ->add('competences', EntityType::class,         [
-                'label' => 'Compétences de l\'offre',
+                'label' => 'Domaines et compétences',
                 'class' => Competence::class,
                 'choice_label' => 'competences',
                 'query_builder' => function (CompetenceRepository $rep) {
