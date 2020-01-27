@@ -4,10 +4,24 @@
     <div class="head">
         <h2>{{ title_block }}</h2>
     </div>
-
     <div class="body">
-        <div class="col-12">
-            <div class="col-6 px-0">
+        <div class="col-12 row">
+            <div class="col-6 upload">
+                <div class="col-12 px-0 title">
+                    <h2>Informations</h2>
+                </div>
+                <div class="col-12 px-0 row">
+                    <div class="col-5 pr-0 upload-image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/600px-JavaScript-logo.png" alt="Generic placeholder image">
+                    </div>
+                    <div class="col-7 upload-info">
+                        <h3>Image</h3>
+                        <p>logo_js.jpg</p>
+                        <div class="upload-drop text-center">
+                            <i class="fas fa-cloud-download-alt center-icon"></i>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <div class="col-6 px-0">
@@ -30,17 +44,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
-            {{ form_row(form.description) }}
+        <div class="form-group col-12">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.description) }}
         </div>
-
-        <div class="col">
-            {{ form_row(form.competences, {'attr' : {'class' : 'select2'}}  ) }}
+        <div class="form-group col-12">
+            {{ form_label(form.competences) }}
+            {{ form_widget(form.competences, {'attr': {'class': 'form-control select2'}}) }}
+            {{ form_errors(form.competences) }}
         </div>
     </div>
 
     <div class="foot">
-        {#<a href="{{ path('offres_new') }}" class="btn btn-primary btn-lg square" role="button">Publier une nouvelle offre</a>#}
         {{ form_row(form.submit, {attr : {class : 'btn btn-primary btn-lg square'}}) }}
     </div>
 

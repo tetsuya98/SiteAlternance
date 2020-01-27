@@ -23,6 +23,60 @@ div.side-container .head h2 {
 
 div.side-container .body {
     padding: 4px;
+    margin-top: 10px;
+}
+
+div.side-container .body div.upload {
+    height: auto;
+}
+
+div.side-container .body div.upload div.title {
+    height: auto;
+    margin-bottom: 10px;
+}
+
+div.side-container .body div.upload div.title h2 {
+    font-size: 25px;
+    color: #002d59;
+}
+
+div.side-container .body div.upload div.upload-image {
+    width: 100%;
+    height: auto;
+}
+
+div.side-container .body div.upload div.upload-image img {
+    width: 100%;
+    height: auto;
+    border: solid #002d59 1px;
+}
+
+div.side-container .body div.upload div.upload-info {
+    height: auto;
+}
+
+div.side-container .body div.upload div.upload-info h3 {
+    font-size: 20px;
+    color: #002d59;
+    margin-bottom: 0;
+}
+
+div.side-container .body div.upload div.upload-info p {
+    margin-bottom: 5px;
+    color: #002d59;
+}
+
+div.side-container .body div.upload div.upload-info div.upload-drop {
+    height: 55px;
+    width: 100%;
+    border: dashed #002d59 2px;
+    border-radius: 15px;
+}
+
+div.side-container .body div.upload div.upload-info div.upload-drop i {
+    margin: auto;
+    font-size: 25px;
+    color: #002d59;
 }
 
 div.side-container span.errors {
@@ -94,4 +148,14 @@ div.offre-element p.type-contrat {
 
 div.offre-element p.more-infos {
     font-weight: lighter;
+}
+
+.login-icon{
+    display:inline-block;
+    font-size: 40px;
+    line-height: 50px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    vertical-align: bottom;
 }
