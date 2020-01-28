@@ -153,7 +153,7 @@ class User extends BaseUser implements YomiInter
     public function setRole($role)
     {
         $this->role = $role;
-        $this->setRoles($role);
+        $this->setRoles([$role]);
     }
 
     /**

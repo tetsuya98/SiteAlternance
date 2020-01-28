@@ -8,6 +8,7 @@
 
 namespace AppBundle\DataFixtures;
 
+use AppBundle\Entity\Competence;
 use AppBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -81,6 +82,12 @@ class AppFixtures extends Fixture
         $user->setRole("ROLE_USER");
         $manager->persist($user);
 
+        $competence = new Competence();
+        $competence->setCompetences("Informatique");
+        $manager->persist($competence);
+        $competence = new Competence();
+        $competence->setCompetences("Mathématiques");
+        $manager->persist($competence);
 
         $regle = new Rules();
         $regle->setLang("Français");
