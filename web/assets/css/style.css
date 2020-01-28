@@ -71,6 +71,11 @@ div.side-container .body div.upload div.upload-info div.upload-drop {
     width: 100%;
     border: dashed #002d59 2px;
     border-radius: 15px;
+    display: inline-block;
+    line-height: 55px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
 }
 
 div.side-container .body div.upload div.upload-info div.upload-drop i {
@@ -148,14 +153,4 @@ div.offre-element p.type-contrat {
 
 div.offre-element p.more-infos {
     font-weight: lighter;
-}
-
-.login-icon{
-    display:inline-block;
-    font-size: 40px;
-    line-height: 50px;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    vertical-align: bottom;
 }
