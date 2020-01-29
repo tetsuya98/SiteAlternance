@@ -29,7 +29,18 @@ class User extends BaseUser implements YomiInter
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ForumUser", inversedBy="userManager" ,cascade={"persist", "remove"})
      */
     protected $userForum;
-
+    /**
+     * @var Etudiant
+     *  @ORM\Column(name="user_etudiant",nullable=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Etudiant", inversedBy="userManager" ,cascade={"persist", "remove"})
+     */
+    protected $userEtudiant;
+    /**
+     * @var Entreprise
+     *  @ORM\Column(name="user_entreprise",nullable=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Entreprise", inversedBy="userManager" ,cascade={"persist", "remove"})
+     */
+    protected $userEntreprise;
     /**
      * @var int
      *
@@ -38,6 +49,21 @@ class User extends BaseUser implements YomiInter
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var int
+     */
+    private $nbVisite;
+
+    /**
+     * @ORM\Column(type="array")
+     *
+     * @var array
+     */
+    private $listeVisiteur;
+
     /**
      * @var int
      *
@@ -100,22 +126,57 @@ class User extends BaseUser implements YomiInter
     protected $offres;
 
     /**
+     * @var int
+     * @ORM\Column(name="numéro_telephone", type="integer")
+     */
+    protected $nemuroTelephone;
+
+
+
+    /**
      * User constructor.
      */
 
 
     public function __construct()
     {
+
         parent::__construct();
+
+
         $this->dateInscrip = date("Y-m-d H:i:s");
         //$this->role = "ROLE_USER";
         $this->imageName =  null;
         $this->offres = new ArrayCollection();
+        $this->competences = new ArrayCollection();
+        $this->listeVisiteur =  new ArrayCollection();
         $this->userForum= new ForumUser($this);
         $this->status = "inconnu";
+        $this->enabled=true;
+        $this->nbVisite=1;
+
+        $a = func_get_args();
+        $i = func_num_args();
+        if (method_exists($this,$f='__construct'.$i)) {
+            call_user_func_array(array($this,$f),$a);
+        }
 
     }
 
+     function __construct1(string $role)
+    {
+
+
+
+        $this->role = $role;
+        $this->roles=[$role,"ROLE_USER"];
+//        $this->addRole("ROLE_USER");
+
+        $this->status = $role;
+        if ($role == "ROLE_ENTREPRISE")$this->userEntreprise=new Entreprise($this);
+        if ($role == "ROLE_ETUDIANT")$this->userEtudiant= new Etudiant($this);
+
+    }
 
 
 
@@ -153,7 +214,8 @@ class User extends BaseUser implements YomiInter
     public function setRole($role)
     {
         $this->role = $role;
-        $this->setRoles($role);
+
+        $this->addRole($role);
     }
 
     /**
@@ -547,4 +609,87 @@ class User extends BaseUser implements YomiInter
         $this->competences->removeUserComp($this);
         return $this->competences->removeElement($competence);
     }
+
+    /**
+     * Set nemuroTelephone.
+     *
+     * @param int $nemuroTelephone
+     *
+     * @return User
+     */
+    public function setNemuroTelephone($nemuroTelephone)
+    {
+        $this->nemuroTelephone = $nemuroTelephone;
+
+        return $this;
+    }
+
+    /**
+     * Get nemuroTelephone.
+     *
+     * @return int
+     */
+    public function getNemuroTelephone()
+    {
+        return $this->nemuroTelephone;
+    }
+
+
+
+    /**
+     * @return Etudiant
+     */
+    public function getUserEtudiant(): Etudiant
+    {
+        return $this->userEtudiant;
+    }
+
+    /**
+     * @param Etudiant $userEtudiant
+     */
+    public function setUserEtudiant(Etudiant $userEtudiant): void
+    {
+        $this->userEtudiant = $userEtudiant;
+    }
+
+    /**
+     * @return Entreprise
+     */
+    public function getUserEntreprise(): Entreprise
+    {
+        return $this->userEntreprise;
+    }
+
+    /**
+     * @param Entreprise $userEntreprise
+     */
+    public function setUserEntreprise(Entreprise $userEntreprise): void
+    {
+        $this->userEntreprise = $userEntreprise;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbVisite(): int
+    {
+        return $this->nbVisite;
+    }
+
+    public function newVisite(int $idvis): int{
+        if(!$this->listeVisiteur->contains($idvis)){
+            $this->nbVisite+=1;
+            $this->listeVisiteur->add($idvis);
+        }
+        return $this->nbVisite;
+    }
+    /**
+     * @param int $nbVisite
+     */
+    public function setNbVisite(int $nbVisite): void
+    {
+        $this->nbVisite = $nbVisite;
+    }
+
+
 }
