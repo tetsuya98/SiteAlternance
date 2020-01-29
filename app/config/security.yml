@@ -8,6 +8,9 @@ security:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
+        ROLE_ETUDIANT: ROLE_USER
+        ROLE_ENTREPRISE: ROLE_USER
+
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
