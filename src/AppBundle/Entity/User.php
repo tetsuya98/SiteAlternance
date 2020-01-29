@@ -142,8 +142,6 @@ class User extends BaseUser implements YomiInter
     {
 
         parent::__construct();
-
-
         $this->dateInscrip = date("Y-m-d H:i:s");
         //$this->role = "ROLE_USER";
         $this->imageName =  null;
