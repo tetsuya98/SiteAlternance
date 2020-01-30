@@ -18,7 +18,7 @@ class ForumUser extends Yosimitso
 {
     /**
      * @var monUtilisateur
-     * @ORM\OneToOne(targetEntity=monUtilisateur::class, mappedBy="userForum")
+     * @ORM\OneToOne(targetEntity=monUtilisateur::class, mappedBy="userForum" ,cascade={"persist", "remove"})
      */
     private $userManager;
 

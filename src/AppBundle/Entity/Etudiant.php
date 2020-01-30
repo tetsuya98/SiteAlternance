@@ -1,27 +1,307 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zitouni
- * Date: 20/01/2020
- * Time: 20:34
- */
 
 namespace AppBundle\Entity;
-
-
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\Common\Collections\ArrayCollection;
-
-
-class Etudiant extends User
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use AppBundle\Entity\User as monUtilisateur;
+/**
+ * Etudiant
+ *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EtudiantRepository")
+ */
+class Etudiant
 {
-    public function __construct()
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column( type="date",nullable=true)
+     */
+    private $dateDeNaissance;
+
+    /**
+     * @var User
+     * @ORM\OneToOne(targetEntity=monUtilisateur::class, mappedBy="userEntreprise" ,cascade={"persist", "remove"})
+     */
+    private $userManager;
+
+    /**
+     * @var array
+     * @ORM\Column( type="array")
+     */
+
+    private $Listeprojet;
+
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName", size="imageSize")
+     *
+     * @var File
+     */
+    protected $cvFile;
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     * @var string
+     */
+    protected  $cvName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var integer
+     */
+    protected  $cvSize;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $updatedAt;
+
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     * @var string
+     */
+    private $linkedin;
+
+    public function __construct(User $user)
     {
-        parent::__construct();
-        $this->dateInscrip = date("Y-m-d H:i:s");
-        $this->role = "ROLE_USER";
-        $this->imageName =  null;
-        $this->offres = new ArrayCollection();
-        $this->userForum= new ForumUser($this);
-        $this->status = "Etudiant";
+        $this->userManager= $user;
+        $this->Listeprojet = new ArrayCollection();
     }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            try {
+                $this->updatedAt = new \DateTimeImmutable();
+            } catch (\Exception $e) {
+            }
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->cvFile;
+    }
+
+    public function setImageName(?string $cvName): void
+    {
+        $this->cvName = $cvName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->cvName;
+    }
+
+    public function setImageSize(?int $cvSize): void
+    {
+        $this->cvSize = $cvSize;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->cvSize;
+    }
+
+
+
+
+    /**
+     * Add projet.
+     *
+     *
+     *
+     * @return Etudiant
+     */
+    public function addprojet(String  $projet)
+    {
+        $this->Listeprojet[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * @param string $projet
+     *  @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+
+    public function removeOffre(string $projet)
+    {
+
+        return $this->Listeprojet->removeElement($projet);
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserManager(): User
+    {
+        return $this->userManager;
+    }
+
+    /**
+     * @param User $userManager
+     */
+    public function setUserManager(User $userManager): void
+    {
+        $this->userManager = $userManager;
+    }
+
+    /**
+     * @return array
+     */
+    public function getListeprojet(): array
+    {
+        return $this->Listeprojet;
+    }
+
+    /**
+     * @param array $Listeprojet
+     */
+    public function setListeprojet(array $Listeprojet): void
+    {
+        $this->Listeprojet = $Listeprojet;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkedin(): string
+    {
+        return $this->linkedin;
+    }
+
+    /**
+     * @param string $linkedin
+     */
+    public function setLinkedin(string $linkedin): void
+    {
+        $this->linkedin = $linkedin;
+    }
+
+
+
+
+
+    /**
+     * Set cvName.
+     *
+     * @param string|null $cvName
+     *
+     * @return Etudiant
+     */
+    public function setCvName($cvName = null)
+    {
+        $this->cvName = $cvName;
+
+        return $this;
+    }
+
+    /**
+     * Get cvName.
+     *
+     * @return string|null
+     */
+    public function getCvName()
+    {
+        return $this->cvName;
+    }
+
+    /**
+     * Set cvSize.
+     *
+     * @param int|null $cvSize
+     *
+     * @return Etudiant
+     */
+    public function setCvSize($cvSize = null)
+    {
+        $this->cvSize = $cvSize;
+
+        return $this;
+    }
+
+    /**
+     * Get cvSize.
+     *
+     * @return int|null
+     */
+    public function getCvSize()
+    {
+        return $this->cvSize;
+    }
+
+    /**
+     * Set updatedAt.
+     *
+     * @param \DateTime|null $updatedAt
+     *
+     * @return Etudiant
+     */
+    public function setUpdatedAt($updatedAt = null)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt.
+     *
+     * @return \DateTime|null
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateDeNaissance()
+    {
+        return $this->dateDeNaissance;
+    }
+
+    /**
+     * @param mixed $dateDeNaissance
+     */
+    public function setDateDeNaissance($dateDeNaissance): void
+    {
+        $this->dateDeNaissance = $dateDeNaissance;
+    }
+
+
 }
