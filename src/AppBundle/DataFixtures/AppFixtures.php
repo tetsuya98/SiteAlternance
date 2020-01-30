@@ -12,6 +12,7 @@ use AppBundle\Entity\Competence;
 use AppBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use OffreBundle\Entity\TypeContrat;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Yosimitso\WorkingForumBundle\Entity\Forum;
 use Yosimitso\WorkingForumBundle\Entity\Rules;
@@ -71,6 +72,7 @@ class AppFixtures extends Fixture
         $user->setRole("ROLE_ADMIN");
         $user->setEnabled(true);
         $user->setPassword($password);
+        $user->setNemuroTelephone(1234);
         $manager->persist($user);
 
         $user = new User();
@@ -80,14 +82,24 @@ class AppFixtures extends Fixture
         $user->getUserForum()->setBanned(1);
         $user->setPassword($password);
         $user->setRole("ROLE_USER");
+        $user->setNemuroTelephone(1234);
         $manager->persist($user);
 
+        //Compétences
         $competence = new Competence();
         $competence->setCompetences("Informatique");
         $manager->persist($competence);
         $competence = new Competence();
         $competence->setCompetences("Mathématiques");
         $manager->persist($competence);
+
+        // Contrats
+        $contrat = new TypeContrat();
+        $contrat->setTitre('Apprentissage');
+        $manager->persist($contrat);
+        $contrat = new TypeContrat();
+        $contrat->setTitre('Stage');
+        $manager->persist($contrat);
 
         $regle = new Rules();
         $regle->setLang("Français");

@@ -89,10 +89,47 @@ div.side-container span.errors {
 }
 
 div.side-container .foot {
-    width: 100%;
-    background-color: #002d59;
+     width: 100%;
+     background-color: #002d59;
+     color: #ffffff;
+}
+
+div.side-container input[type="text"], div.side-container select {
+    border-radius: 30px;
+    border: solid 2px #002d59;
+}
+
+div.side-container textarea {
+    border-radius: 15px;
+    border: solid 2px #002d59;
+}
+
+div.side-container div.form-group {
+    margin-bottom: 5px;
+}
+
+div.side-container div.form-group label {
+    margin-bottom: 3px;
+}
+
+div.side-container div.form-group span.select2-container span.select2-selection {
+    border-radius: 30px;
+    border: solid 2px #002d59;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+div.side-container div.form-group span.select2-container span.select2-selection li.select2-selection__choice {
+    border-radius: 15px;
+    border: solid 1px #002d59;
+    background-color: #002d59 ;
     color: #ffffff;
 }
+
+div.side-container div.form-group span.select2-container span.select2-selection span.select2-selection__choice__remove {
+    color: #ffffff;
+}
+
 
 div.side-container .foot a {
     width: 100%;
