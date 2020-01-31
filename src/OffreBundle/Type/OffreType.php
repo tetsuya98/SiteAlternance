@@ -12,7 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
+//
 class OffreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -41,6 +43,7 @@ class OffreType extends AbstractType
                         ->orderBy('u.titre', 'ASC');
                 }
             ])
+            ->add('imageFile', VichImageType::class)
             ->add('submit', SubmitType::class, ['label' => "Publier l'offre"])
             ->getForm();
     }

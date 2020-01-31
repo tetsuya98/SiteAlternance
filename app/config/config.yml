@@ -136,12 +136,19 @@ knp_paginator:
 
 
 vich_uploader:
-  db_driver: orm # or mongodb or propel or phpcr
-  mappings:
-    product_image:
-      uri_prefix: /images/Avatar
-      upload_destination: '%kernel.project_dir%/web/images/Avatar'
-      inject_on_load: false
-      delete_on_update: true
-      delete_on_remove: true
-      namer: Vich\UploaderBundle\Naming\UniqidNamer
+    db_driver: orm # or mongodb or propel or phpcr
+    mappings:
+        product_image:
+            uri_prefix: /images/Avatar
+            upload_destination: '%kernel.project_dir%/web/images/Avatar'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        offre_image:
+            uri_prefix: /images/offres/avatar
+            upload_destination: '%kernel.project_dir%/web/offres/avatar'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
