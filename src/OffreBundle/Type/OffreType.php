@@ -30,8 +30,9 @@ class OffreType extends AbstractType
                         ->orderBy('u.competences', 'ASC');
                 },
                 'multiple' => true,
+                'required' => false
             ])
-            ->add('typeContrat', EntityType::class,         [
+            ->add('typeContrat', EntityType::class, [
                 'label' => 'Type de contrat',
                 'class' => TypeContrat::class,
                 'choice_label' => 'titre',
