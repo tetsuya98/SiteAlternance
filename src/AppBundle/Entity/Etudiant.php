@@ -29,7 +29,7 @@ class Etudiant
 
     /**
      * @var User
-     * @ORM\OneToOne(targetEntity=monUtilisateur::class, mappedBy="userEntreprise" ,cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=monUtilisateur::class, inversedBy="userEntreprise" ,cascade={"persist", "remove"})
      */
     private $userManager;
 
@@ -79,10 +79,11 @@ class Etudiant
      */
     private $linkedin;
 
-    public function __construct(User $user)
+    public function __construct(monUtilisateur $user)
     {
         $this->userManager= $user;
         $this->Listeprojet = new ArrayCollection();
+
     }
 
     /**

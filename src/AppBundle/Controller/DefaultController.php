@@ -4,14 +4,36 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Etudiant;
 use AppBundle\Entity\User;
+use AppBundle\Form\EntrepriseType;
+use AppBundle\Form\EtudiantType;
 use AppBundle\Form\UserType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class DefaultController extends Controller
 {
+
+    /**
+     * @var object $authorizationChecker Symfony\Component\Security\Core\Authorization\AuthorizationChecker
+     * //     */
+    protected $authorizationChecker;
+
+    /**
+     * @return object Symfony\Component\Security\Core\Authorization\AuthorizationChecker
+     */
+    protected function getAuthorization()
+    {
+        if (null === $this->authorizationChecker) {
+            $this->authorizationChecker = $this->get('security.authorization_checker');
+        }
+
+        return $this->authorizationChecker;
+    }
+
     /**
      * @Route("/", name="homepage")
      */
@@ -33,6 +55,9 @@ class DefaultController extends Controller
 
         // Génération du formulaire
         $form = $this->createForm(UserType::class, $Etu);
+        $form->add('Créer un compte', SubmitType::class, [
+            'attr' => ['class' => 'save'],
+        ]);
 
         // Validation et enregistrement de l'offre
         $form->handleRequest($request);
@@ -64,6 +89,10 @@ class DefaultController extends Controller
 
         // Génération du formulaire
         $form = $this->createForm(UserType::class, $Etu);
+        $form->add('Créer un compte', SubmitType::class, [
+            'attr' => ['class' => 'save'],
+        ]);
+
 
         // Validation et enregistrement de l'offre
         $form->handleRequest($request);
@@ -94,4 +123,87 @@ class DefaultController extends Controller
         $user->setPassword($password);
         return $user;
     }
+
+    /**
+     * @Route("/edit/profile",name="editProfile")
+     *
+     */
+
+    public function EditProfile(Request $request){
+
+        $user = $this->getUser();
+        $res = false;
+        if (null === $this->getUser()) {
+            // Ici, l'utilisateur est anonyme ou l'URL n'est pas derrière un pare-feu
+            return $this->redirectToRoute('login');
+        }
+        $form2 = $this->createForm(UserType::class, $user);
+        $form2->remove("plainPassword");
+        if ($this->getAuthorization()->isGranted('ROLE_ENTREPRISE') &&  $user->getUserEntreprise()!= null) {
+            $user->getUserEntreprise()->setUserManager($user);
+            $user->setUserEtudiant(null);
+            dump($user->getUserEntreprise());
+          /*  die;*/
+
+
+            $form = $this->createForm(EntrepriseType::class, $user->getUserEntreprise());
+
+           // $form->add($form=$this->createForm(UserType::class, $user));
+            /*var_dump($user->getUserEntreprise());
+            die;*/
+
+
+
+
+            $form->add('submit', SubmitType::class, array('label' => 'Modifier'));
+
+            $form->handleRequest($request);
+            //  $form->isValid()
+
+            if ($form->isSubmitted() and $form2->isSubmitted()) {
+                $entityManager = $this->getDoctrine()->getManager();
+
+
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+                /* $this->get('session')->getFlashBag()
+                     ->add('infoAjout', 'nouvelle salle ajoutée :'.$canidat->__toString());*/
+                if ($res) return $this->redirectToRoute('profile');
+                return $this->redirectToRoute('homepage');
+            }
+
+        }elseif ($this->getAuthorization()->isGranted('ROLE_ETUDIANT')and  $user->getUserEtudiant() != null){
+            $form = $this->createForm(EtudiantType::class, $user->getUserEtudiant());
+            $form->add('submit', SubmitType::class, array('label' => 'Modifier'));
+
+            $form->handleRequest($request);
+            //  $form->isValid()
+
+            if ($form->isSubmitted() && $form2->isSubmitted()) {
+                $entityManager = $this->getDoctrine()->getManager();
+
+
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+                /* $this->get('session')->getFlashBag()
+                     ->add('infoAjout', 'nouvelle salle ajoutée :'.$canidat->__toString());*/
+                if ($res) return $this->redirectToRoute('profile');
+                return $this->redirectToRoute('homepage');
+            }
+
+
+        }
+        else{
+                return $this->redirectToRoute('fos_user_profile_edit');
+
+
+
+        }
+        return $this->render('User/editProfile.html.twig', [
+            'form' => $form->createView(),'form2'=>$form2->createView()
+        ]);
+    }
+
 }

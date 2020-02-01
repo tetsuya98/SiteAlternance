@@ -17,8 +17,12 @@
 
 
             <li class="welcome_user">Bienvenue, {{ app.user.username }}</li>
+            <li><a href={{ path('editProfile') }} >edit profile</a></li>
             {% if is_granted("ROLE_ETUDIANT") %}
                 <li>Vous etes etudiant</li>
+            {% endif %}
+            {% if is_granted("ROLE_ENTREPRISE") %}
+                <li>Vous etes une entrprise</li>
             {% endif %}
         {% endif %}
 
