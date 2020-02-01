@@ -154,6 +154,8 @@ class User extends BaseUser implements YomiInter ,  ArrayAccess
         $this->status = "inconnu";
         $this->enabled=true;
         $this->nbVisite=1;
+        $this->userEtudiant=null;
+        $this->userEntreprise=null;
 
         $a = func_get_args();
         $i = func_num_args();
@@ -163,7 +165,7 @@ class User extends BaseUser implements YomiInter ,  ArrayAccess
 
     }
 
-     function __construct1(string $role)
+    function __construct1(string $role)
     {
 
 
@@ -172,9 +174,15 @@ class User extends BaseUser implements YomiInter ,  ArrayAccess
         $this->roles=[$role,"ROLE_USER"];
 //        $this->addRole("ROLE_USER");
 
-        $this->status = $role;
-        if ($role == "ROLE_ENTREPRISE")$this->userEntreprise=new Entreprise($this);
-        if ($role == "ROLE_ETUDIANT")$this->userEtudiant= new Etudiant($this);
+
+        if ($role == "ROLE_ENTREPRISE"){
+            $this->userEntreprise=new Entreprise($this);
+            $this->status = "ENTREPRISE";
+        }
+        if ($role == "ROLE_ETUDIANT"){
+            $this->userEtudiant= new Etudiant($this);
+            $this->status = "ETUDIANT";
+        }
 
     }
 
@@ -641,7 +649,7 @@ class User extends BaseUser implements YomiInter ,  ArrayAccess
      */
     public function getUserEtudiant()
     {
-        if($this->userEtudiant==null) return null;
+        if($this->userEtudiant===null) return null;
         return $this->userEtudiant;
     }
 
@@ -658,7 +666,7 @@ class User extends BaseUser implements YomiInter ,  ArrayAccess
      */
     public function getUserEntreprise(): Entreprise
     {
-        if($this->userEntreprise == null) return null;
+        if($this->userEntreprise === null) return null;
         return $this->userEntreprise;
     }
 
@@ -678,10 +686,15 @@ class User extends BaseUser implements YomiInter ,  ArrayAccess
         return $this->nbVisite;
     }
 
-    public function newVisite(int $idvis): int{
-        if(!$this->listeVisiteur->contains($idvis)){
-            $this->nbVisite+=1;
-            $this->listeVisiteur->add($idvis);
+    public function newVisite(User $idvis): int
+    {
+        if($this->getId()!=$idvis->getId())
+        {
+            if(!$this->listeVisiteur->contains($idvis->getId()))
+            {
+                $this->nbVisite+=1;
+                $this->listeVisiteur->add($idvis->getId());
+            }
         }
         return $this->nbVisite;
     }

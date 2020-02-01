@@ -14,6 +14,8 @@
         {% endif %}
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <li><a href={{ path('workingforum_forum') }}>Forum</a></li>
+            <li><a href={{ path('All_User') }}>All_User</a></li>
+
 
 
             <li class="welcome_user">Bienvenue, {{ app.user.username }}</li>
