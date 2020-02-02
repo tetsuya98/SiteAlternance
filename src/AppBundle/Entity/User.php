@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use ArrayAccess;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -22,7 +23,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User extends BaseUser implements YomiInter
+class User extends BaseUser implements YomiInter ,  ArrayAccess
 {
     /**
      * @var ForumUser
@@ -31,14 +32,15 @@ class User extends BaseUser implements YomiInter
     protected $userForum;
     /**
      * @var Etudiant
-     *  @ORM\Column(name="user_etudiant",nullable=true)
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Etudiant", inversedBy="userManager" ,cascade={"persist", "remove"})
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Etudiant",mappedBy ="userManager" ,cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $userEtudiant;
     /**
      * @var Entreprise
-     *  @ORM\Column(name="user_entreprise",nullable=true)
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Entreprise", inversedBy="userManager" ,cascade={"persist", "remove"})
+     *  @ORM\JoinColumn(name="user_entreprise",nullable=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Entreprise",mappedBy ="userManager" ,cascade={"persist", "remove"})
      */
     protected $userEntreprise;
     /**
@@ -126,8 +128,8 @@ class User extends BaseUser implements YomiInter
     protected $offres;
 
     /**
-     * @var int
-     * @ORM\Column(name="numéro_telephone", type="integer")
+     * @var string
+     * @ORM\Column(name="numéro_telephone", type="string",nullable=true)
      */
     protected $nemuroTelephone;
 
@@ -152,6 +154,8 @@ class User extends BaseUser implements YomiInter
         $this->status = "inconnu";
         $this->enabled=true;
         $this->nbVisite=1;
+        $this->userEtudiant=null;
+        $this->userEntreprise=null;
 
         $a = func_get_args();
         $i = func_num_args();
@@ -161,7 +165,7 @@ class User extends BaseUser implements YomiInter
 
     }
 
-     function __construct1(string $role)
+    function __construct1(string $role)
     {
 
 
@@ -170,9 +174,15 @@ class User extends BaseUser implements YomiInter
         $this->roles=[$role,"ROLE_USER"];
 //        $this->addRole("ROLE_USER");
 
-        $this->status = $role;
-        if ($role == "ROLE_ENTREPRISE")$this->userEntreprise=new Entreprise($this);
-        if ($role == "ROLE_ETUDIANT")$this->userEtudiant= new Etudiant($this);
+
+        if ($role == "ROLE_ENTREPRISE"){
+            $this->userEntreprise=new Entreprise($this);
+            $this->status = "ENTREPRISE";
+        }
+        if ($role == "ROLE_ETUDIANT"){
+            $this->userEtudiant= new Etudiant($this);
+            $this->status = "ETUDIANT";
+        }
 
     }
 
@@ -637,15 +647,16 @@ class User extends BaseUser implements YomiInter
     /**
      * @return Etudiant
      */
-    public function getUserEtudiant(): Etudiant
+    public function getUserEtudiant()
     {
+        if($this->userEtudiant===null) return null;
         return $this->userEtudiant;
     }
 
     /**
-     * @param Etudiant $userEtudiant
+     * @param Etudiant $userEtudiant|null
      */
-    public function setUserEtudiant(Etudiant $userEtudiant): void
+    public function setUserEtudiant(Etudiant $userEtudiant=null): void
     {
         $this->userEtudiant = $userEtudiant;
     }
@@ -655,6 +666,7 @@ class User extends BaseUser implements YomiInter
      */
     public function getUserEntreprise(): Entreprise
     {
+        if($this->userEntreprise === null) return null;
         return $this->userEntreprise;
     }
 
@@ -674,10 +686,15 @@ class User extends BaseUser implements YomiInter
         return $this->nbVisite;
     }
 
-    public function newVisite(int $idvis): int{
-        if(!$this->listeVisiteur->contains($idvis)){
-            $this->nbVisite+=1;
-            $this->listeVisiteur->add($idvis);
+    public function newVisite(User $idvis): int
+    {
+        if($this->getId()!=$idvis->getId())
+        {
+            if(!$this->listeVisiteur->contains($idvis->getId()))
+            {
+                $this->nbVisite+=1;
+                $this->listeVisiteur->add($idvis->getId());
+            }
         }
         return $this->nbVisite;
     }
@@ -690,4 +707,65 @@ class User extends BaseUser implements YomiInter
     }
 
 
+    /**
+     * Whether a offset exists
+     * @link https://php.net/manual/en/arrayaccess.offsetexists.php
+     * @param mixed $offset <p>
+     * An offset to check for.
+     * </p>
+     * @return boolean true on success or false on failure.
+     * </p>
+     * <p>
+     * The return value will be casted to boolean if non-boolean was returned.
+     * @since 5.0.0
+     */
+    public function offsetExists($offset)
+    {
+        // TODO: Implement offsetExists() method.
+    }
+
+    /**
+     * Offset to retrieve
+     * @link https://php.net/manual/en/arrayaccess.offsetget.php
+     * @param mixed $offset <p>
+     * The offset to retrieve.
+     * </p>
+     * @return mixed Can return all value types.
+     * @since 5.0.0
+     */
+    public function offsetGet($offset)
+    {
+        // TODO: Implement offsetGet() method.
+    }
+
+    /**
+     * Offset to set
+     * @link https://php.net/manual/en/arrayaccess.offsetset.php
+     * @param mixed $offset <p>
+     * The offset to assign the value to.
+     * </p>
+     * @param mixed $value <p>
+     * The value to set.
+     * </p>
+     * @return void
+     * @since 5.0.0
+     */
+    public function offsetSet($offset, $value)
+    {
+        // TODO: Implement offsetSet() method.
+    }
+
+    /**
+     * Offset to unset
+     * @link https://php.net/manual/en/arrayaccess.offsetunset.php
+     * @param mixed $offset <p>
+     * The offset to unset.
+     * </p>
+     * @return void
+     * @since 5.0.0
+     */
+    public function offsetUnset($offset)
+    {
+        // TODO: Implement offsetUnset() method.
+    }
 }

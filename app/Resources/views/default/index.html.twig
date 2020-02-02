@@ -14,12 +14,19 @@
         {% endif %}
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <li><a href={{ path('workingforum_forum') }}>Forum</a></li>
+            <li><a href={{ path('All_User') }}>All_User</a></li>
+
 
 
             <li class="welcome_user">Bienvenue, {{ app.user.username }}</li>
+            <li><a href={{ path('editProfile') }} >edit profile</a></li>
             {% if is_granted("ROLE_ETUDIANT") %}
                 <li>Vous etes etudiant</li>
             {% endif %}
+            {% if is_granted("ROLE_ENTREPRISE") %}
+                <li>Vous etes une entrprise</li>
+            {% endif %}
+            <p>vous avez eu {{ app.user.nbVisite }} visites !!! </p>
         {% endif %}
 
 

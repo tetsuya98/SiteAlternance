@@ -32,8 +32,6 @@ class UserType extends AbstractType
                 'first_options' => ['label' => 'form.password'],
                 'second_options' => ['label' => 'form.password_confirmation'],
                 'invalid_message' => 'fos_user.password.mismatch',
-            ])->add('Créer un compte', SubmitType::class, [
-                'attr' => ['class' => 'save'],
             ])
         ;
       //  $builder->add('dateInscrip')->add('role')->add('status')->add('description')->add('imageName')->add('imageSize')->add('updatedAt')->add('competences');

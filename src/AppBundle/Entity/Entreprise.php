@@ -24,7 +24,7 @@ class Entreprise
 
     /**
      * @var User
-     * @ORM\OneToOne(targetEntity=monUtilisateur::class, mappedBy="userEtudiant" ,cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=monUtilisateur::class, inversedBy="userEtudiant" ,cascade={"persist", "remove"})
      */
     private $userManager;
 
@@ -129,6 +129,11 @@ class Entreprise
         $this->NomUtilisateur = $NomUtilisateur;
     }
 
-
+    public function __toString(){
+        // to show the name of the Category in the select
+        return "Entrepris";
+        // to show the id of the Category in the select
+        // return $this->id;
+    }
 
 }
