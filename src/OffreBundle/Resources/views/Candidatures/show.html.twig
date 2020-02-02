@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% include('OffreBundle:Default:_head.html.twig') %}
+<body>
+
+<div class="container">
+    <div class="row col-12">
+        <div class="col-8">
+
+
+            <div class="col-12 side-container">
+
+                <div class="head">
+                    <h2>Visualisation</h2>
+                </div>
+                <div class="body">
+                    <div class="col-12 row">
+                        {{ candidature.offre.titre }}
+                    </div>
+                    {% if candidature.response %}
+                        {% if candidature.response == 1 %}
+                            <p>Vous accepté la candidature le {{ candidature.dateMeeting|date("d/m", "Europe/Paris") }}</p>
+                            <p>Votre RDV aura lieu le {{ candidature.dateMeeting|date("d/m", "Europe/Paris") }} à
+                                {{ candidature.dateMeeting|date("H:i", "Europe/Paris") }}
+                            </p>
+                        {% elseif candidature.response == 2 %}
+                        {% endif %}
+                    {% else %}
+                        <div class="col-12 row">
+                            {% include 'OffreBundle:Candidatures:_accept.html.twig' %}
+                        </div>
+                        <div class="col-12 row">
+                            {% include 'OffreBundle:Candidatures:_refuse.html.twig' %}
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

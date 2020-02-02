@@ -71,6 +71,11 @@ class Etudiant
      */
     protected $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="OffreBundle\Entity\Candidature", mappedBy="etudiant")
+     */
+    protected $candidatures;
+
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
@@ -302,6 +307,14 @@ class Etudiant
     public function setDateDeNaissance($dateDeNaissance): void
     {
         $this->dateDeNaissance = $dateDeNaissance;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCandidatures()
+    {
+        return $this->candidatures;
     }
 
 
