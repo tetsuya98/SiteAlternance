@@ -26,6 +26,7 @@
             {% if is_granted("ROLE_ENTREPRISE") %}
                 <li>Vous etes une entrprise</li>
             {% endif %}
+            <p>vous avez eu {{ app.user.nbVisite }} visites !!! </p>
         {% endif %}
 
 

@@ -67,7 +67,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setUsername('admin');
         $password = $this->encoder->encodePassword($user, 'root');
-        $user->setEmail("admin@adm.fr");
+        $user->setEmail("admin@zacc.fr");
         $user->setRole("ROLE_ADMIN");
         $user->setEnabled(true);
         $user->setPassword($password);
@@ -76,18 +76,32 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setUsername('root');
         $password = $this->encoder->encodePassword($user, 'root');
-        $user->setEmail("root@adm.fr");
+        $user->setEmail("root@zacc.fr");
         $user->getUserForum()->setBanned(1);
         $user->setPassword($password);
         $user->setRole("ROLE_USER");
         $manager->persist($user);
 
-        $competence = new Competence();
-        $competence->setCompetences("Informatique");
-        $manager->persist($competence);
-        $competence = new Competence();
-        $competence->setCompetences("Mathématiques");
-        $manager->persist($competence);
+        $user = new User("ROLE_ENTREPRISE");
+        $user->setUsername('ENTREPRISE');
+        $password = $this->encoder->encodePassword($user, 'root');
+        $user->setEmail("ENTREPRISE@zacc.fr");
+        $user->getUserForum()->setBanned(0);
+        $user->setPassword($password);
+        $user->setRole("ROLE_USER");
+        $manager->persist($user);
+
+
+        $user = new User("ROLE_ETUDIANT");
+        $user->setUsername('ETUDIANT');
+        $password = $this->encoder->encodePassword($user, 'root');
+        $user->setEmail("ETUDIANT@zacc.fr");
+        $user->getUserForum()->setBanned(0);
+        $user->setPassword($password);
+
+        $manager->persist($user);
+
+
 
         $regle = new Rules();
         $regle->setLang("Français");
