@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block title %} Profil de {{ user.username }}{% endblock %}
+{% block body %}
+    <h2 class="titre_principal">Profil de {{ user.username }}</h2>
+    <div id="content">
+        <div class="fos_user_user_show">
+
+            {% if user.imageName is not empty %}
+                <p><img id="photo_profil" src="{{ asset('/images/Avatar/'~user.imageName) }}" alt="photo de profil" width="100"/></p>
+            {% else %}
+                <!-------<p><img id="photo_profil" src="{{ asset('/image/default.png') }}" alt="photo de profil" width="100"/></p>    -->
+            {% endif %}
+
+            <p><strong>{{ 'profile.show.username'|trans }} :</strong> {{ user.username }}</p>
+            <p><strong>{{ 'profile.show.email'|trans }} :</strong> {{ user.email }}</p>
+            {% if user.description is not empty %}
+                <p><strong>Description :</strong> {{ user.description }}</p>
+            {% else %}
+                <p><strong>Description :</strong> L'utilisateur ne possède pas encore de description.</p>
+            {% endif %}
+
+            {% if user.competences is not empty %}
+                <p><strong>Compétences :</strong> <br/>
+                    {% for competences in user.competences %}
+                        {{ competences }} <br/>
+                    {% endfor %}</p>
+            {% else %}
+                <p><strong>Compétences :</strong> Aucune.</p>
+            {% endif %}
+
+            {% if user.nbPost is not empty %}
+                <p><strong>Nombre de Posts :</strong> {{ user.nbPost }}</p>
+            {% else %}
+                <p><strong>Nombre de Posts :</strong> L'utilisateur n'a pas encore écrit de post.</p>
+            {% endif %}
+
+
+        </div>
+    </div>
+{% endblock %}

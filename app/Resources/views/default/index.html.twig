@@ -1,7 +1,34 @@
-{% extends 'base.html.twig' %}
 
+{% extends 'layout.html.twig' %}
 {% block body %}
     <div id="wrapper">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            Connecté en tant que {{ app.user.username }}
+            -
+            <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+        {% else %}
+            <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+            <li><a href="{{ path('new_Student') }}">Creer un Compte Etudiant</a></li>
+            <li><a href="{{ path('new_Entreprise') }}">Creer un Compte Entreprise</a></li>
+
+        {% endif %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <li><a href={{ path('workingforum_forum') }}>Forum</a></li>
+            <li><a href={{ path('All_User') }}>All_User</a></li>
+
+
+
+            <li class="welcome_user">Bienvenue, {{ app.user.username }}</li>
+            <li><a href={{ path('editProfile') }} >edit profile</a></li>
+            {% if is_granted("ROLE_ETUDIANT") %}
+                <li>Vous etes etudiant</li>
+            {% endif %}
+            {% if is_granted("ROLE_ENTREPRISE") %}
+                <li>Vous etes une entrprise</li>
+            {% endif %}
+        {% endif %}
+
+
         <div id="container">
             <div id="welcome">
                 <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>

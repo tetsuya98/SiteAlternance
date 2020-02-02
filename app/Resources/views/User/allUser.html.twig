@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'YosimitsoWorkingForumBundle' %}
+{% block title %}liste compte{% endblock %}
+{% block body %}
+
+        {% for msg in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">
+                {{ msg }}
+            </div>
+        {% endfor %}
+
+        <h2 class="title_clear">Liste des Etudiant</h2>
+
+        <div class="block_users">
+            {% for  user in listeEtu %}
+                <div class="g_utilisateur">
+                    <p>
+                        N° d'utilisateur : {{ user.id }} <br/>
+                        Nom :  <strong><a class="user_link" href="{{ path('show_prof', { 'id': user.id }) }}">{{ user.username }}</a></strong> <br/>
+                        Email : {{ user.email }} <br/>
+                        Role :
+                        {% for role in user.roles %}
+                            {{ ('forum.user.'~role) | trans }}
+                        {% endfor %}  <br/>
+
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+        <h2 class="title_clear">Liste des Entreprise</h2>
+        <div class="block_users">
+            {% if listeEntr is not empty %}
+                {% for user in listeEntr %}
+                    <div class="g_utilisateur">
+                        <p>
+                            N° d'utilisateur : {{ user.id }} <br/>
+                            Nom :  <strong><a class="user_link" href="{{ path('show_prof', { 'id': user.id }) }}">{{ user.username }}</a></strong> <br/>
+                            Email : {{ user.email }} <br/>
+                            Role :
+                            {% for role in user.roles %}
+                                {{ ('forum.user.'~role) | trans }}
+                            {% endfor %}  <br/>
+
+
+                        </p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>
+                    Il n'y a actuellement pas d'utilisateur banni.
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
