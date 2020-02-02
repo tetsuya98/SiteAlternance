@@ -84,6 +84,11 @@ class Offre
      */
     private $nbVue;
 
+    /**
+     * @ORM\OneToMany(targetEntity="OffreBundle\Entity\Candidature", mappedBy="offre")
+     */
+    protected $candidatures;
+
 
     /**
      * Get id
@@ -422,5 +427,13 @@ class Offre
     public function getFileSize(): ?int
     {
         return $this->fileSize;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCandidatures()
+    {
+        return $this->candidatures;
     }
 }
