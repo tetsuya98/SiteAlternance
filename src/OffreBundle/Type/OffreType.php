@@ -43,7 +43,7 @@ class OffreType extends AbstractType
                         ->orderBy('u.titre', 'ASC');
                 }
             ])
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, ['required' => false])
             ->add('submit', SubmitType::class, ['label' => "Publier l'offre"])
             ->getForm();
     }
