@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% include('OffreBundle:Default:_head.html.twig') %}
+<body>
+
+<div class="container">
+    <div class="my-5"></div>
+    <div class="row">
+        <div class="col-md-6 form-group side-container">
+            <div class="head">
+                <h2>Offres</h2>
+            </div>
+            <div class="body">
+                {% for candidature in candidatures %}
+                    <div class="d-flex col-12 offre-element">
+                        <div class="p-2 media">
+                            {% if candidature.offre.imageName is null %}
+                                <img src="{{ asset('assets/img/folder.jpg') }}">
+                            {% else %}
+                                <img src="{{ asset('offres/avatar/' ~ candidature.offre.imageName)}}">
+                            {% endif %}
+                        </div>
+                        <div class="p-2 titles">
+                            <h3>{{ candidature.offre.titre }}</h3>
+                            <p class="type-contrat">Contrat en alternance (2 ans)</p>
+                            <p class="more-infos">
+                                Candidaté le {{ candidature.datePostule|date("d/m", "Europe/Paris") }}
+                            </p>
+                        </div>
+                        <div class="ml-auto p-2 mt-auto">
+                            <a href="{{ path('candidature_remove', {'candidature': candidature.id}) }}"
+                               class="btn button btn-sm">Annuler</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="foot">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

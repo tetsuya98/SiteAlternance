@@ -18,13 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class DefaultController
+ * Class CandidatureController
  * @package OffreBundle\Controller
  */
-class DefaultController extends Controller
+class CandidatureController extends Controller
 {
     /**
-     * @Route("/", name="offres_index")
+     * @Route("/", name="candidatures_index")
      */
     public function indexAction()
     {
@@ -32,9 +32,14 @@ class DefaultController extends Controller
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
-        return $this->render('OffreBundle:Default:index.html.twig', [
-            'offres' => $user->getOffres()
-        ]);
+        if (!is_null($user->getUserEtudiant())){
+            $etudiant = $user->getUserEtudiant();
+            return $this->render('OffreBundle:Candidatures:etudiant_index.html.twig', [
+                'candidatures' => $etudiant->getCandidatures()
+            ]);
+        } else {
+
+        }
     }
 
     /**
@@ -100,17 +105,24 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/remove/{offre}", name="offres_remove")
-     * @param Offre $offre Offre à supprimer
+     * @Route("/remove/{candidature}", name="candidature_remove")
+     * @param Candidature $candidature Candidature à supprimer
      * @return RedirectResponse Retour vers l'index
+     * @throws \Exception
      */
-    public function removeAction(Offre $offre) {
+    public function removeAction(Candidature $candidature) {
+
+        /** @var User $user */
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if ($user->getUserEtudiant() !== $candidature->getEtudiant()) {
+            throw new \Exception("Vous n'êtes pas l'auteur de la candidature.");
+        }
         $em = $this->getDoctrine()->getManager();
-        $em->remove($offre);
+        $em->remove($candidature);
         $em->flush();
         $flashbag = $this->get('session')->getFlashBag();
-        $flashbag->add('success', "L'offre a été supprimée avec succès.");
-        return $this->redirectToRoute('offres_index');
+        $flashbag->add('success', "La candidature a été supprimée avec succès.");
+        return $this->redirectToRoute('candidatures_index');
     }
 
     /**
@@ -143,7 +155,7 @@ class DefaultController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offre);
             $entityManager->flush();
-            return $this->redirectToRoute('candidatures_index');
+            return $this->redirectToRoute('offres_index');
         }
 
         // Rendu de la vue
