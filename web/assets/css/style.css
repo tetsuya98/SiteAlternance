@@ -126,7 +126,16 @@ div.side-container div.form-group span.select2-container span.select2-selection 
     color: #ffffff;
 }
 
-div.side-container div.form-group a.btn-primary {
+div.side-container div.form-group a.btn-primary, button.btn-custom {
+    border-radius: 17px;
+    border: solid 1px #002d59;
+    background-color: #002d59 ;
+    color: #ffffff;
+    text-align: center;
+}
+
+a.btn-custom {
+    padding: 8px;
     border-radius: 17px;
     border: solid 1px #002d59;
     background-color: #002d59 ;
@@ -229,4 +238,9 @@ div.offre-element p.more-infos {
 }
 .custom-file-input:active::before {
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+div.img-icon img{
+    width: 64px;
+    height: 64px;
 }

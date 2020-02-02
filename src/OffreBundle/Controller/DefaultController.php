@@ -73,6 +73,24 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/show/{offre}",name="offres_show")
+     * @param Offre $offre
+     * @return Response Vue
+     */
+    public function showAction(Offre $offre){
+
+        /** @var User $user */
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if ($user->getRole() === 'ETUDIANT'){
+
+        }
+
+        return $this->render('OffreBundle:Default:show.html.twig',[
+            'offre' => $offre
+        ]);
+    }
+
+    /**
      * @Route("/edit/{offre}", name="offres_edit")
      * @param Offre $offre
      * @param Request $request
