@@ -32,9 +32,17 @@ class DefaultController extends Controller
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
-        return $this->render('OffreBundle:Default:index.html.twig', [
-            'offres' => $user->getOffres()
-        ]);
+        if (!is_null($user->getUserEntreprise())) {
+            return $this->render('OffreBundle:Default:index.html.twig', [
+                'offres' => $user->getOffres()
+            ]);
+        } else {
+            return $this->render('OffreBundle:Default:index.html.twig', [
+                'offres' => $this->getDoctrine()->getRepository(Offre::class)
+                ->findBy([],['crdate' => 'DESC'])
+            ]);
+        }
+
     }
 
     /**
@@ -76,18 +84,20 @@ class DefaultController extends Controller
      * @Route("/show/{offre}",name="offres_show")
      * @param Offre $offre
      * @return Response Vue
+     * @throws \Exception
      */
     public function showAction(Offre $offre){
 
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        if ($user->getRole() === 'ETUDIANT'){
-
+        if (!is_null($user->getUserEtudiant())){
+            return $this->render('OffreBundle:Default:show.html.twig',[
+                'offre' => $offre
+            ]);
+        } else {
+            throw new \Exception("Vous n'êtes pas un étudiant.");
         }
 
-        return $this->render('OffreBundle:Default:show.html.twig',[
-            'offre' => $offre
-        ]);
     }
 
     /**

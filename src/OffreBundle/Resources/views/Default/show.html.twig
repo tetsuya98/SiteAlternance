@@ -61,6 +61,9 @@
                     {% if app.user == offre.user %}
                         <h3>Gérer</h3>
                         <a href="{{ path('offres_edit', {'offre' : offre.id}) }}" class="btn-custom mb-2">Modifier</a>
+                    {% else %}
+                        <h3>Candidater</h3>
+                        <a href="{{ path('offres_postule', {'offre' : offre.id}) }}" class="btn-custom mb-2">Candidater</a>
                     {% endif %}
                 </div>
 

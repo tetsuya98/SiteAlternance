@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-6 form-group side-container">
             <div class="head">
-                <h2>Offres</h2>
+                <h2>Candidatures</h2>
             </div>
             <div class="body">
                 {% for candidature in candidatures %}
@@ -22,14 +22,15 @@
                         </div>
                         <div class="p-2 titles">
                             <h3>{{ candidature.offre.titre }}</h3>
-                            <p class="type-contrat">Contrat en alternance (2 ans)</p>
+                            <p class="type-contrat">{{ candidature.offre.typeContrat.titre }} ({{ candidature.offre.nbSemaine }} semaines)</p>
                             <p class="more-infos">
                                 Candidaté le {{ candidature.datePostule|date("d/m", "Europe/Paris") }}
+                                | {{ candidature.status }}
                             </p>
                         </div>
                         <div class="ml-auto p-2 mt-auto">
-                            <a href="{{ path('candidature_remove', {'candidature': candidature.id}) }}"
-                               class="btn button btn-sm">Annuler</a>
+                            <a href="{{ path('candidature_show', {'candidature': candidature.id}) }}"
+                               class="btn button btn-sm">Accéder</a>
                         </div>
                     </div>
                 {% endfor %}

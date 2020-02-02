@@ -8,7 +8,11 @@
     <div class="row">
         <div class="col-md-6 form-group side-container">
             <div class="head">
-                <h2>Offres</h2>
+                {% if app.user.userEntreprise %}
+                    <h2>Vos offres</h2>
+                {% else %}
+                    <h2>Offres</h2>
+                {% endif %}
             </div>
             <div class="body">
                 {% for offre in offres %}
@@ -22,24 +26,33 @@
                         </div>
                         <div class="p-2 titles">
                             <h3>{{ offre.titre }}</h3>
-                            <p class="type-contrat">Contrat en alternance (2 ans)</p>
+                            <p class="type-contrat">{{ offre.typeContrat.titre }} ({{ offre.nbSemaine }} semaines)</p>
                             <p class="more-infos">
-                                Publié le {{ offre.crDate|date("d/m", "Europe/Paris") }} |
-                                10 vues / 5 candidatures
+                                Publié le {{ offre.crDate|date("d/m", "Europe/Paris") }}
+                                {% if app.user.userEntreprise %}
+                                    | {{ offre.nbVue }} vues / {{ offre.candidatures|length }} candidatures
+                                {% endif %}
                             </p>
                         </div>
                         <div class="ml-auto p-2 mt-auto">
+                        {% if app.user.userEntreprise %}
                             <a href="{{ path('offres_remove', {'offre': offre.id}) }}"
                                class="btn button btn-sm">Supprimer</a>
                             <a href="{{ path('offres_edit', {'offre': offre.id}) }}"
                                class="btn button btn-sm">Modifier</a>
+                        {% else %}
+                            <a href="{{ path('offres_show', {'offre': offre.id}) }}"
+                               class="btn button btn-sm">Accéder</a>
+                        {% endif %}
                         </div>
                     </div>
                 {% endfor %}
             </div>
-            <div class="foot">
-                <a href="{{ path('offres_new') }}" class="btn btn-primary btn-lg square" role="button">Publier une nouvelle offre</a>
-            </div>
+            {% if app.user.userEntreprise %}
+                <div class="foot">
+                    <a href="{{ path('offres_new') }}" class="btn btn-primary btn-lg square" role="button">Publier une nouvelle offre</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 
