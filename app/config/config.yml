@@ -152,3 +152,10 @@ vich_uploader:
             delete_on_update: true
             delete_on_remove: true
             namer: Vich\UploaderBundle\Naming\UniqidNamer
+        offre_file:
+            uri_prefix: /images/offres/file
+            upload_destination: '%kernel.project_dir%/web/offres/file'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
