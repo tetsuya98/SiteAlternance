@@ -12,7 +12,12 @@
                 </div>
                 <div class="col-12 px-0 row">
                     <div class="col-5 pr-0 upload-image">
-                        <img src="/Projet/web/offres/avatar/{{ form.vars.value.imageName }}" alt="Generic placeholder image">
+                        {% if form.vars.value.imageName is null %}
+                            <img src="{{ asset('assets/img/folder.jpg') }}" alt="Generic placeholder image">
+                        {% else %}
+                            <img src="{{ asset('offres/avatar/' ~ form.vars.value.imageName)}}" alt="Generic placeholder image">
+                        {% endif %}
+
                     </div>
                     <div class="col-7 upload-info">
                         <h3>Image</h3>
