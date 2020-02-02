@@ -3,12 +3,17 @@
 namespace OffreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Entity\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Candidature
  *
  * @ORM\Table(name="candidature")
  * @ORM\Entity(repositoryClass="OffreBundle\Repository\CandidatureRepository")
+ * @Vich\Uploadable()
  */
 class Candidature
 {
@@ -65,6 +70,68 @@ class Candidature
      */
     private $etudiant;
 
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="candidature_file", fileNameProperty="fileName", size="fileSize")
+     *
+     * @var File
+     */
+    protected $file;
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     * @var string
+     */
+    protected  $fileName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var integer
+     */
+    protected  $fileSize;
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|UploadedFile $file
+     * @throws Exception
+     */
+    public function setFile(?File $file = null): void
+    {
+        $this->file = $file;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFileName(?string $imageName): void
+    {
+        $this->fileName = $imageName;
+    }
+
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    public function setFileSize(?int $fileSize): void
+    {
+        $this->fileSize = $fileSize;
+    }
+
+    public function getFileSize(): ?int
+    {
+        return $this->fileSize;
+    }
 
     /**
      * Get id.

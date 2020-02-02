@@ -146,15 +146,22 @@ vich_uploader:
             delete_on_remove: true
             namer: Vich\UploaderBundle\Naming\UniqidNamer
         offre_image:
-            uri_prefix: /images/offres/avatar
+            uri_prefix: /offres/avatar
             upload_destination: '%kernel.project_dir%/web/offres/avatar'
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true
             namer: Vich\UploaderBundle\Naming\UniqidNamer
         offre_file:
-            uri_prefix: /images/offres/file
+            uri_prefix: /offres/file
             upload_destination: '%kernel.project_dir%/web/offres/file'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        candidature_file:
+            uri_prefix: /candidatures/file
+            upload_destination: '%kernel.project_dir%/web/candidatures/file'
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true
