@@ -4,8 +4,7 @@ namespace OffreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Entity\File;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -53,6 +52,13 @@ class Candidature
      * @ORM\Column(name="dateMeeting", type="datetime", nullable=true)
      */
     private $dateMeeting;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="motivation", type="text")
+     */
+    private $motivation;
 
     /**
      * @var \OffreBundle\Entity\Offre
@@ -269,5 +275,21 @@ class Candidature
     public function setEtudiant(\AppBundle\Entity\Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMotivation()
+    {
+        return $this->motivation;
+    }
+
+    /**
+     * @param string $motivation
+     */
+    public function setMotivation($motivation)
+    {
+        $this->motivation = $motivation;
     }
 }

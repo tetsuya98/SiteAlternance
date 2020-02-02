@@ -2,7 +2,7 @@ $(document).ready(function() {
     console.log('ok');
     $('.select2').select2();
 
-    $('#offre_file_file').each(function (){
+    $('#offre_file_file, #candidature_file_file').each(function (){
         let input = $(this);
         let parent = input.closest('.vich-file');
         let del = parent.find('#offre_file_delete');

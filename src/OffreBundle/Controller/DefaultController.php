@@ -3,7 +3,9 @@
 namespace OffreBundle\Controller;
 
 use AppBundle\Entity\User;
+use OffreBundle\Entity\Candidature;
 use OffreBundle\Entity\Offre;
+use OffreBundle\Type\CandidatureType;
 use OffreBundle\Type\OffreType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -109,5 +111,44 @@ class DefaultController extends Controller
         $flashbag = $this->get('session')->getFlashBag();
         $flashbag->add('success', "L'offre a été supprimée avec succès.");
         return $this->redirectToRoute('offres_index');
+    }
+
+    /**
+     * @Route("/postule/{offre}", name="offres_postule")
+     * @param Offre $offre Offre à candidater
+     * @throws \Exception
+     */
+    public function postuleAction(Offre $offre, Request $request){
+
+        // Récupération de l'étudiant
+        /** @var User $user */
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        dump($user);
+        $etudiant = $user->getUserEtudiant();
+        if (is_null($etudiant)) {
+            throw new \Exception("L'utilisateur doit être un étudiant pour postuler.");
+        }
+
+        // Création du form et entité
+        $candidature = new Candidature();
+        $candidature->setEtudiant($etudiant);
+        $candidature->setOffre($offre);
+        $candidature->setDatePostule(new \DateTime());
+        $form = $this->createForm(CandidatureType::class, $candidature);
+
+        // Validation et enregistrement de l'offre
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $offre = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($offre);
+            $entityManager->flush();
+            return $this->redirectToRoute('offres_index');
+        }
+
+        // Rendu de la vue
+        return $this->render('OffreBundle:Candidatures:new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
