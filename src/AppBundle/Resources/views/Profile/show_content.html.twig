@@ -1,0 +1,46 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="fos_user_user_show">
+
+    {% if user.imageName is not empty %}
+        <p><img id="photo_profil" src="{{ asset('/images/Avatar/'~user.imageName) }}" alt="photo de profil" width="100"/></p>
+    {% else %}
+        <p><img id="photo_profil" src="{{ asset('/image/default.png') }}" alt="photo de profil" width="100"/></p>
+    {% endif %}
+
+    <p><strong>{{ 'profile.show.username'|trans }} :</strong> {{ user.username }}</p>
+    <p><strong>{{ 'profile.show.email'|trans }} :</strong> {{ user.email }}</p>
+    {% if user.description is not empty %}
+        <p><strong>Description :</strong> {{ user.description }}</p>
+    {% else %}
+        <p><strong>Description :</strong> L'utilisateur ne possède pas encore de description.</p>
+    {% endif %}
+
+    {% if user.competences is not empty %}
+        <p><strong>Compétences :</strong> <br/>
+            {% for competences in user.competences %}
+                {{ competences }} <br/>
+            {% endfor %}</p>
+    {% else %}
+        <p><strong>Compétences :</strong> Aucune.</p>
+    {% endif %}
+
+    {% if user.nbPost is not empty %}
+        <p><strong>Nombre de Posts :</strong> {{ user.nbPost }}</p>
+    {% else %}
+        <p><strong>Nombre de Posts :</strong> L'utilisateur n'a pas encore écrit de post.</p>
+    {% endif %}
+
+    <p><strong>Badge(s) Débloqué(s) :</strong>
+        {% if   badge is defined and badge is not empty %}
+            {% for name in badge %}
+                <br/>{{ name.name }}
+            {% endfor %}
+        {% else %}
+            L'utilisateur n'a pas encore débloqué de badge.
+        {% endif %}
+    </p>
+
+    <a class="class_button" href={{ path('fos_user_profile_edit') }}>Modifier mon profil</a>
+    <a class="class_button" href={{ path('fos_user_change_password') }}>Modifier mon mot de passe</a>
+</div>

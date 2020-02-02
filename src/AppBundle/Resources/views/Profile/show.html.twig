@@ -1,0 +1,22 @@
+{% extends "@FOSUser/layout.html.twig" %}
+{% block title %} ALCO - Profil {% endblock %}
+{% block body %}
+<h2 class="titre_principal">Mon Profil</h2>
+<div id="content">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        Vous êtes connecté en tant que <strong>{{ app.user.username }}</strong>
+    {% endif %}
+    {# On affiche les messages flash que définissent les contrôleurs du bundle #}
+    {% for key, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert alert-{{ key }}">
+                {{ message|trans({}, 'FOSUserBundle') }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% block fos_user_content %}
+        {% include "@FOSUser/Profile/show_content.html.twig" %}
+    {% endblock fos_user_content %}
+
+</div>
+{% endblock %}

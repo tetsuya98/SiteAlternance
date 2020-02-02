@@ -1,0 +1,14 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+{% block title %} ALCO - Réinitialiser le mot de passe {% endblock %}
+{% block body %}
+    <h2 class="titre_principal">Demande validée</h2>
+    <div id="content">
+        {% block fos_user_content %}
+            <p>
+                {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+            </p>
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "@FOSUser/layout.html.twig" %}
+{% block title %}  Connexion {% endblock %}
+{% block body %}
+    <h2 class="titre_principal">Connexion</h2>
+    <div id="content">
+        {% block fos_user_content %}
+            {{ include('@FOSUser/Security/login_content.html.twig') }}
+        {% endblock fos_user_content %}
+        <hr/>
+        <p><strong>Pas de compte ?</strong><br/>
+        <li><a href="{{ path('new_Student') }}">Creer un Compte Etudiant</a></li>
+        <li><a href="{{ path('new_Entreprise') }}">Creer un Compte Entreprise</a></li>
+        A bientôt !</p>
+    </div>
+{% endblock %}

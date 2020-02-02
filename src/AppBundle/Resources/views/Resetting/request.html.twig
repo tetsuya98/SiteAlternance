@@ -1,0 +1,10 @@
+{% extends "@FOSUser/layout.html.twig" %}
+{% block title %} ALCO - Réinitialiser le mot de passe {% endblock %}
+{% block body %}
+    <h2 class="titre_principal">Réinitialiser le mot de passe</h2>
+    <div id="content">
+        {% block fos_user_content %}
+            {% include "@FOSUser/Resetting/request_content.html.twig" %}
+        {% endblock fos_user_content %}
+    </div>
+{% endblock %}

@@ -29,7 +29,18 @@ class User extends BaseUser implements YomiInter
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ForumUser", inversedBy="userManager" ,cascade={"persist", "remove"})
      */
     protected $userForum;
-
+    /**
+     * @var userEtudiant
+     *  @ORM\Column(name="user_etudiant",nullable=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Etudiant", inversedBy="userManager" ,cascade={"persist", "remove"})
+     */
+    protected $userEtudiant;
+    /**
+     * @var userEntrepris
+     *  @ORM\Column(name="user_entreprise",nullable=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Entreprise", inversedBy="userManager" ,cascade={"persist", "remove"})
+     */
+    protected $userEntreprise;
     /**
      * @var int
      *
@@ -48,7 +59,7 @@ class User extends BaseUser implements YomiInter
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="string", length=255)
+     * @ORM\Column(name="role", type="string", length=255,nullable = true)
      *
      */
 
@@ -86,7 +97,7 @@ class User extends BaseUser implements YomiInter
 
 
     /**
-     * @var string
+     * @var Competence
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Competence", mappedBy = "userComp" )
 
@@ -100,22 +111,52 @@ class User extends BaseUser implements YomiInter
     protected $offres;
 
     /**
+     * @var int
+     * @ORM\Column(name="numéro_telephone", type="integer")
+     */
+    protected $nemuroTelephone;
+
+
+
+    /**
      * User constructor.
      */
 
 
     public function __construct()
     {
+
         parent::__construct();
+
+
         $this->dateInscrip = date("Y-m-d H:i:s");
         //$this->role = "ROLE_USER";
         $this->imageName =  null;
         $this->offres = new ArrayCollection();
         $this->userForum= new ForumUser($this);
         $this->status = "inconnu";
+        $this->enabled=true;
+
+        $a = func_get_args();
+        $i = func_num_args();
+        if (method_exists($this,$f='__construct'.$i)) {
+            call_user_func_array(array($this,$f),$a);
+        }
 
     }
 
+     function __construct1(string $role)
+    {
+
+
+
+        $this->role = $role;
+        $this->roles=[$role,"ROLE_USER"];
+//        $this->addRole("ROLE_USER");
+
+        $this->status = $role;
+
+    }
 
 
 
@@ -153,6 +194,8 @@ class User extends BaseUser implements YomiInter
     public function setRole($role)
     {
         $this->role = $role;
+
+        $this->addRole($role);
     }
 
     /**
@@ -505,6 +548,7 @@ class User extends BaseUser implements YomiInter
      */
     public function removeOffre(\OffreBundle\Entity\Offre $offre)
     {
+
         return $this->offres->removeElement($offre);
     }
 
@@ -518,4 +562,103 @@ class User extends BaseUser implements YomiInter
     }
 
 
+
+    /**
+     * Add competence.
+     *
+     * @param \AppBundle\Entity\Competence $competence
+     *
+     * @return User
+     */
+    public function addCompetence(\AppBundle\Entity\Competence $competence)
+    {
+        $this->competences[] = $competence;
+        $this->competences->addUserComp($this);
+        return $this;
+    }
+
+    /**
+     * Remove competence.
+     *
+     * @param \AppBundle\Entity\Competence $competence
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCompetence(\AppBundle\Entity\Competence $competence)
+    {
+        $this->competences->removeUserComp($this);
+        return $this->competences->removeElement($competence);
+    }
+
+    /**
+     * Set userEtudiant.
+     *
+     * @param string|null $userEtudiant
+     *
+     * @return User
+     */
+    public function setUserEtudiant($userEtudiant = null)
+    {
+        $this->userEtudiant = $userEtudiant;
+
+        return $this;
+    }
+
+    /**
+     * Get userEtudiant.
+     *
+     * @return string|null
+     */
+    public function getUserEtudiant()
+    {
+        return $this->userEtudiant;
+    }
+
+    /**
+     * Set userEntreprise.
+     *
+     * @param string|null $userEntreprise
+     *
+     * @return User
+     */
+    public function setUserEntreprise($userEntreprise = null)
+    {
+        $this->userEntreprise = $userEntreprise;
+
+        return $this;
+    }
+
+    /**
+     * Get userEntreprise.
+     *
+     * @return string|null
+     */
+    public function getUserEntreprise()
+    {
+        return $this->userEntreprise;
+    }
+
+    /**
+     * Set nemuroTelephone.
+     *
+     * @param int $nemuroTelephone
+     *
+     * @return User
+     */
+    public function setNemuroTelephone($nemuroTelephone)
+    {
+        $this->nemuroTelephone = $nemuroTelephone;
+
+        return $this;
+    }
+
+    /**
+     * Get nemuroTelephone.
+     *
+     * @return int
+     */
+    public function getNemuroTelephone()
+    {
+        return $this->nemuroTelephone;
+    }
 }
