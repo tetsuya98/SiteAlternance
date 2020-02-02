@@ -23,15 +23,141 @@ div.side-container .head h2 {
 
 div.side-container .body {
     padding: 4px;
+    margin-top: 10px;
+}
+
+div.side-container .body div.upload {
+    height: auto;
+}
+
+div.side-container .body div.upload div.title {
+    height: auto;
+    margin-bottom: 10px;
+}
+
+div.side-container .body div.upload div.title h2 {
+    font-size: 25px;
+    color: #002d59;
+}
+
+div.side-container .body div.upload div.upload-image {
+    width: 100%;
+    height: auto;
+}
+
+div.side-container .body div.upload div.upload-image img {
+    width: 100%;
+    height: auto;
+    border: solid #002d59 1px;
+}
+
+div.side-container .body div.upload div.upload-info {
+    height: auto;
+}
+
+div.side-container .body div.upload div.upload-info h3 {
+    font-size: 20px;
+    color: #002d59;
+    margin-bottom: 0;
+}
+
+div.side-container .body div.upload div.upload-info p {
+    margin-bottom: 5px;
+    color: #002d59;
+}
+
+div.side-container .body div.upload div.upload-info div.upload-drop {
+    height: 55px;
+    width: 100%;
+    border: dashed #002d59 2px;
+    border-radius: 15px;
+    display: inline-block;
+    line-height: 55px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+div.side-container .body div.upload div.upload-info div.upload-drop i {
+    margin: auto;
+    font-size: 25px;
+    color: #002d59;
+}
+
+div.side-container span.errors {
+    /*TODO*/
 }
 
 div.side-container .foot {
-    width: 100%;
-    background-color: #002d59;
+     width: 100%;
+     background-color: #002d59;
+     color: #ffffff;
+}
+
+div.side-container input[type="text"], div.modal input[type="text"], div.side-container select {
+    border-radius: 30px;
+    border: solid 2px #002d59;
+}
+
+div.side-container textarea {
+    border-radius: 15px;
+    border: solid 2px #002d59;
+}
+
+div.side-container div.form-group {
+    margin-bottom: 5px;
+}
+
+div.side-container div.form-group label {
+    margin-bottom: 3px;
+}
+
+div.side-container div.form-group span.select2-container span.select2-selection {
+    border-radius: 30px;
+    border: solid 2px #002d59;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+div.side-container div.form-group span.select2-container span.select2-selection li.select2-selection__choice {
+    border-radius: 15px;
+    border: solid 1px #002d59;
+    background-color: #002d59 ;
     color: #ffffff;
 }
 
+div.side-container div.form-group a.btn {
+    border-radius: 17px;
+    border: solid 1px #002d59;
+    background-color: #002d59 ;
+    color: #ffffff;
+    text-align: center;
+}
+
+div.modal button.btn-primary {
+    border: solid 1px #002d59;
+    background-color: #002d59 ;
+    color: #ffffff;
+}
+
+div.side-container div.form-group span.select2-container span.select2-selection span.select2-selection__choice__remove {
+    color: #ffffff;
+}
+
+
 div.side-container .foot a {
+    width: 100%;
+    color: #ffffff;
+    background: none;
+    height: auto;
+    padding: 0;
+    font-size: 15px;
+    margin: 2px 0;
+    text-decoration: none;
+    border: none;
+}
+
+div.side-container .foot button {
     width: 100%;
     color: #ffffff;
     background: none;

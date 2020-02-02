@@ -7,7 +7,6 @@ use OffreBundle\Entity\TypeContrat;
 use OffreBundle\Repository\TypeContratRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -21,7 +20,6 @@ class OffreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageFile', VichImageType::class, ['required' => false])
             ->add('titre', TextType::class, ['label' => "Intitulé de l'offre"])
             ->add('description', TextareaType::class, ['label' => "Description de l'offre"])
             ->add('nbSemaine', NumberType::class, ['label' => "Durée du stage (en semaine)"])
@@ -45,12 +43,7 @@ class OffreType extends AbstractType
                         ->orderBy('u.titre', 'ASC');
                 }
             ])
-            ->add('files', FileType::class, [
-                'multiple' => true,
-                'attr'     => [
-                    'multiple' => 'multiple'
-                ]
-            ])
+            ->add('imageFile', VichImageType::class, ['required' => false])
             ->add('submit', SubmitType::class, ['label' => "Publier l'offre"])
             ->getForm();
     }

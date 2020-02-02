@@ -360,35 +360,4 @@ class Offre
     {
         return $this->imageSize;
     }
-
-    /**
-     * Set images
-     *
-     * @param string $images
-     *
-     * @return satelliteImage[]
-     */
-    public function setImages($images)
-    {
-        $this->files = $images;
-
-        return $this;
-    }
-
-    /**
-     * Get images
-     *
-     * @return string
-     */
-    public function getImages()
-    {
-        return $this->image;
-    }
-
-    public function addImage($image)
-    {
-        $this->images[] = $image;
-
-        return $this;
-    }
 }
