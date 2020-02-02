@@ -1,6 +1,9 @@
 <?php
 
 namespace OffreBundle\Repository;
+use AppBundle\Entity\Entreprise;
+use AppBundle\Entity\User;
+use OffreBundle\Entity\Offre;
 
 /**
  * CandidatureRepository
@@ -10,4 +13,12 @@ namespace OffreBundle\Repository;
  */
 class CandidatureRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function entrepriseCandidatures(User $user){
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->leftJoin('c.offre','o')
+            ->where('o.user = :user')
+            ->setParameter('user',$user->getId())
+            ->getQuery()->getResult();
+    }
 }

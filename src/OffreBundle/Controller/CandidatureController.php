@@ -40,7 +40,10 @@ class CandidatureController extends Controller
                 'candidatures' => $etudiant->getCandidatures()
             ]);
         } else {
-
+            return $this->render('OffreBundle:Candidatures:entreprise_index.html.twig', [
+                'candidatures' => $this->getDoctrine()->getRepository(Candidature::class)
+                    ->entrepriseCandidatures($user)
+            ]);
         }
     }
 

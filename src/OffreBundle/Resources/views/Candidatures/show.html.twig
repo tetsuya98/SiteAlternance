@@ -17,12 +17,22 @@
                     <div class="col-12 row">
                         {{ candidature.offre.titre }}
                     </div>
-                    <div class="col-12 row">
-                        {% include 'OffreBundle:Candidatures:_accept.html.twig' %}
-                    </div>
-                    <div class="col-12 row">
-                        {% include 'OffreBundle:Candidatures:_refuse.html.twig' %}
-                    </div>
+                    {% if candidature.response %}
+                        {% if candidature.response == 1 %}
+                            <p>Vous accepté la candidature le {{ candidature.dateMeeting|date("d/m", "Europe/Paris") }}</p>
+                            <p>Votre RDV aura lieu le {{ candidature.dateMeeting|date("d/m", "Europe/Paris") }} à
+                                {{ candidature.dateMeeting|date("H:i", "Europe/Paris") }}
+                            </p>
+                        {% elseif candidature.response == 2 %}
+                        {% endif %}
+                    {% else %}
+                        <div class="col-12 row">
+                            {% include 'OffreBundle:Candidatures:_accept.html.twig' %}
+                        </div>
+                        <div class="col-12 row">
+                            {% include 'OffreBundle:Candidatures:_refuse.html.twig' %}
+                        </div>
+                    {% endif %}
                 </div>
 
             </div>
