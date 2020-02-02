@@ -1,5 +1,6 @@
-nav.navbar navbar-expand-lg navbar-light fixed-top py-3{
-    display: block;
+#mainNav {
+    box-shadow: none;
+    background-color: transparent;
 }
 div.side-container {
     border: solid #002d59 1px;

@@ -3906,7 +3906,7 @@ input[type="button"].btn-block {
 }
 
 .nav-tabs .nav-link.disabled {
-  color: #6c757d;
+  color: #162c76;
   background-color: transparent;
   border-color: transparent;
 }
@@ -9618,14 +9618,14 @@ hr.light {
 
 @media (min-width: 992px) {
   #mainNav {
-    box-shadow: none;
-    background-color: transparent;
+    box-shadow: 0 0.5rem 1rem  rgba(0, 0, 0, 0.15);
+    background-color: #fff;
   }
   #mainNav .navbar-brand {
-    color: rgba(255, 255, 255, 0.7);
+    color:black;
   }
   #mainNav .navbar-brand:hover {
-    color: #fff;
+    color: black;
   }
   #mainNav .navbar-nav .nav-item .nav-link {
     color: rgba(255, 255, 255, 0.7);
