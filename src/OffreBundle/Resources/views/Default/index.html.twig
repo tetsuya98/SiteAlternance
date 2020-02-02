@@ -23,7 +23,11 @@
                 {% for offre in offres %}
                     <div class="d-flex col-12 offre-element">
                         <div class="p-2 media">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/600px-JavaScript-logo.png" alt="Generic placeholder image">
+                            {% if offre.imageName is null %}
+                                <img src="{{ asset('assets/img/folder.jpg') }}" alt="Generic placeholder image">
+                            {% else %}
+                                <img src="{{ asset('offres/avatar/' ~ offre.imageName)}}" alt="Generic placeholder image">
+                            {% endif %}
                         </div>
                         <div class="p-2 titles">
                             <h3>{{ offre.titre }}</h3>
