@@ -27,5 +27,5 @@ $(document).ready(function() {
         input.change(function (e){
             $('#select-file').text(e.target.value.substring(e.target.value.lastIndexOf('\\') + 1));
         });
-    })
+    });
 });

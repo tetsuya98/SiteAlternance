@@ -1,0 +1,11 @@
+<div class="col-12 side-container">
+    {{ form_start(formAccept) }}
+
+    {{ form_label(formAccept.dateMeeting) }}
+    {{ form_widget(formAccept.dateMeeting, {'attr': {'class': 'form-control datetimepicker'}}) }}
+    {{ form_errors(formAccept.dateMeeting) }}
+
+    {{ form_row(formAccept.submit, {attr : {class : 'btn btn-primary btn-lg square'}}) }}
+
+    {{ form_end(formAccept) }}
+</div>

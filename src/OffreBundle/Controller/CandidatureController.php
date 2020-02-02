@@ -5,6 +5,8 @@ namespace OffreBundle\Controller;
 use AppBundle\Entity\User;
 use OffreBundle\Entity\Candidature;
 use OffreBundle\Entity\Offre;
+use OffreBundle\Type\CandidatureAcceptType;
+use OffreBundle\Type\CandidatureRefuseType;
 use OffreBundle\Type\CandidatureType;
 use OffreBundle\Type\OffreType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -40,6 +42,49 @@ class CandidatureController extends Controller
         } else {
 
         }
+    }
+
+    /**
+     * @Route("/show/{candidature}", name="candidature_show")
+     * @param Candidature $candidature
+     * @param Request $request
+     * @return RedirectResponse|Response Afficahe de la vue | Redirect vers l'index
+     */
+    public function showAction(Candidature $candidature, Request $request){
+
+        // Génération du formulaire
+        $formAccept = $this->createForm(CandidatureAcceptType::class, $candidature);
+        $candidature->setDateMeeting(new \DateTime());
+        $formAccept->handleRequest($request);
+        if ($formAccept->isSubmitted() && $formAccept->isValid()) {
+            $candidature = $formAccept->getData();
+            $candidature->setResponse(1);
+            $candidature->setDateResponse(new \DateTime());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($candidature);
+            $entityManager->flush();
+            return $this->redirectToRoute('candidatures_index');
+        }
+
+        // Génération du formulaire
+        $formRefuse = $this->createForm(CandidatureRefuseType::class, $candidature);
+        $formRefuse->handleRequest($request);
+        if ($formRefuse->isSubmitted() && $formRefuse->isValid()) {
+            $candidature = $formRefuse->getData();
+            $candidature->setResponse(2);
+            $candidature->setDateResponse(new \DateTime());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($candidature);
+            $entityManager->flush();
+            return $this->redirectToRoute('candidatures_index');
+        }
+
+        // Rendu de la vue
+        return $this->render('OffreBundle:Candidatures:show.html.twig', [
+            'formAccept' => $formAccept->createView(),
+            'formRefuse' => $formRefuse->createView(),
+            'candidature' => $candidature
+        ]);
     }
 
     /**
