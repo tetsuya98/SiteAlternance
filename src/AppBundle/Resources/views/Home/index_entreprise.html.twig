@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block body %}
+
+    <div class="col-md-6 mr-md-2">
+        <div class="profil-container d-flex">
+            <div class="color-block"></div>
+            <div class="img-profil">
+                {% if app.user.imageName %}
+                    <img src="{{ asset('image/avatar/' ~ app.user.imageName) }}" alt="Profil"/>
+                {% else %}
+                    <img src="{{ asset('assets/img/user.png') }}" alt="Profil"/>
+                {% endif %}
+            </div>
+            <div class="profil-info p-3">
+                <h1>{{ app.user.userEntreprise.nomUtilisateur }}</h1>
+                <p>Entreprise de services du numérique</p>
+                <p>Localisation Amiens</p>
+                <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-custom mt-2">Modifier les informations</a>
+            </div>
+        </div>
+
+        <div class="my-4"></div>
+
+        <div class="side-container">
+            <div class="head">
+                <h2>Statistiques</h2>
+            </div>
+            <div class="body d-flex">
+                <div class="stats text-center w-100">
+                    <h1>{{ vues }}</h1>
+                    <p>Visites de<br/>candidatures</p>
+                </div>
+                <div class="vertical-sep"></div>
+                <div class="stats text-center w-100">
+                    <h1>{{ candidatures }}</h1>
+                    <p>Candidatures<br/>instantanées</p>
+                </div>
+                <div class="vertical-sep"></div>
+                <div class="stats text-center w-100">
+                    <h1>{{ offres }}</h1>
+                    <p>Offres<br/>postées</p>
+                </div>
+            </div>
+            <div class="horizontal-sep"></div>
+
+            <div class="d-flex justify-content-between w-100 px-3 mt-2 mb-2">
+                <h5 class="mt-1">Tendances des offres</h5>
+                <a href="{{ path('offres_index') }}" class="btn btn-custom btn-sm">Gérer les offres</a>
+            </div>
+
+
+            <div class="classement d-flex h-auto px-4 pb-4">
+                {% if best|length > 0 %}
+                    <div class="w-100 h-auto">
+                        <div class="classement-element d-flex">
+                            <div class="img-icon mr-2">
+                                {% if best[0].imageName %}
+                                    <img src="{{ asset('offres/file/' ~ best[0].imageName) }}" alt="Offre"/>
+                                {% else %}
+                                    <img src="{{ asset('assets/img/folder.jpg') }}" alt="Offre"/>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h4>{{ best[0].titre }}</h4>
+                                <p>{{ best[0].nbVue }} vues</p>
+                                <p>{{ best[0].candidatures|length }} candidatures</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vertical-sep"></div>
+                    <div class="w-100 h-auto">
+                        {% if best|length > 1 %}
+                            <div class="classement-element d-flex">
+                                <div class="img-icon mr-2">
+                                    {% if best[1].imageName %}
+                                        <img src="{{ asset('offres/file/' ~ best[1].imageName) }}" alt="Offre"/>
+                                    {% else %}
+                                        <img src="{{ asset('assets/img/folder.jpg') }}" alt="Offre"/>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h4>{{ best[1].titre }}</h4>
+                                    <p>{{ best[1].nbVue }} vues</p>
+                                    <p>{{ best[1].candidatures|length }} candidatures</p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="text-center" style="height: 96px">
+                                <p>Pas d'autre offre</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="text-center my-auto">
+                        <p>Veuillez publier une offre...</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="col-md-6 ml-md-2">
+
+    </div>
+
+{% endblock %}

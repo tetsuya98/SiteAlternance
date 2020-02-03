@@ -9,6 +9,8 @@ use AppBundle\Form\EtudiantType;
 use AppBundle\Form\UserType;
 use Doctrine\ORM\EntityRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Exception\BaseException;
+use OffreBundle\Entity\Candidature;
+use OffreBundle\Entity\Offre;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -46,11 +48,41 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->render('default/index.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            ]);
+        } elseif (!is_null($user->getUserEntreprise())) {
+            return $this->indexEntrepriseAction();
+        } elseif (!is_null($user->getUserEtudiant())) {
+            return $this->indexEtudiantAction();
+        } else {
+            return $this->render('default/index.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            ]);
+        }
+    }
+
+    private function indexEtudiantAction() {
+
+        $em = $this->getDoctrine();
+        return $this->render('@App/Home/index_etudiant.html.twig', [
         ]);
     }
+
+    private function indexEntrepriseAction(){
+        $em = $this->getDoctrine();
+        return $this->render('@App/Home/index_entreprise.html.twig', [
+            'candidatures' => $em->getRepository(Candidature::class)->getCountCandidatures($this->getUser()),
+            'vues' => $em->getRepository(Offre::class)->getCountVues($this->getUser()),
+            'offres' => $em->getRepository(Offre::class)->getCountOffres($this->getUser()),
+            'best' => $em->getRepository(Offre::class)->getBestOffres($this->getUser())
+        ]);
+    }
+
     /**
      * @Route("/register/Etudiant",name="new_Student")
      *

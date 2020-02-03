@@ -2,6 +2,8 @@
 
 namespace OffreBundle\Repository;
 
+use AppBundle\Entity\User;
+
 /**
  * OffreRepository
  *
@@ -10,4 +12,30 @@ namespace OffreBundle\Repository;
  */
 class OffreRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getCountVues(User $user) {
+        return $this->createQueryBuilder('o')
+            ->select('SUM(o.nbVue) as sum')
+            ->where('o.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()->getSingleResult()['sum'];
+    }
+
+    public function getCountOffres(User $user) {
+        return $this->createQueryBuilder('o')
+            ->select('COUNT(o) as count')
+            ->where('o.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()->getSingleResult()['count'];
+    }
+
+    public function getBestOffres(User $user) {
+        return $this->createQueryBuilder('o')
+            ->select('o')
+            ->where('o.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('o.nbVue', 'DESC')
+            ->setMaxResults(2)
+            ->getQuery()->getResult();
+    }
+
 }

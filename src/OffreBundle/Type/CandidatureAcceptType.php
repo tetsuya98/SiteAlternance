@@ -13,7 +13,7 @@ class CandidatureAcceptType extends AbstractType
     {
         $builder
             ->add('dateMeeting', DateTimeType::class, [
-                'label' => "Date de RDV",
+                'label' => "Date du RDV",
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'data' => new DateTime()])

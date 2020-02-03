@@ -7,14 +7,13 @@
 
 
             <div class="col-12 side-container">
-
                 <div class="head">
                     <h2>Visualisation</h2>
                 </div>
-                <div class="body">
+                <div class="body px-2">
                     <div class="col-12 d-flex justify-content-between">
                         <div class="row">
-                            <div class="img-icon">
+                            <div class="img-icon mr-2">
                                 {% if candidature.etudiant.userManager.imageName %}
                                     <img src="{{ asset('images/Avatar/' ~ candidature.etudiant.userManager.imageName) }}">
                                 {% else %}
@@ -28,9 +27,12 @@
                         </div>
                         <div class="row">
                             <div class="">
-                                {{ candidature.etudiant.userManager.username }}
+                                <h3>{{ candidature.etudiant.userManager.username }}</h3>
+                                {% if candidature.etudiant.dateDeNaissance %}
+                                    <p>{{ candidature.etudiant.dateDeNaissance|date('d/m/y') }}</p>
+                                {% endif %}
                             </div>
-                            <div class="img-icon">
+                            <div class="img-icon ml-2">
                                 {% if candidature.offre.imageName %}
                                     <img src="{{ asset('offres/avatar/' ~ candidature.offre.imageName) }}">
                                 {% else %}
@@ -57,8 +59,6 @@
                         <h4>Actions</h4>
                         <div class="col-12 row">
                             {% include 'OffreBundle:Candidatures:_accept.html.twig' %}
-                        </div>
-                        <div class="col-12 row">
                             {% include 'OffreBundle:Candidatures:_refuse.html.twig' %}
                         </div>
                     {% endif %}

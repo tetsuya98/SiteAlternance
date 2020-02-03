@@ -13,12 +13,21 @@ use OffreBundle\Entity\Offre;
  */
 class CandidatureRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function entrepriseCandidatures(User $user){
+    public function getEntrepriseCandidatures(User $user){
         return $this->createQueryBuilder('c')
             ->select('c')
             ->leftJoin('c.offre','o')
             ->where('o.user = :user')
             ->setParameter('user',$user->getId())
             ->getQuery()->getResult();
+    }
+
+    public function getCountCandidatures(User $user) : int {
+        return $this->createQueryBuilder('c')
+            ->select('COUNT(c) as count')
+            ->leftJoin('c.offre','o')
+            ->where('o.user = :user')
+            ->setParameter('user',$user->getId())
+            ->getQuery()->getSingleResult()['count'];
     }
 }

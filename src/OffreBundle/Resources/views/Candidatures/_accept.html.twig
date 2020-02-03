@@ -1,11 +1,11 @@
 {{ form_start(formAccept) }}
 
 <div class="form-inline">
-{{ form_label(formAccept.dateMeeting) }}
-{{ form_widget(formAccept.dateMeeting, {'attr': {'class': 'form-control datetimepicker ml-2'}}) }}
-{{ form_errors(formAccept.dateMeeting) }}
-</div>
+    {{ form_label(formAccept.dateMeeting) }}
+    {{ form_widget(formAccept.dateMeeting, {'attr': {'class': 'form-control datetimepicker mx-2'}}) }}
+    {{ form_errors(formAccept.dateMeeting) }}
 
-{{ form_row(formAccept.submit, {attr : {class : 'btn btn-custom'}}) }}
+    {{ form_row(formAccept.submit, {attr : {class : 'btn btn-custom mr-1'}}) }}
+</div>
 
 {{ form_end(formAccept) }}
