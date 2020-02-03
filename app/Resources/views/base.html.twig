@@ -36,19 +36,21 @@
             <div class="container-fluid">
                 <a class="navbar-brand js-scroll-trigger" href={{ path('homepage') }}>
                     <img src="{{ asset('assets/img/upjv-b.jpeg') }}" width="40" height="40" alt="">
-                    Accueil</a>
+                    {% block title %}Accueil{% endblock title %}</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
                         {% if app.user and app.user.userEtudiant %}
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('homepage') }}>Accueil</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('offres_index') }}>Les offres</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('candidatures_index') }}>Vos candidatures</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('workingforum_forum') }}>Le forum</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('editProfile') }} >Mon compte</a></li>
                             <li  class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
                         {% elseif app.user and app.user.userEntreprise %}
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('homepage') }}>Accueil</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('offres_index') }}>Vos offres</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('candidatures_index') }}>Les candidatures</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('workingforum_forum') }}>Le forum</a></li>
