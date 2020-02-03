@@ -204,7 +204,7 @@ class Etudiant
     /**
      * @return string
      */
-    public function getLinkedin(): string
+    public function getLinkedin()
     {
         return $this->linkedin;
     }
@@ -315,6 +315,22 @@ class Etudiant
     public function getCandidatures()
     {
         return $this->candidatures;
+    }
+
+    /**
+     * @return File
+     */
+    public function getCvFile()
+    {
+        return $this->cvFile;
+    }
+
+    /**
+     * @param File $cvFile
+     */
+    public function setCvFile(File $cvFile): void
+    {
+        $this->cvFile = $cvFile;
     }
 
 

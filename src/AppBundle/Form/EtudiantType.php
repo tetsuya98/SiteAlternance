@@ -18,8 +18,6 @@ class EtudiantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('cvName')->add('linkedin')
-            ->add('userManager.email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
-            ->add('userManager.username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
             ->add("cvFile",VichImageType::class,array( 'required' => false, 'label' => 'déposer votre CV : '));
         ;
 
