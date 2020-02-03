@@ -149,7 +149,7 @@ class DefaultController extends Controller
         if ($this->getAuthorization()->isGranted('ROLE_ENTREPRISE') &&  $user->getUserEntreprise()!= null) {
             $user->getUserEntreprise()->setUserManager($user);
             $user->setUserEtudiant(null);
-            dump($user->getUserEntreprise());
+          //  dump($user->getUserEntreprise());
           /*  die;*/
 
 

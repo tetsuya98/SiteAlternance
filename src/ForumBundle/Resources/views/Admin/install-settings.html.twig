@@ -1,0 +1,35 @@
+{% extends '@YosimitsoWorkingForum/Common/base.html.twig' %}
+{% block forum %}
+    {% include '@YosimitsoWorkingForum/Common/header.html.twig' %}
+{% trans_default_domain 'YosimitsoWorkingForumBundle' %}
+<div id="wf_forum_content">
+    {% if app.session.flashbag.has('success') %}
+                <div class="alert-success">
+                    <ul>
+                  {% for flashMessage in app.session.flashbag.get('success') %}
+                      <li>{{ flashMessage }}</li>
+                  {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+               {% if app.session.flashbag.has('error') %}
+                <div class="alert-error">
+                    <ul>
+                  {% for flashMessage in app.session.flashbag.get('error') %}
+                      <li>{{ flashMessage }}</li>
+                  {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+               <h1>{{ 'admin.admin_workingforum' | trans }}</h1>
+<div id="wf_forum_admin">
+      <div class="wf_forum_block_title">{{ 'admin.install_settings' |trans }}</div>
+    {% for msg in msg %}
+        <p>{{ msg }}</p>
+      {% endfor %}
+      
+      <p><a href="{{ path('workingforum_admin') }}">Back to admin panel</a></p>
+</div>
+</div>
+
+    {% endblock %}

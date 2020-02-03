@@ -20,14 +20,17 @@ use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
- *
+ *@Vich\Uploadable
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ *     /**
+
  */
 class User extends BaseUser implements YomiInter ,  ArrayAccess
 {
     /**
      * @var ForumUser
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ForumUser", inversedBy="userManager" ,cascade={"persist", "remove"})
+     *
      */
     protected $userForum;
     /**

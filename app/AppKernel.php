@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Yosimitso\WorkingForumBundle\YosimitsoWorkingForumBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
+            new ForumBundle\ForumBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

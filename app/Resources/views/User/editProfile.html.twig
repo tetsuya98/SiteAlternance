@@ -1,3 +1,5 @@
+{% extends 'layout.html.twig' %}
+{% block body %}
 {{ app.user.status }}
 {{ form(form2) }}
 {{ form(form) }}
@@ -5,3 +7,4 @@
 
 <li><a href="{{ path('fos_user_change_password') }}">change password </a></li>
 </html>
+{% endblock %}

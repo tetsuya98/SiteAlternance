@@ -1,0 +1,13 @@
+services:
+  yosimitso_workingforum_base_controller:
+    class: Yosimitso\WorkingForumBundle\Controller\BaseController
+    calls:
+      - ["setParameters",["@doctrine.orm.entity_manager","@yosimitso_workingforum_authorization","@=service('security.token_storage').getToken().getUser().getUserForum()","@session", "@translator", "@knp_paginator", "@templating"]]
+  yosimitso_workingforum_config:
+    class: Yosimitso\WorkingForumBundle\Twig\Extension\ConfigurationTwigExtension
+    tags:
+      - { name: twig.extension }
+    arguments: ["%yosimitso_working_forum.theme_color%"]
+#    forum.example:
+#        class: ForumBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

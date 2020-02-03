@@ -11,38 +11,43 @@
 
         <h2 class="title_clear">Liste des Etudiant</h2>
 
-        <div class="block_users">
+    <div class='d-flex'>
             {% for  user in listeEtu %}
-                <div class="g_utilisateur">
+                <div class="card mr-5" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ asset('/image/avatar/default.png')  }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.username }}</h5>
                     <p>
-                        N° d'utilisateur : {{ user.id }} <br/>
+
                         Nom :  <strong><a class="user_link" href="{{ path('show_prof', { 'id': user.id }) }}">{{ user.username }}</a></strong> <br/>
+                        <p class="card-text"> {{ user.description }}</p>
                         Email : {{ user.email }} <br/>
-                        Role :
-                        {% for role in user.roles %}
-                            {{ ('forum.user.'~role) | trans }}
-                        {% endfor %}  <br/>
 
                     </p>
+                        <a href="{{ path('show_prof', { 'id': user.id }) }}" class="btn btn-primary">Show profil</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
+    </br>
         <h2 class="title_clear">Liste des Entreprise</h2>
-        <div class="block_users">
+    </br>
+    <div class='d-flex'>
             {% if listeEntr is not empty %}
                 {% for user in listeEntr %}
-                    <div class="g_utilisateur">
-                        <p>
-                            N° d'utilisateur : {{ user.id }} <br/>
-                            Nom :  <strong><a class="user_link" href="{{ path('show_prof', { 'id': user.id }) }}">{{ user.username }}</a></strong> <br/>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ asset('/image/avatar/default.png')  }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user.username }}</h5>
+                            <p>
+
+                                Nom :  <strong><a class="user_link" href="{{ path('show_prof', { 'id': user.id }) }}">{{ user.username }}</a></strong> <br/>
+                            <p class="card-text"> {{ user.description }}</p>
                             Email : {{ user.email }} <br/>
-                            Role :
-                            {% for role in user.roles %}
-                                {{ ('forum.user.'~role) | trans }}
-                            {% endfor %}  <br/>
 
-
-                        </p>
+                            </p>
+                            <a href="{{ path('show_prof', { 'id': user.id }) }}" class="btn btn-primary">Show profil</a>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}
@@ -53,3 +58,4 @@
         </div>
     </div>
 {% endblock %}
+

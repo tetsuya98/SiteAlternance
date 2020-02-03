@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use AppBundle\Entity\User as monUtilisateur;
 /**
  * Etudiant
- *
+ *@Vich\Uploadable
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EtudiantRepository")
  */
 class Etudiant

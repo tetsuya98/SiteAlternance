@@ -1,0 +1,173 @@
+forum:
+    forum_rules: Règles du forum
+    nbThread: sujets
+    nbPost: messages
+    thread: Sujet
+    sublabel: Description du sujet
+    author: Auteur
+    replies: Réponses
+    by: Par
+    post: message
+    post_a_message: Poster une réponse
+    submit_post: Poster !
+    new_thread: Nouveau sujet
+    into_forum: dans le forum
+    create_thread : Créez le sujet
+    last_reply_date: Dernier message
+    lock: Verrouiller
+    no_message_locked: Ce sujet a été verrouillé, vous ne pouvez pas poster de nouveaux messages
+    no_message_login: Vous devez être connecté pour pouvoir poster un message
+    thread_locked: Sujet verrouillé
+    locked: Verrouillé
+    reply: Répondre
+    resolved: Résolu
+    now_resolved: Mon sujet est résolu
+    thread_resolved: Ce sujet est résolu
+    admin_access: Accès à l'administration
+    empty_forum: Aucun message
+    no_subforum: Aucun sous-forum
+    pin: Epinglé
+    wrote: a écrit
+    user:
+        ROLE_SUPER_ADMIN: Admin
+        ROLE_ADMIN: Admin
+        ROLE_USER: Utilisateur
+        ROLE_MODERATOR: Modérateur
+        username: Utilisateur
+        banned: Banni
+        roles: Rôles
+    report: Signaler ce message
+    thanks_reporting: Merci pour ce signalement.
+    doPin: Epingler
+    required: Requis
+    averagePostThread : Moyenne messages / sujets
+    search_forum: Rechercher
+    new: nouveau
+    content: contenu
+    date: date
+    post_moderated: "Ce message a été modéré pour la raison suivante :"
+    has_written: a écrit
+    confirm_report: Voulez-vous signaler ce message ?
+    subforum_name: Nom du sous-forum
+    allowed_roles: Rôles autorisés
+    move_thread: Deplacer le sujet
+    confirm_move_thread: "Déplacer dans :"
+    thread_was_moved_to: Le sujet a été déplacé dans
+    delete_thread: Supprimer le sujet
+    confirm_delete_thread: Êtes vous sûr de vouloir supprimer ce sujet ?
+    pin_thread: Epingler le sujet
+    thread_too_old_locked: Le sujet est trop vieux et n'accepte plus de réponses
+    quote: Citer ce message
+    enclosed_files: Fichier(s) joint(s)
+    move_thread_success: Le sujet a été déplacé
+    file_upload:
+        accepted_format: Formats acceptés
+        add_enclosed_file: Ajouter un fichier joint
+        ko_max: ko max.
+        error:
+            default: Une erreur est survenue lors de l'upload du fichier, merci de contacter un administrateur
+            max_size_exceeded: Vos fichiers dépassent la taille maximum autorisée, la limite est de %max_size% ko
+            invalid_format: "Le format de votre fichier n'est pas autorisé : %format%"
+            invalid_filename: "Le nom de fichier est invalide : %filename%"
+    error_flood: Le flood est interdit, merci d'attendre %second% secondes entre chaque message
+    no_rules_available: Les règle du forum ne sont pas encore disponibles
+    switch_lang: Changer de langue
+    subscribe: M'avertir des nouvelles réponses
+    already_subscribed: Vous serez averti des nouvelles réponses
+    cancel_subscription: annuler l'abonnement
+    add_subscription: S'abonner
+
+pagination:
+    previous: Précédent
+    next: Suivant
+    latestPage: Dernière page
+
+admin:
+    admin_workingforum: Administration de WorkingForum
+    forum_name: Nom du forum
+    list_subforum: Liste des sous-forums
+    admin_area: Administration du forum
+    new_subforum: Nouveau sous-forum
+    submit: Enregistrer
+    manage_forum: Gestion des forums
+    manage_settings: Réglages
+    delete_subforum: Souhaitez vous supprimer ce sous forum ?
+    install_settings: Installation des règlages
+    add: Ajouter
+    statistics: Statistiques
+    back_to_admin: Retour à l'admin.
+    back_to_forum: Retour au forum
+    manage_users: Gestion des utilisateurs
+    users_list: Liste des utilisateurs
+    reported_messages: Messages signalés
+    reported_by: Signalé par
+    action: action
+    decision: "décision :"
+    nowModerated: Ce message est maintenant modéré
+    delete_forum: Supprimer ce forum
+    forumDeleted: Ce forum a été supprimé
+    confirmDeleteForum: Êtes vous sûr de vouloir supprimer ce forum ?
+    empty_means_all: Vide = pas de restriction
+    report:
+        good: Valable
+        moderate: Modérer
+        moderateAndBan: Modérer et bannir l'utilisateur
+        why: "Donner une raison :"
+        history: Historique des signalements
+        list: Liste des signalements
+        invalid_reason: Vous devez donner une raison
+    menu:
+        user: Gestion des utilisateurs
+        forum: Gestion des forums
+        report_history: Historique des signalements
+        report: Liste des signalements
+        forum_rules: Règles des forums
+    rules:
+        edit: Editer les règles
+        choose_one: choisissez la langue a éditer
+        or_create_new_one: ou créez une règle dans une nouvelle langue
+        lang: langue
+setting:
+    intro: Ces paramètres sont modifiables dans le fichier de configuration de l'app.
+    allow_anonymous_read: Autoriser les utilisateurs non enregistrés à lire
+    allow_moderator_delete_thread: Autoriser les modérateurs à supprimer des sujets
+    theme_color: Couleur du thème
+    lock_thread_older_than: Verrouiller les sujets sans réponses depuis (jours)
+    post_flood_sec: Temps minimum entre chaque message (utilisateur / sec)
+    vote:
+      threshold_useful_post: Message considéré comme utile (votes)
+    file_upload:
+      title: Fichiers joints
+      enable: Activé
+      max_size_ko: Taille max. par message (ko)
+      accepted_format: Formats acceptés
+      preview_file: Aperçu des fichiers
+message:
+    saved: Enregistrement effectués
+    posted: Message posté
+    threadCreated: Votre sujet a été créé
+    threadLocked: Le sujet a été verrouillé avec succès
+    threadResolved: Le sujet est résolu, merci pour votre retour
+    threadPinned: Le sujet a été epinglé avec succès
+    banned: Désolé mais vous êtes banni
+    error:
+        must_be_logged: Vous devez être connecté pour accèder à cette page
+        banned: Désolé mais vous êtes banni
+        restricted_action: Vous n'êtes pas autorisé à faire cela
+        restricted_access: Vous n'êtes pas autorisé à lire ce sous-forum
+        something_wrong: Désolé mais quelque chose ne s'est pas passé correctement
+        post_error: Your post is invalid
+    thread_deleted: Le sujet a été supprimé avec succès
+    subscription_cancelled: Vous êtes désinscrit
+    generic_error: Une erreur est survenue
+    post_saved_draft: Votre message a été enregistré dans les brouillons à
+    quote_unavailable: Le message cité avec l'id %id% ne peut être affiché, merci de le vérifier
+search:
+    results_for: Résultats pour "%keywords%"
+    no_result: Désolé, aucun résultat pour "%keywords%"
+    keywords: Mots clés
+    search_in: Rechercher dans
+
+subscription:
+    emailNotification:
+        subject: "[siteTitle] Nouveau message dans 'threadLabel'"
