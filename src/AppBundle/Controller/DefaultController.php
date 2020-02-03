@@ -58,7 +58,8 @@ class DefaultController extends Controller
             return $this->indexEntrepriseAction();
         } elseif (!is_null($user->getUserEtudiant())) {
             return $this->indexEtudiantAction();
-        } else {
+        } elseif ($this->getAuthorization()->isGranted('ROLE_SUPER_ADMIN') )return $this->redirectToRoute('easyadmin');
+        else {
             return $this->indexWithoutLogin();
         }
     }
