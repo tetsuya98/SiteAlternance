@@ -667,7 +667,7 @@ class User extends BaseUser implements YomiInter ,  ArrayAccess
     /**
      * @return Entreprise
      */
-    public function getUserEntreprise(): Entreprise
+    public function getUserEntreprise()
     {
         if($this->userEntreprise === null) return null;
         return $this->userEntreprise;

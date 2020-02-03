@@ -247,4 +247,5 @@ div.offre-element p.more-infos {
 div.img-icon img{
     width: 64px;
     height: 64px;
+    border: solid #002d59 1px;
 }

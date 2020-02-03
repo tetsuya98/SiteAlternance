@@ -32,9 +32,17 @@ class DefaultController extends Controller
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
-        return $this->render('OffreBundle:Default:index.html.twig', [
-            'offres' => $user->getOffres()
-        ]);
+        if (!is_null($user->getUserEntreprise())) {
+            return $this->render('OffreBundle:Default:index.html.twig', [
+                'offres' => $user->getOffres()
+            ]);
+        } else {
+            return $this->render('OffreBundle:Default:index.html.twig', [
+                'offres' => $this->getDoctrine()->getRepository(Offre::class)
+                ->findBy([],['crdate' => 'DESC'])
+            ]);
+        }
+
     }
 
     /**
@@ -45,10 +53,15 @@ class DefaultController extends Controller
      */
     public function newAction(Request $request){
 
-        // Création de l'offre
-        $offre = new Offre();
+        // Vérification user
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if (is_null($user->getUserEntreprise())) {
+            throw new \Exception("Vous n'êtes pas une entreprise.");
+        }
+
+        // Création de l'offre
+        $offre = new Offre();
         $offre->setUser($user);
         $offre->setCrdate(new \DateTime());
         $offre->setNbVue(0);
@@ -76,27 +89,52 @@ class DefaultController extends Controller
      * @Route("/show/{offre}",name="offres_show")
      * @param Offre $offre
      * @return Response Vue
+     * @throws \Exception
      */
     public function showAction(Offre $offre){
 
+        // Vérification si étudiant
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        if ($user->getRole() === 'ETUDIANT'){
-
+        if (is_null($user->getUserEtudiant())) {
+            throw new \Exception("Vous n'êtes pas un étudiant.");
         }
 
-        return $this->render('OffreBundle:Default:show.html.twig',[
+        // Ajout compteur vue
+        $offre->setNbVue($offre->getNbVue() + 1);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($offre);
+        $em->flush();
+
+        // Vérification si postulé
+        $candidature = $em->getRepository(Candidature::class)->findOneBy([
+            'etudiant' => $user->getUserEtudiant(),
             'offre' => $offre
         ]);
+
+        // Retour de la vue
+        return $this->render('OffreBundle:Default:show.html.twig',[
+            'offre' => $offre,
+            'candidature' => $candidature
+        ]);
+
     }
 
     /**
      * @Route("/edit/{offre}", name="offres_edit")
      * @param Offre $offre
      * @param Request $request
-     * @return RedirectResponse|Response Afficahe de la vue | Redirect vers l'index
+     * @return RedirectResponse|Response Affiche de la vue | Redirect vers l'index
+     * @throws \Exception
      */
     public function editAction(Offre $offre, Request $request){
+
+        // Vérification user
+        /** @var User $user */
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if ($user !== $offre->getUser()) {
+            throw new \Exception("Vous n'êtes pas l'auteur de l'offre.");
+        }
 
         // Génération du formulaire
         $form = $this->createForm(OffreType::class, $offre);

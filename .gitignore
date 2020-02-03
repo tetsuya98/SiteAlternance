@@ -15,3 +15,6 @@
 !var/SymfonyRequirements.php
 /vendor/
 /.idea/*
+/web/offres/
+/web/candidatures/
+/web/images/

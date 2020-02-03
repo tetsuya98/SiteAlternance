@@ -34,7 +34,7 @@
                                 {#<h5>{{ offre.user.userEntreprise.nomUtilisateur }}</h5>#}
                                 <h5>{{ offre.user.username }}</h5>
                             </div>
-                            <div class="img-icon">
+                            <div class="img-icon ml-2">
                                 {% if offre.user.imageName %}
                                     <img src="{{ asset('images/Avatar/' ~ offre.user.imageName) }}">
                                 {% else %}
@@ -48,7 +48,7 @@
                     <h3>Compétences</h3>
                     <div class="d-flex">
                         {% for competence in offre.competences %}
-                            <button class="btn btn-custom">{{ competence.competences }}</button>
+                            <button class="btn btn-custom mr-1">{{ competence.competences }}</button>
                         {% endfor %}
                     </div>
                     <h3>Pièce jointe</h3>
@@ -58,9 +58,12 @@
                     {% else %}
                         <p>Pas de pièce jointe</p>
                     {% endif %}
-                    {% if app.user == offre.user %}
-                        <h3>Gérer</h3>
-                        <a href="{{ path('offres_edit', {'offre' : offre.id}) }}" class="btn-custom mb-2">Modifier</a>
+
+                    <h3>Candidature</h3>
+                    {% if candidature %}
+                        <p>{{ candidature.status }}</p>
+                    {% else %}
+                        <a href="{{ path('offres_postule', {'offre' : offre.id}) }}" class="btn-custom mb-2">Candidater</a>
                     {% endif %}
                 </div>
 
