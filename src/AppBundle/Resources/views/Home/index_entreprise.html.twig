@@ -7,7 +7,7 @@
             <div class="color-block"></div>
             <div class="img-profil">
                 {% if app.user.imageName %}
-                    <img src="{{ asset('image/avatar/' ~ app.user.imageName) }}" alt="Profil"/>
+                    <img src="{{ asset('images/avatar/' ~ app.user.imageName) }}" alt="Profil"/>
                 {% else %}
                     <img src="{{ asset('assets/img/user.png') }}" alt="Profil"/>
                 {% endif %}
