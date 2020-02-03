@@ -109,7 +109,7 @@ div.side-container .foot {
      color: #ffffff;
 }
 
-div.side-container input[type="text"], div.modal input[type="text"], div.side-container select {
+div.side-container input[type="text"], div.side-container input[type="password"], div.modal input[type="text"], div.side-container select {
     border-radius: 30px;
     border: solid 2px #002d59;
 }
@@ -350,4 +350,8 @@ html.home-back {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+img.without-border {
+    border: none !important;
 }

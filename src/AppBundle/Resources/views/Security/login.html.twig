@@ -1,15 +1,116 @@
-{% extends "@FOSUser/layout.html.twig" %}
-{% block title %}  Connexion {% endblock %}
-{% block body %}
-    <h2 class="titre_principal">Connexion</h2>
-    <div id="content">
-        {% block fos_user_content %}
-            {{ include('@FOSUser/Security/login_content.html.twig') }}
-        {% endblock fos_user_content %}
-        <hr/>
-        <p><strong>Pas de compte ?</strong><br/>
-        <li><a href="{{ path('new_Student') }}">Creer un Compte Etudiant</a></li>
-        <li><a href="{{ path('new_Entreprise') }}">Creer un Compte Entreprise</a></li>
-        A bientôt !</p>
+{% trans_default_domain 'FOSUserBundle' %}
+
+<!DOCTYPE html>
+<html lang="fr" class="home-back">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Creative - Start Bootstrap Theme</title>
+
+    <!-- Font Awesome Icons -->
+    <link href="{{ asset('theme/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="{{ asset('theme/vendor/magnific-popup/magnific-popup.css') }}" rel="stylesheet">
+
+    <!-- Theme CSS - Includes Bootstrap -->
+    <link href="{{ asset('theme/css/creative.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
+    <script src="{{ asset('theme/vendor/jquery/jquery.min.js')}}"></script>
+
+
+</head>
+
+<body class="home-back">
+
+<div class="container-fluid d-flex justify-content-center">
+
+    <div class="col-md-4 col-12">
+        <div class="side-container">
+            <div class="body p-5 mt-0" style="background-color: #ffffff">
+                
+                <div class="img-icon d-flex justify-content-center mb-5">
+                    <img class="without-border" src="{{ asset('assets/img/upjv.png') }}" alt="upjv">
+                </div>
+                
+
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+
+                    {% if error %}
+                        <div class="mb-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+
+                    <div class="form-group mb-2">
+                        <label for="username">Identifiant</label>
+                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="password">Mot de passe</label>
+                        <input class="form-control" type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+                    </div>
+
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label class="form-check-label" for="remember_me">Se souvenir de moi</label>
+                    </div>
+
+                    <input class="btn btn-primary w-100" type="submit" id="_submit" name="_submit" value="SE CONNECTER" />
+
+                    <a href="{{ path('homepage') }}">Retour</a>
+
+                </form>
+            </div>
+        </div>
     </div>
-{% endblock %}
+
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{{ asset('theme/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{{ asset('theme/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<script src="{{ asset('theme/vendor/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{{ asset('theme/js/creative.min.js')}}"></script>
+
+<script src="https://kit.fontawesome.com/0f9a6979f1.js" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script src="{{ asset('assets/js/script.js') }}"></script>
+
+</body>
+
+</html>
+
+
+{#{% block title %}  Connexion {% endblock %}#}
+{#{% block body %}#}
+{#    <h2 class="titre_principal">Connexion</h2>#}
+{#    <div id="content">#}
+{#        {% block fos_user_content %}#}
+{#            {{ include('@FOSUser/Security/login_content.html.twig') }}#}
+{#        {% endblock fos_user_content %}#}
+{#        <hr/>#}
+{#        <p><strong>Pas de compte ?</strong><br/>#}
+{#        <li><a href="{{ path('new_Student') }}">Creer un Compte Etudiant</a></li>#}
+{#        <li><a href="{{ path('new_Entreprise') }}">Creer un Compte Entreprise</a></li>#}
+{#        A bientôt !</p>#}
+{#    </div>#}
+{#{% endblock %}#}
