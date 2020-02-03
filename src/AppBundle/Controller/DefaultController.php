@@ -128,9 +128,7 @@ class DefaultController extends Controller
 
         // Génération du formulaire
         $form = $this->createForm(UserType::class, $Etu);
-        $form->add('Créer un compte', SubmitType::class, [
-            'attr' => ['class' => 'save'],
-        ]);
+        $form->add('submit', SubmitType::class, ['label' => "Créer le compte"]);
 
         // Validation et enregistrement de l'offre
         $form->handleRequest($request);
@@ -162,9 +160,7 @@ class DefaultController extends Controller
 
         // Génération du formulaire
         $form = $this->createForm(UserType::class, $Etu);
-        $form->add('Créer un compte', SubmitType::class, [
-            'attr' => ['class' => 'save'],
-        ]);
+        $form->add('submit', SubmitType::class, ['label' => "Créer le compte"]);
 
 
         // Validation et enregistrement de l'offre
@@ -275,7 +271,7 @@ class DefaultController extends Controller
 
         }
         return $this->render('User/editProfile.html.twig', [
-            'form' => $form->createView(),'form2'=>$form2->createView()
+            'form' => $form2->createView(),'form2'=>$form->createView()
         ]);
     }
 

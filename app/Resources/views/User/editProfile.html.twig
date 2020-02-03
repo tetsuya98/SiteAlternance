@@ -1,10 +1,212 @@
 {% extends 'layout.html.twig' %}
 {% block body %}
-{{ app.user.status }}
-{{ form(form2) }}
-{{ form(form) }}
-<html>
+    <div class="col-12 side-container">
+    {{ form_start(form) }}
+    <div class="head">
+        <h2>Modification du profile {{ app.user.status }}</h2>
+    </div>
+    <div class="body">
+        <div class="col-12 row">
+            <div class="col-6 upload">
+                <div class="col-12 px-0 title">
+                    <h2>Informations</h2>
+                </div>
+                <div class="col-12 px-0 row">
+                    <div class="col-5 pr-0 upload-image">
+                        {% if form.vars.value.imageName is null %}
+                            <img src="{{ asset('/image/avatar/default.png') }}" alt="Generic placeholder image">
+                        {% else %}
+                            <img src="{{ asset('offres/avatar/' ~ form.vars.value.imageName)}}" alt="Generic placeholder image">
+                        {% endif %}
 
-<li><a href="{{ path('fos_user_change_password') }}">change password </a></li>
-</html>
-{% endblock %}
+                    </div>
+                    <div class="col-7 upload-info">
+                        <h3>Image</h3>
+                        <p id="file-name">Aucune fichier</p>
+                        <div class="upload-drop">
+                            <i class="fas fa-cloud-download-alt"></i>
+                        </div>
+                        <small class="help-block">
+                            {{ form_errors(form.imageFile) }}
+                        </small>
+                        <div class="d-none">
+                            {{ form_widget(form.imageFile) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-6 px-0">
+                <div class="form-group">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.username) }}
+                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.username) }}
+                </div>
+                {{ form_start(form2) }}
+                {% if app.user.status == "ENTREPRISE" %}
+                    <div class="form-group">
+                        {{ form_label(form2.NomUtilisateur) }}
+                        {{ form_widget(form2.NomUtilisateur, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form2.NomUtilisateur) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form2.sirt) }}
+                        {{ form_widget(form2.sirt, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form2.sirt) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form2.adresse) }}
+                        {{ form_widget(form2.adresse, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form2.adresse) }}
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-primary btn-lg square" href="{{ path('fos_user_change_password') }}">Changer le mot de passe</a>
+                    </div>
+                {% endif %}
+                {% if app.user.status == "ETUDIANT" %}
+                <div class="form-group">
+                    {{ form_label(form2.linkedin) }}
+                    {{ form_widget(form2.linkedin, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form2.linkedin) }}
+                </div>
+                <div class="col-6 upload">
+                    <div class="col-12 px-0 title">
+                        <h2>Curicullum Vitae</h2>
+                    </div>
+                    <div class="col-12 px-0 row">
+                        <div class="col-5 pr-0 upload-image">
+                            {% if form.vars.value.imageName is null %}
+                                <img src="{{ asset('assets/img/folder.jpg') }}" alt="Generic placeholder image">
+                            {% else %}
+                                <img src="{{ asset('offres/avatar/' ~ form.vars.value.imageName)}}" alt="Generic placeholder image">
+                            {% endif %}
+
+                        </div>
+                        <div class="col-7 upload-info">
+                            <h3>Image</h3>
+                            <p id="file-name">Aucune fichier</p>
+                            <div class="upload-drop">
+                                <i class="fas fa-cloud-download-alt"></i>
+                            </div>
+                            <small class="help-block">
+                                {{ form_errors(form2.cvFile) }}
+                            </small>
+                            <div class="d-none">
+                                {{ form_widget(form2.cvFile) }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-primary btn-lg square" href="{{ path('fos_user_change_password') }}">Changer le mot de passe</a>
+                </div>
+            </div>
+            <div class="form-group col-12">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.description, {'attr': {'class': 'error'}}) }}
+            </div>
+            {% if app.user.status == "ETUDIANT" %}
+            <div class="form-group col-12">
+                {{ form_label(form.competences) }}
+                <div class="d-flex">
+                    {{ form_widget(form.competences, {'attr': {'class': 'form-control select2'}}) }}
+                    <a href="#" data-toggle="modal" data-target="#modal-competence" class="btn btn-primary ml-1"
+                       style="width: 50px; font-weight: bold">+</a>
+                </div>
+                {{ form_errors(form.competences) }}
+            </div>
+            {% endif %}
+            {{ form_end(form) }}
+        </div>
+        <div class="foot">
+            {{ form_row(form2.submit, {attr : {class : 'btn btn-primary btn-lg square'}}) }}
+        </div>
+        {{ form_end(form2) }}
+
+    </div>
+
+    <div class="modal fade" id="modal-competence" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter une nouvelle compétence</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Nom de la compétence</label>
+                            <input type="text" class="form-control" id="competence-name">
+                            <small class="help-block mt-2" id="error-new" style="display: none;"></small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" id="add-competence">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#appbundle_user_imageFile_file').change(function (e){
+                $('#file-name').text(e.target.value.substring(e.target.value.lastIndexOf('\\') + 1));
+            });
+
+            $('.upload-drop').click(function (){
+                $('#appbundle_user_imageFile_file').trigger('click');
+            })
+
+        });
+
+        $('#add-competence').click(function() {
+            $('#add-competence').attr("disabled", true);
+            $.post(
+                "{{ path('competences_new') }}",
+                {'title': $('input#competence-name').val()},
+                function (data) {
+                    data = JSON.parse(data);
+                    if (typeof data.id !== 'undefined'){
+                        $('#offre_competences').append('<option value="' + data.id + '">'
+                            + data.title + '</option>');
+                        $('#error-new').css('display','none');
+                        let select = $('.select2');
+                        select.trigger('change');
+                        let tmp = select.val();
+                        tmp.push(data.id);
+                        select.val(tmp).change();
+                        $('#modal-competence').modal('hide');
+                        $('input#competence-name').val('')
+                    } else {
+                        let error = $('#error-new');
+                        if (data.error === 'empty'){
+                            error.text("Veuillez entrer une valeur valide.");
+                        } else if (data.error === 'unique'){
+                            error.text("Cette compétence est déjà enregistrée.");
+                        }
+                        error.css('display','');
+                    }
+                    $('#add-competence').attr("disabled", false);
+                }
+            ).fail(function (e) {
+                let error = $('#error-new');
+                error.val("Une erreur inconnue est survenue.");
+                error.css('display','');
+                $('#add-competence').attr("disabled", false);
+            });
+        });
+    </script>
+
+{% endblock%}

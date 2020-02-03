@@ -2,6 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Competence;
+use AppBundle\Repository\CompetenceRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -35,7 +38,19 @@ class UserType extends AbstractType
                 'second_options' => ['label' => 'form.password_confirmation'],
                 'invalid_message' => 'fos_user.password.mismatch',
             ]) ->add("description",TextareaType::class,array( 'required' => false, 'label' => 'Description :'))
+            ->add('competences', EntityType::class,         [
+                'label' => 'Domaines et compétences',
+                'class' => Competence::class,
+                'choice_label' => 'competences',
+                'query_builder' => function (CompetenceRepository $rep) {
+                    return $rep->createQueryBuilder('u')
+                        ->orderBy('u.competences', 'ASC');
+                },
+                'multiple' => true,
+                'required' => false
+            ])
             ->add("imageFile",VichImageType::class,array( 'required' => false, 'label' => 'Image de Profil : '));
+
         ;
       //  $builder->add('dateInscrip')->add('role')->add('status')->add('description')->add('imageName')->add('imageSize')->add('updatedAt')->add('competences');
        /* $builder->add('username', TextType::class, array('label' => 'Nom d\'utilisateur :'))
