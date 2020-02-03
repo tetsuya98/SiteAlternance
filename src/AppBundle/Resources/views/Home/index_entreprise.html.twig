@@ -7,13 +7,13 @@
             <div class="color-block"></div>
             <div class="img-profil">
                 {% if app.user.imageName %}
-                    <img src="{{ asset('image/avatar/' ~ app.user.imageName) }}" alt="Profil"/>
+                    <img src="{{ asset('images/avatar/' ~ app.user.imageName) }}" alt="Profil"/>
                 {% else %}
                     <img src="{{ asset('assets/img/user.png') }}" alt="Profil"/>
                 {% endif %}
             </div>
             <div class="profil-info p-3">
-                <h1>{{ app.user.userEntreprise.nomUtilisateur }}</h1>
+                <h1>{{ app.user.username }}</h1>
                 <p>Entreprise de services du numérique</p>
                 <p>Localisation Amiens</p>
                 <a href="{{ path('editProfile') }}" class="btn btn-custom mt-2">Modifier les informations</a>
@@ -28,7 +28,7 @@
             </div>
             <div class="body d-flex">
                 <div class="stats text-center w-100">
-                    <h1>{{ vues }}</h1>
+                    <h1>{{ vues|default('0') }}</h1>
                     <p>Visites de<br/>candidatures</p>
                 </div>
                 <div class="vertical-sep"></div>
