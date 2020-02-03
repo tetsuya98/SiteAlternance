@@ -3,6 +3,7 @@
 namespace OffreBundle\Controller;
 
 use AppBundle\Entity\User;
+use Exception;
 use OffreBundle\Entity\Candidature;
 use OffreBundle\Entity\Offre;
 use OffreBundle\Type\CandidatureAcceptType;
@@ -91,79 +92,17 @@ class CandidatureController extends Controller
     }
 
     /**
-     * @Route("/new", name="offres_new")
-     * @param Request $request
-     * @return RedirectResponse|Response
-     * @throws \Exception
-     */
-    public function newAction(Request $request){
-
-        // Création de l'offre
-        $offre = new Offre();
-        /** @var User $user */
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        $offre->setUser($user);
-        $offre->setCrdate(new \DateTime());
-        $offre->setNbVue(0);
-
-        // Génération du formulaire
-        $form = $this->createForm(OffreType::class, $offre);
-
-        // Validation et enregistrement de l'offre
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $offre = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($offre);
-            $entityManager->flush();
-            return $this->redirectToRoute('offres_index');
-        }
-
-        // Rendu de la vue
-        return $this->render('OffreBundle:Default:new.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/edit/{offre}", name="offres_edit")
-     * @param Offre $offre
-     * @param Request $request
-     * @return RedirectResponse|Response Afficahe de la vue | Redirect vers l'index
-     */
-    public function editAction(Offre $offre, Request $request){
-
-        // Génération du formulaire
-        $form = $this->createForm(OffreType::class, $offre);
-
-        // Validation et enregistrement de l'offre
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $offre = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($offre);
-            $entityManager->flush();
-            return $this->redirectToRoute('offres_index');
-        }
-
-        // Rendu de la vue
-        return $this->render('OffreBundle:Default:edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/remove/{candidature}", name="candidature_remove")
      * @param Candidature $candidature Candidature à supprimer
      * @return RedirectResponse Retour vers l'index
-     * @throws \Exception
+     * @throws Exception
      */
     public function removeAction(Candidature $candidature) {
 
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         if ($user->getUserEtudiant() !== $candidature->getEtudiant()) {
-            throw new \Exception("Vous n'êtes pas l'auteur de la candidature.");
+            throw new Exception("Vous n'êtes pas l'auteur de la candidature.");
         }
         $em = $this->getDoctrine()->getManager();
         $em->remove($candidature);
@@ -176,7 +115,8 @@ class CandidatureController extends Controller
     /**
      * @Route("/postule/{offre}", name="offres_postule")
      * @param Offre $offre Offre à candidater
-     * @throws \Exception
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function postuleAction(Offre $offre, Request $request){
 
@@ -186,7 +126,7 @@ class CandidatureController extends Controller
         dump($user);
         $etudiant = $user->getUserEtudiant();
         if (is_null($etudiant)) {
-            throw new \Exception("L'utilisateur doit être un étudiant pour postuler.");
+            throw new Exception("L'utilisateur doit être un étudiant pour postuler.");
         }
 
         // Création du form et entité
