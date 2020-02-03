@@ -90,13 +90,29 @@ class DefaultController extends Controller
 
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        if (!is_null($user->getUserEtudiant())){
-            return $this->render('OffreBundle:Default:show.html.twig',[
-                'offre' => $offre
-            ]);
-        } else {
+
+        // Vérification si étudiant
+        if (is_null($user->getUserEtudiant())) {
             throw new \Exception("Vous n'êtes pas un étudiant.");
         }
+
+        // Ajout compteur vue
+        $offre->setNbVue($offre->getNbVue() + 1);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($offre);
+        $em->flush();
+
+        // Vérification si postulé
+        $candidature = $em->getRepository(Candidature::class)->findOneBy([
+            'etudiant' => $user->getUserEtudiant(),
+            'offre' => $offre
+        ]);
+
+        // Retour de la vue
+        return $this->render('OffreBundle:Default:show.html.twig',[
+            'offre' => $offre,
+            'candidature' => $candidature
+        ]);
 
     }
 

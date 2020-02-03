@@ -297,7 +297,7 @@ class Candidature
         if (is_null($this->getResponse())) {
             return "En attente";
         } elseif ($this->getResponse() === 1) {
-            return "Rdv " . $this->getDateMeeting()->format('d/m H:s');
+            return "Rdv " . $this->getDateMeeting()->format('d/m H:i');
         } else {
             return "Refusé le " . $this->getDateResponse()->format('d/m');
         }

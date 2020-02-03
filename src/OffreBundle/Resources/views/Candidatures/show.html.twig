@@ -14,18 +14,49 @@
                     <h2>Visualisation</h2>
                 </div>
                 <div class="body">
-                    <div class="col-12 row">
-                        {{ candidature.offre.titre }}
+                    <div class="col-12 d-flex justify-content-between">
+                        <div class="row">
+                            <div class="img-icon">
+                                {% if candidature.etudiant.userManager.imageName %}
+                                    <img src="{{ asset('images/Avatar/' ~ candidature.etudiant.userManager.imageName) }}">
+                                {% else %}
+                                    <img src="{{ asset('assets/img/folder.jpg') }}">
+                                {% endif %}
+                            </div>
+                            <div class="">
+                                <h3>{{ candidature.offre.titre }}</h3>
+                                <p>{{ candidature.offre.typeContrat.titre }} ({{ candidature.offre.nbSemaine }} semaines)</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="">
+                                {{ candidature.etudiant.userManager.username }}
+                            </div>
+                            <div class="img-icon">
+                                {% if candidature.offre.imageName %}
+                                    <img src="{{ asset('offres/avatar/' ~ candidature.offre.imageName) }}">
+                                {% else %}
+                                    <img src="{{ asset('assets/img/folder.jpg') }}">
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
+
+                    <h4>Compétences</h4>
+                    <div class="d-flex">
+                        {% for competence in candidature.etudiant.userManager.competences %}
+                            <button class="btn btn-custom">{{ competence.competences }}</button>
+                        {% endfor %}
+                    </div>
+
+                    <h4>Motivations</h4>
+                    <p>{{ candidature.motivation }}</p>
+
                     {% if candidature.response %}
-                        {% if candidature.response == 1 %}
-                            <p>Vous accepté la candidature le {{ candidature.dateMeeting|date("d/m", "Europe/Paris") }}</p>
-                            <p>Votre RDV aura lieu le {{ candidature.dateMeeting|date("d/m", "Europe/Paris") }} à
-                                {{ candidature.dateMeeting|date("H:i", "Europe/Paris") }}
-                            </p>
-                        {% elseif candidature.response == 2 %}
-                        {% endif %}
+                        <h4>Statut de candidatures</h4>
+                        <p>{{ candidature.status }}</p>
                     {% else %}
+                        <h4>Actions</h4>
                         <div class="col-12 row">
                             {% include 'OffreBundle:Candidatures:_accept.html.twig' %}
                         </div>

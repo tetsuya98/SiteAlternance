@@ -58,11 +58,11 @@
                     {% else %}
                         <p>Pas de pièce jointe</p>
                     {% endif %}
-                    {% if app.user == offre.user %}
-                        <h3>Gérer</h3>
-                        <a href="{{ path('offres_edit', {'offre' : offre.id}) }}" class="btn-custom mb-2">Modifier</a>
+
+                    <h3>Candidature</h3>
+                    {% if candidature %}
+                        <p>{{ candidature.status }}</p>
                     {% else %}
-                        <h3>Candidater</h3>
                         <a href="{{ path('offres_postule', {'offre' : offre.id}) }}" class="btn-custom mb-2">Candidater</a>
                     {% endif %}
                 </div>
