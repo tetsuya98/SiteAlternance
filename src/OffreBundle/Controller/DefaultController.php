@@ -53,10 +53,15 @@ class DefaultController extends Controller
      */
     public function newAction(Request $request){
 
-        // Création de l'offre
-        $offre = new Offre();
+        // Vérification user
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if (is_null($user->getUserEntreprise())) {
+            throw new \Exception("Vous n'êtes pas une entreprise.");
+        }
+
+        // Création de l'offre
+        $offre = new Offre();
         $offre->setUser($user);
         $offre->setCrdate(new \DateTime());
         $offre->setNbVue(0);
@@ -88,10 +93,9 @@ class DefaultController extends Controller
      */
     public function showAction(Offre $offre){
 
+        // Vérification si étudiant
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-
-        // Vérification si étudiant
         if (is_null($user->getUserEtudiant())) {
             throw new \Exception("Vous n'êtes pas un étudiant.");
         }
@@ -120,9 +124,17 @@ class DefaultController extends Controller
      * @Route("/edit/{offre}", name="offres_edit")
      * @param Offre $offre
      * @param Request $request
-     * @return RedirectResponse|Response Afficahe de la vue | Redirect vers l'index
+     * @return RedirectResponse|Response Affiche de la vue | Redirect vers l'index
+     * @throws \Exception
      */
     public function editAction(Offre $offre, Request $request){
+
+        // Vérification user
+        /** @var User $user */
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if ($user !== $offre->getUser()) {
+            throw new \Exception("Vous n'êtes pas l'auteur de l'offre.");
+        }
 
         // Génération du formulaire
         $form = $this->createForm(OffreType::class, $offre);
