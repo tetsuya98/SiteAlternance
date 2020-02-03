@@ -5,6 +5,8 @@ namespace OffreBundle\Controller;
 use AppBundle\Entity\User;
 use OffreBundle\Entity\Candidature;
 use OffreBundle\Entity\Offre;
+use OffreBundle\Type\CandidatureAcceptType;
+use OffreBundle\Type\CandidatureRefuseType;
 use OffreBundle\Type\CandidatureType;
 use OffreBundle\Type\OffreType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,13 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class DefaultController
+ * Class CandidatureController
  * @package OffreBundle\Controller
  */
-class DefaultController extends Controller
+class CandidatureController extends Controller
 {
     /**
-     * @Route("/", name="offres_index")
+     * @Route("/", name="candidatures_index")
      */
     public function indexAction()
     {
@@ -32,8 +34,59 @@ class DefaultController extends Controller
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
-        return $this->render('OffreBundle:Default:index.html.twig', [
-            'offres' => $user->getOffres()
+        if (!is_null($user->getUserEtudiant())){
+            $etudiant = $user->getUserEtudiant();
+            return $this->render('OffreBundle:Candidatures:etudiant_index.html.twig', [
+                'candidatures' => $etudiant->getCandidatures()
+            ]);
+        } else {
+            return $this->render('OffreBundle:Candidatures:entreprise_index.html.twig', [
+                'candidatures' => $this->getDoctrine()->getRepository(Candidature::class)
+                    ->entrepriseCandidatures($user)
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/show/{candidature}", name="candidature_show")
+     * @param Candidature $candidature
+     * @param Request $request
+     * @return RedirectResponse|Response Afficahe de la vue | Redirect vers l'index
+     */
+    public function showAction(Candidature $candidature, Request $request){
+
+        // Génération du formulaire
+        $formAccept = $this->createForm(CandidatureAcceptType::class, $candidature);
+        $candidature->setDateMeeting(new \DateTime());
+        $formAccept->handleRequest($request);
+        if ($formAccept->isSubmitted() && $formAccept->isValid()) {
+            $candidature = $formAccept->getData();
+            $candidature->setResponse(1);
+            $candidature->setDateResponse(new \DateTime());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($candidature);
+            $entityManager->flush();
+            return $this->redirectToRoute('candidatures_index');
+        }
+
+        // Génération du formulaire
+        $formRefuse = $this->createForm(CandidatureRefuseType::class, $candidature);
+        $formRefuse->handleRequest($request);
+        if ($formRefuse->isSubmitted() && $formRefuse->isValid()) {
+            $candidature = $formRefuse->getData();
+            $candidature->setResponse(2);
+            $candidature->setDateResponse(new \DateTime());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($candidature);
+            $entityManager->flush();
+            return $this->redirectToRoute('candidatures_index');
+        }
+
+        // Rendu de la vue
+        return $this->render('OffreBundle:Candidatures:show.html.twig', [
+            'formAccept' => $formAccept->createView(),
+            'formRefuse' => $formRefuse->createView(),
+            'candidature' => $candidature
         ]);
     }
 
@@ -73,24 +126,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/show/{offre}",name="offres_show")
-     * @param Offre $offre
-     * @return Response Vue
-     */
-    public function showAction(Offre $offre){
-
-        /** @var User $user */
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        if ($user->getRole() === 'ETUDIANT'){
-
-        }
-
-        return $this->render('OffreBundle:Default:show.html.twig',[
-            'offre' => $offre
-        ]);
-    }
-
-    /**
      * @Route("/edit/{offre}", name="offres_edit")
      * @param Offre $offre
      * @param Request $request
@@ -118,17 +153,24 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/remove/{offre}", name="offres_remove")
-     * @param Offre $offre Offre à supprimer
+     * @Route("/remove/{candidature}", name="candidature_remove")
+     * @param Candidature $candidature Candidature à supprimer
      * @return RedirectResponse Retour vers l'index
+     * @throws \Exception
      */
-    public function removeAction(Offre $offre) {
+    public function removeAction(Candidature $candidature) {
+
+        /** @var User $user */
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if ($user->getUserEtudiant() !== $candidature->getEtudiant()) {
+            throw new \Exception("Vous n'êtes pas l'auteur de la candidature.");
+        }
         $em = $this->getDoctrine()->getManager();
-        $em->remove($offre);
+        $em->remove($candidature);
         $em->flush();
         $flashbag = $this->get('session')->getFlashBag();
-        $flashbag->add('success', "L'offre a été supprimée avec succès.");
-        return $this->redirectToRoute('offres_index');
+        $flashbag->add('success', "La candidature a été supprimée avec succès.");
+        return $this->redirectToRoute('candidatures_index');
     }
 
     /**
@@ -161,7 +203,7 @@ class DefaultController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offre);
             $entityManager->flush();
-            return $this->redirectToRoute('candidatures_index');
+            return $this->redirectToRoute('offres_index');
         }
 
         // Rendu de la vue

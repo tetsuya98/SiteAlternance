@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 //
@@ -44,6 +45,7 @@ class OffreType extends AbstractType
                 }
             ])
             ->add('imageFile', VichImageType::class, ['required' => false])
+            ->add('file', VichFileType::class, ['required' => false, 'label' => 'Pièce jointe'])
             ->add('submit', SubmitType::class, ['label' => "Publier l'offre"])
             ->getForm();
     }

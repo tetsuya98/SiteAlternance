@@ -3,9 +3,14 @@ forum:
     prefix:   /forum
 
 offre:
-    resource: "@OffreBundle/Controller/"
+    resource: "@OffreBundle/Controller/DefaultController.php"
     type:     annotation
     prefix:   /offres
+
+candidature:
+    resource: "@OffreBundle/Controller/CandidatureController.php"
+    type:     annotation
+    prefix:   /candidatures
 
 app:
     resource: '@AppBundle/Controller/'

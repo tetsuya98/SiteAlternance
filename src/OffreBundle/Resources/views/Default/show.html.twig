@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% include('OffreBundle:Default:_head.html.twig') %}
+<body>
+
+<div class="container">
+    <div class="row col-12">
+        <div class="col-8">
+
+
+            <div class="col-12 side-container">
+
+                <div class="head">
+                    <h2>Offre</h2>
+                </div>
+                <div class="body px-3">
+                    <div class="col-12 d-flex justify-content-between">
+                        <div class="row">
+                            <div class="img-icon">
+                                {% if offre.imageName %}
+                                    <img src="{{ asset('offres/avatar/' ~ offre.imageName)}}">
+                                {% else %}
+                                    <img src="{{ asset('assets/img/folder.jpg') }}">
+                                {% endif %}
+                            </div>
+                            <div class="ml-2">
+                                <h4>{{ offre.titre }}</h4>
+                                <p>{{ offre.typeContrat.titre }} ({{ offre.nbSemaine }} semaines)</p>
+                                <p>Publié le {{ offre.crDate|date("d/m", "Europe/Paris") }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                {#<h5>{{ offre.user.userEntreprise.nomUtilisateur }}</h5>#}
+                                <h5>{{ offre.user.username }}</h5>
+                            </div>
+                            <div class="img-icon">
+                                {% if offre.user.imageName %}
+                                    <img src="{{ asset('images/Avatar/' ~ offre.user.imageName) }}">
+                                {% else %}
+                                    <img src="{{ asset('assets/img/folder.jpg') }}">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Description</h3>
+                    <p>{{ offre.description }}</p>
+                    <h3>Compétences</h3>
+                    <div class="d-flex">
+                        {% for competence in offre.competences %}
+                            <button class="btn btn-custom">{{ competence.competences }}</button>
+                        {% endfor %}
+                    </div>
+                    <h3>Pièce jointe</h3>
+                    {% if offre.fileName %}
+                        <a class="btn btn-custom" href="{{ asset('offres/file/' ~ offre.fileName) }}">Télécharger</a>
+                        <p>{{ offre.fileName }}</p>
+                    {% else %}
+                        <p>Pas de pièce jointe</p>
+                    {% endif %}
+                    {% if app.user == offre.user %}
+                        <h3>Gérer</h3>
+                        <a href="{{ path('offres_edit', {'offre' : offre.id}) }}" class="btn-custom mb-2">Modifier</a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
