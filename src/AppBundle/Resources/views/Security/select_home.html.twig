@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr" class="home-back">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Creative - Start Bootstrap Theme</title>
+
+    <!-- Font Awesome Icons -->
+    <link href="{{ asset('theme/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="{{ asset('theme/vendor/magnific-popup/magnific-popup.css') }}" rel="stylesheet">
+
+    <!-- Theme CSS - Includes Bootstrap -->
+    <link href="{{ asset('theme/css/creative.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
+    <script src="{{ asset('theme/vendor/jquery/jquery.min.js')}}"></script>
+
+
+</head>
+
+<body class="home-back">
+
+<div class="container-fluid d-flex">
+
+    <div class="col-md-6 col-12 mr-md-3">
+        <div class="side-container">
+            <div class="head">
+                <h3>Présentation</h3>
+            </div>
+            <div class="body mt-0 px-0 pt-0" style="background-color: #ffffff">
+                <div class="w-100">
+                    <img src="{{ asset('assets/img/advices/1.jpg') }}" alt="Conseils" class="img-fluid"/>
+                </div>
+                <div class="p-4 text-justify">
+                    <h3>Gérer la relation élève / entreprise</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequuntur corporis hic
+                        laboriosam minus mollitia nisi, officiis pariatur perferendis praesentium quas,
+                        tempora vero voluptatum. Architecto enim magni nihil provident tempora.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequuntur corporis hic
+                        laboriosam minus mollitia nisi, officiis pariatur perferendis praesentium quas,
+                        tempora vero voluptatum. Architecto enim magni nihil provident tempora.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-12 ml-md-3 row">
+        <a href="{{ path('fos_user_security_login') }}" class="big-btn">Espace étudiant</a>
+        <a href="{{ path('fos_user_security_login') }}" class="big-btn">Espace entreprise</a>
+        <a href="{{ path('new_Student') }}" class="big-btn">Création compte étudiant</a>
+        <a href="{{ path('new_Entreprise') }}" class="big-btn">Création compte entreprise</a>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{{ asset('theme/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{{ asset('theme/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<script src="{{ asset('theme/vendor/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{{ asset('theme/js/creative.min.js')}}"></script>
+
+<script src="https://kit.fontawesome.com/0f9a6979f1.js" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script src="{{ asset('assets/js/script.js') }}"></script>
+
+</body>
+
+</html>

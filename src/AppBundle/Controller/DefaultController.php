@@ -53,17 +53,13 @@ class DefaultController extends Controller
         $user = $this->getUser();
 
         if (is_null($user)) {
-            return $this->render('default/index.html.twig', [
-                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            ]);
+            return $this->indexWithoutLogin();
         } elseif (!is_null($user->getUserEntreprise())) {
             return $this->indexEntrepriseAction();
         } elseif (!is_null($user->getUserEtudiant())) {
             return $this->indexEtudiantAction();
         } else {
-            return $this->render('default/index.html.twig', [
-                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            ]);
+            return $this->indexWithoutLogin();
         }
     }
 
@@ -115,6 +111,10 @@ class DefaultController extends Controller
                 ->setMaxResults(2)->getQuery()->getResult(),
             'agenda' => $em->getRepository(Candidature::class)->getAgendaEntreprise($this->getUser(), 2)
         ]);
+    }
+
+    private function indexWithoutLogin() {
+        return $this->render('@App/Security/select_home.html.twig');
     }
 
     /**
