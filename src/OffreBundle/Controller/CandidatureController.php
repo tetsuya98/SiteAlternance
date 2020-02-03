@@ -123,7 +123,6 @@ class CandidatureController extends Controller
         // Récupération de l'étudiant
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        dump($user);
         $etudiant = $user->getUserEtudiant();
         if (is_null($etudiant)) {
             throw new Exception("L'utilisateur doit être un étudiant pour postuler.");
