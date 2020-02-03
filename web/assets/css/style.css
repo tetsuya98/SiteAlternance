@@ -355,3 +355,7 @@ html.home-back {
 img.without-border {
     border: none !important;
 }
+
+#mainNav {
+    background-color: #002d59;
+}
