@@ -2,8 +2,32 @@
 {% block title %} {{ parent() }} {% endblock %}
 {% block body %}
 
-    <div class="col-md-6 col-12 form-group side-container">
-        {% include 'OffreBundle:Candidatures:_form.html.twig' with {'title_block' : "Candidater"} %}
+    <div class="col-md-6 col-12 mr-md-3 form-group">
+        <div class="side-container">
+            {% include 'OffreBundle:Candidatures:_form.html.twig' with {'title_block' : "Candidater"} %}
+        </div>
+    </div>
+
+    <div class="col-md-6 col-12 ml-md-3">
+        <div class="side-container">
+            <div class="head">
+                <h3>Nos conseils</h3>
+            </div>
+            <div class="body mt-0 px-0 pt-0">
+                <div class="w-100">
+                    <img src="{{ asset('assets/img/advices/1.jpg') }}" alt="Conseils" class="img-fluid"/>
+                </div>
+                <div class="p-4 text-justify">
+                    <h3>Déposer une candidature</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequuntur corporis hic
+                        laboriosam minus mollitia nisi, officiis pariatur perferendis praesentium quas,
+                        tempora vero voluptatum. Architecto enim magni nihil provident tempora.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequuntur corporis hic
+                        laboriosam minus mollitia nisi, officiis pariatur perferendis praesentium quas,
+                        tempora vero voluptatum. Architecto enim magni nihil provident tempora.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

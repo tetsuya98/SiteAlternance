@@ -2,68 +2,85 @@
 {% block title %} {{ parent() }} {% endblock %}
 {% block body %}
 
-    <div class="row col-12">
-        <div class="col-8">
-
-
-            <div class="col-12 side-container">
-                <div class="head">
-                    <h2>Visualisation</h2>
-                </div>
-                <div class="body px-2">
-                    <div class="col-12 d-flex justify-content-between">
-                        <div class="row">
-                            <div class="img-icon mr-2">
-                                {% if candidature.etudiant.userManager.imageName %}
-                                    <img src="{{ asset('images/Avatar/' ~ candidature.etudiant.userManager.imageName) }}">
-                                {% else %}
-                                    <img src="{{ asset('assets/img/folder.jpg') }}">
-                                {% endif %}
-                            </div>
-                            <div class="">
-                                <h3>{{ candidature.offre.titre }}</h3>
-                                <p>{{ candidature.offre.typeContrat.titre }} ({{ candidature.offre.nbSemaine }} semaines)</p>
-                            </div>
+    <div class="col-md-6 col-12 mr-md-3 form-group">
+        <div class="side-container">
+            <div class="head">
+                <h2>Visualisation</h2>
+            </div>
+            <div class="body px-2">
+                <div class="col-12 d-flex justify-content-between">
+                    <div class="row">
+                        <div class="img-icon mr-2">
+                            {% if candidature.etudiant.userManager.imageName %}
+                                <img src="{{ asset('images/Avatar/' ~ candidature.etudiant.userManager.imageName) }}">
+                            {% else %}
+                                <img src="{{ asset('assets/img/folder.jpg') }}">
+                            {% endif %}
                         </div>
-                        <div class="row">
-                            <div class="">
-                                <h3>{{ candidature.etudiant.userManager.username }}</h3>
-                                {% if candidature.etudiant.dateDeNaissance %}
-                                    <p>{{ candidature.etudiant.dateDeNaissance|date('d/m/y') }}</p>
-                                {% endif %}
-                            </div>
-                            <div class="img-icon ml-2">
-                                {% if candidature.offre.imageName %}
-                                    <img src="{{ asset('offres/avatar/' ~ candidature.offre.imageName) }}">
-                                {% else %}
-                                    <img src="{{ asset('assets/img/folder.jpg') }}">
-                                {% endif %}
-                            </div>
+                        <div class="">
+                            <h3>{{ candidature.offre.titre }}</h3>
+                            <p>{{ candidature.offre.typeContrat.titre }} ({{ candidature.offre.nbSemaine }} semaines)</p>
                         </div>
                     </div>
-
-                    <h4>Compétences</h4>
-                    <div class="d-flex">
-                        {% for competence in candidature.etudiant.userManager.competences %}
-                            <button class="btn btn-custom">{{ competence.competences }}</button>
-                        {% endfor %}
-                    </div>
-
-                    <h4>Motivations</h4>
-                    <p>{{ candidature.motivation }}</p>
-
-                    {% if candidature.response %}
-                        <h4>Statut de candidatures</h4>
-                        <p>{{ candidature.status }}</p>
-                    {% else %}
-                        <h4>Actions</h4>
-                        <div class="col-12 row">
-                            {% include 'OffreBundle:Candidatures:_accept.html.twig' %}
-                            {% include 'OffreBundle:Candidatures:_refuse.html.twig' %}
+                    <div class="row">
+                        <div class="">
+                            <h3>{{ candidature.etudiant.userManager.username }}</h3>
+                            {% if candidature.etudiant.dateDeNaissance %}
+                                <p>{{ candidature.etudiant.dateDeNaissance|date('d/m/y') }}</p>
+                            {% endif %}
                         </div>
-                    {% endif %}
+                        <div class="img-icon ml-2">
+                            {% if candidature.offre.imageName %}
+                                <img src="{{ asset('offres/avatar/' ~ candidature.offre.imageName) }}">
+                            {% else %}
+                                <img src="{{ asset('assets/img/folder.jpg') }}">
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
 
+                <h4>Compétences</h4>
+                <div class="d-flex">
+                    {% for competence in candidature.etudiant.userManager.competences %}
+                        <button class="btn btn-custom">{{ competence.competences }}</button>
+                    {% endfor %}
+                </div>
+
+                <h4>Motivations</h4>
+                <p>{{ candidature.motivation }}</p>
+
+                {% if candidature.response %}
+                    <h4>Statut de candidatures</h4>
+                    <p>{{ candidature.status }}</p>
+                {% else %}
+                    <h4>Actions</h4>
+                    <div class="col-12 row">
+                        {% include 'OffreBundle:Candidatures:_accept.html.twig' %}
+                        {% include 'OffreBundle:Candidatures:_refuse.html.twig' %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-12 ml-md-3">
+        <div class="side-container">
+            <div class="head">
+                <h3>Nos conseils</h3>
+            </div>
+            <div class="body mt-0 px-0 pt-0">
+                <div class="w-100">
+                    <img src="{{ asset('assets/img/advices/1.jpg') }}" alt="Conseils" class="img-fluid"/>
+                </div>
+                <div class="p-4 text-justify">
+                    <h3>Répondre à une candidature</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequuntur corporis hic
+                        laboriosam minus mollitia nisi, officiis pariatur perferendis praesentium quas,
+                        tempora vero voluptatum. Architecto enim magni nihil provident tempora.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequuntur corporis hic
+                        laboriosam minus mollitia nisi, officiis pariatur perferendis praesentium quas,
+                        tempora vero voluptatum. Architecto enim magni nihil provident tempora.</p>
+                </div>
             </div>
         </div>
     </div>

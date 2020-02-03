@@ -2,53 +2,82 @@
 {% block title %} {{ parent() }} {% endblock %}
 {% block body %}
 
-<div class="col-md-6 col-12 form-group side-container">
-    <div class="head">
-        {% if app.user.userEntreprise %}
-            <h2>Vos offres</h2>
-        {% else %}
-            <h2>Offres</h2>
-        {% endif %}
+    <div class="col-md-6 col-12 mr-md-3 form-group">
+        <div class="side-container">
+            <div class="head">
+                {% if app.user.userEntreprise %}
+                    <h2>Vos offres</h2>
+                {% else %}
+                    <h2>Offres</h2>
+                {% endif %}
+            </div>
+            <div class="body">
+                {% for offre in offres %}
+                    <div class="d-flex col-12 offre-element">
+                        <div class="p-2 media">
+                            {% if offre.imageName is null %}
+                                <img src="{{ asset('assets/img/folder.jpg') }}" alt="Generic placeholder image">
+                            {% else %}
+                                <img src="{{ asset('offres/avatar/' ~ offre.imageName)}}" alt="Generic placeholder image">
+                            {% endif %}
+                        </div>
+                        <div class="p-2 titles">
+                            <h3>{{ offre.titre }}</h3>
+                            <p class="type-contrat">{{ offre.typeContrat.titre }} ({{ offre.nbSemaine }} semaines)</p>
+                            <p class="more-infos">
+                                Publié le {{ offre.crDate|date("d/m", "Europe/Paris") }}
+                                {% if app.user.userEntreprise %}
+                                    | {{ offre.nbVue }} vues / {{ offre.candidatures|length }} candidatures
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="ml-auto p-2 mt-auto">
+                            {% if app.user.userEntreprise %}
+                                <a href="{{ path('offres_remove', {'offre': offre.id}) }}"
+                                   class="btn button btn-sm">Supprimer</a>
+                                <a href="{{ path('offres_edit', {'offre': offre.id}) }}"
+                                   class="btn button btn-sm">Modifier</a>
+                            {% else %}
+                                <a href="{{ path('offres_show', {'offre': offre.id}) }}"
+                                   class="btn button btn-sm">Accéder</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if app.user.userEntreprise %}
+                <div class="foot">
+                    <a href="{{ path('offres_new') }}" class="btn btn-primary btn-lg square" role="button">Publier une nouvelle offre</a>
+                </div>
+            {% endif %}
+        </div>
     </div>
-    <div class="body">
-        {% for offre in offres %}
-            <div class="d-flex col-12 offre-element">
-                <div class="p-2 media">
-                    {% if offre.imageName is null %}
-                        <img src="{{ asset('assets/img/folder.jpg') }}" alt="Generic placeholder image">
-                    {% else %}
-                        <img src="{{ asset('offres/avatar/' ~ offre.imageName)}}" alt="Generic placeholder image">
-                    {% endif %}
+
+    <div class="col-md-6 col-12 ml-md-3">
+        <div class="side-container">
+            <div class="head">
+                <h3>Nos conseils</h3>
+            </div>
+            <div class="body mt-0 px-0 pt-0">
+                <div class="w-100">
+                    <img src="{{ asset('assets/img/advices/1.jpg') }}" alt="Conseils" class="img-fluid"/>
                 </div>
-                <div class="p-2 titles">
-                    <h3>{{ offre.titre }}</h3>
-                    <p class="type-contrat">{{ offre.typeContrat.titre }} ({{ offre.nbSemaine }} semaines)</p>
-                    <p class="more-infos">
-                        Publié le {{ offre.crDate|date("d/m", "Europe/Paris") }}
-                        {% if app.user.userEntreprise %}
-                            | {{ offre.nbVue }} vues / {{ offre.candidatures|length }} candidatures
-                        {% endif %}
-                    </p>
-                </div>
-                <div class="ml-auto p-2 mt-auto">
+                <div class="p-4 text-justify">
                     {% if app.user.userEntreprise %}
-                        <a href="{{ path('offres_remove', {'offre': offre.id}) }}"
-                           class="btn button btn-sm">Supprimer</a>
-                        <a href="{{ path('offres_edit', {'offre': offre.id}) }}"
-                           class="btn button btn-sm">Modifier</a>
+                        <h3>Bien gérer les offres</h3>
                     {% else %}
-                        <a href="{{ path('offres_show', {'offre': offre.id}) }}"
-                           class="btn button btn-sm">Accéder</a>
+                        <h3>Trouver une offre</h3>
                     {% endif %}
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequuntur corporis hic
+                        laboriosam minus mollitia nisi, officiis pariatur perferendis praesentium quas,
+                        tempora vero voluptatum. Architecto enim magni nihil provident tempora.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequuntur corporis hic
+                        laboriosam minus mollitia nisi, officiis pariatur perferendis praesentium quas,
+                        tempora vero voluptatum. Architecto enim magni nihil provident tempora.</p>
                 </div>
             </div>
-        {% endfor %}
-    </div>
-    {% if app.user.userEntreprise %}
-        <div class="foot">
-            <a href="{{ path('offres_new') }}" class="btn btn-primary btn-lg square" role="button">Publier une nouvelle offre</a>
         </div>
-    {% endif %}
-</div>
+    </div>
+
 
 {% endblock %}
