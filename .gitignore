@@ -16,6 +16,6 @@
 /vendor/
 #/web/bundles/
 /.idea/*
-/web/offres
-/web/candidatures
-/web/images
+/web/offres/
+/web/candidatures/
+/web/images/
