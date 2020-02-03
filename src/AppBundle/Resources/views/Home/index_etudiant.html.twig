@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block body %}
+
+    <div class="col-md-6 mr-md-2">
+        <div class="profil-container d-flex">
+            <div class="color-block"></div>
+            <div class="img-profil">
+                {% if app.user.imageName %}
+                    <img src="{{ asset('image/avatar/' ~ app.user.imageName) }}" alt="Profil"/>
+                {% else %}
+                    <img src="{{ asset('assets/img/user.png') }}" alt="Profil"/>
+                {% endif %}
+            </div>
+            <div class="profil-info p-3">
+                <h1>{{ app.user.username }}</h1>
+                <p>UPJV Amiens</p>
+                <p>L3 MIAGE</p>
+                <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-custom mt-2">Modifier les informations</a>
+            </div>
+        </div>
+
+        <div class="my-4"></div>
+
+        <div class="side-container">
+            <div class="head">
+                <h2>Informations</h2>
+            </div>
+            <div class="body d-flex">
+                <div class="stats text-center w-100">
+                    <h1>{{ app.user.nbVisite }}</h1>
+                    <p>Visites sur<br/>votre compte</p>
+                </div>
+                <div class="vertical-sep"></div>
+                <div class="stats text-center w-100">
+                    <h1>{{ app.user.userEtudiant.candidatures|length }}</h1>
+                    <p>Candidatures<br/>instantanées</p>
+                </div>
+                <div class="vertical-sep"></div>
+                <div class="stats text-center w-100">
+                    <h1>{{ countEntretiens }}</h1>
+                    <p>Nombre<br/>d'entretiens</p>
+                </div>
+            </div>
+            <div class="horizontal-sep"></div>
+
+            <div class="d-flex justify-content-between w-100 px-3 mt-2 mb-2">
+                <h5 class="mt-1">Agenda</h5>
+            </div>
+
+            <div class="classement d-flex h-auto px-4 pb-4">
+                {% if agenda %}
+                    <div class="d-flex col-12 offre-element">
+                        <div class="p-2 media">
+                            <img src="{{ asset('assets/img/agenda.png') }}">
+                        </div>
+                        <div class="p-2 titles">
+                            <h3>{{agenda.dateMeeting|date('d/m/Y')}}</h3>
+                            <p>{{agenda.dateMeeting|date('H:i')}}</p>
+                            <p>Entretien {{agenda.offre.user.userEntreprise.nomUtilisateur}}</p>
+                        </div>
+                        <div class="ml-auto p-2 mt-auto">
+                            <a href="{{ path('offres_show', {'offre': agenda.offre.id}) }}"
+                               class="btn button btn-sm">Accéder</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center my-auto">
+                        <p>Vous n'avez pas d'entretien de prévu</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="col-md-6 ml-md-2">
+
+        <div class="side-container">
+            <div class="head">
+                <h3>Les offres</h3>
+            </div>
+            <div class="body">
+                {% if offres %}
+                    {% for offre in offres %}
+                        <div class="d-flex col-12 offre-element">
+                            <div class="p-2 media">
+                                {% if offre.imageName is null %}
+                                    <img src="{{ asset('assets/img/folder.jpg') }}" alt="Generic placeholder image">
+                                {% else %}
+                                    <img src="{{ asset('offres/avatar/' ~ offre.imageName)}}" alt="Generic placeholder image">
+                                {% endif %}
+                            </div>
+                            <div class="p-2 titles">
+                                <h3>{{ offre.titre }}</h3>
+                                <p class="type-contrat">{{ offre.typeContrat.titre }} ({{ offre.nbSemaine }} semaines)</p>
+                                <p class="more-infos">
+                                    Publié le {{ offre.crDate|date("d/m", "Europe/Paris") }}
+                                </p>
+                            </div>
+                            <div class="ml-auto p-2 mt-auto">
+                                <a href="{{ path('offres_show', {'offre': offre.id}) }}"
+                                   class="btn button btn-sm">Accéder</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
+
+            </div>
+            <div class="foot">
+                <a href="{{ path('offres_index') }}" class="btn btn-primary btn-lg square" role="button">
+                    Accéder aux offres</a>
+            </div>
+        </div>
+
+        <div class="my-4"></div>
+
+        <div class="side-container">
+            <div class="head">
+                <h3>Mes candidatures</h3>
+            </div>
+            <div class="body">
+                {% if candidatures %}
+                    {% for candidature in candidatures %}
+                        <div class="d-flex col-12 offre-element">
+                            <div class="p-2 media">
+                                {% if candidature.offre.imageName is null %}
+                                    <img src="{{ asset('assets/img/folder.jpg') }}">
+                                {% else %}
+                                    <img src="{{ asset('offres/avatar/' ~ candidature.offre.imageName)}}">
+                                {% endif %}
+                            </div>
+                            <div class="p-2 titles">
+                                <h3>{{ candidature.offre.titre }}</h3>
+                                <p class="type-contrat">{{ candidature.offre.typeContrat.titre }} ({{ candidature.offre.nbSemaine }} semaines)</p>
+                                <p class="more-infos">
+                                    Candidaté le {{ candidature.datePostule|date("d/m", "Europe/Paris") }}
+                                    | {{ candidature.status }}
+                                </p>
+                            </div>
+                            <div class="ml-auto p-2 mt-auto">
+                                <a href="{{ path('candidature_show', {'candidature': candidature.id}) }}"
+                                   class="btn button btn-sm">Accéder</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
+            </div>
+            <div class="foot">
+                <a href="{{ path('candidatures_index') }}" class="btn btn-primary btn-lg square" role="button">
+                    Accéder aux {{ app.user.userEtudiant.candidatures|length }} candidatures</a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

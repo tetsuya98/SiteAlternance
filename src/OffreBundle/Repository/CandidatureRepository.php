@@ -30,4 +30,26 @@ class CandidatureRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('user',$user->getId())
             ->getQuery()->getSingleResult()['count'];
     }
+
+    public function getAgendaEntreprise(User $user, $limit = null){
+
+        // Définition requête
+        $query = $this->createQueryBuilder('c')
+            ->select('c')
+            ->leftJoin('c.offre', 'o')
+            ->where('o.user = :user')
+            ->andWhere('c.dateMeeting IS NOT NULL')
+            ->andWhere('c.dateMeeting > :date')
+            ->setParameter('user', $user)
+            ->setParameter('date', new \DateTime())
+            ->orderBy('c.dateMeeting','ASC');
+
+        // Limitation résultat
+        if (!is_null($limit)) {
+            $query->setMaxResults($limit);
+        }
+
+        // Retour du résultat
+        return $query->getQuery()->getResult();
+    }
 }

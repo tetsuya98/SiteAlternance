@@ -33,7 +33,7 @@
                 </div>
                 <div class="vertical-sep"></div>
                 <div class="stats text-center w-100">
-                    <h1>{{ candidatures }}</h1>
+                    <h1>{{ countCandidatures }}</h1>
                     <p>Candidatures<br/>instantanées</p>
                 </div>
                 <div class="vertical-sep"></div>
@@ -48,7 +48,6 @@
                 <h5 class="mt-1">Tendances des offres</h5>
                 <a href="{{ path('offres_index') }}" class="btn btn-custom btn-sm">Gérer les offres</a>
             </div>
-
 
             <div class="classement d-flex h-auto px-4 pb-4">
                 {% if best|length > 0 %}
@@ -104,6 +103,78 @@
 
 
     <div class="col-md-6 ml-md-2">
+
+        <div class="side-container">
+            <div class="head">
+                <h3>Candidatures</h3>
+            </div>
+            <div class="body">
+                {% if candidatures %}
+                    {% for candidature in candidatures %}
+                        <div class="d-flex col-12 offre-element">
+                            <div class="p-2 media">
+                                {% if candidature.offre.imageName is null %}
+                                    <img src="{{ asset('assets/img/folder.jpg') }}">
+                                {% else %}
+                                    <img src="{{ asset('offres/avatar/' ~ candidature.offre.imageName)}}">
+                                {% endif %}
+                            </div>
+                            <div class="p-2 titles">
+                                <h3>{{ candidature.offre.titre }}</h3>
+                                <p class="type-contrat">{{ candidature.offre.typeContrat.titre }} ({{ candidature.offre.nbSemaine }} semaines)</p>
+                                <p class="more-infos">
+                                    Candidaté le {{ candidature.datePostule|date("d/m", "Europe/Paris") }}
+                                    | {{ candidature.status }}
+                                </p>
+                            </div>
+                            <div class="ml-auto p-2 mt-auto">
+                                <a href="{{ path('candidature_show', {'candidature': candidature.id}) }}"
+                                   class="btn button btn-sm">Accéder</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
+
+            </div>
+            <div class="foot">
+                <a href="{{ path('candidatures_index') }}" class="btn btn-primary btn-lg square" role="button">
+                    Accéder aux {{ countCandidatures }} candidatures</a>
+            </div>
+        </div>
+
+        <div class="my-4"></div>
+
+        <div class="side-container">
+            <div class="head">
+                <h3>Agenda</h3>
+            </div>
+            <div class="body">
+                {% if agenda %}
+                    {% for candidature in agenda %}
+                        <div class="d-flex col-12 offre-element">
+                            <div class="p-2 media">
+                                <img src="{{ asset('assets/img/agenda.png') }}">
+                            </div>
+                            <div class="p-2 titles">
+                                <h3>{{candidature.dateMeeting|date('d/m/Y')}}</h3>
+                                <p>{{candidature.dateMeeting|date('H:i')}}</p>
+                                <p>Entretien {{candidature.etudiant.userManager.username}}</p>
+                            </div>
+                            <div class="ml-auto p-2 mt-auto">
+                                <a href="{{ path('candidature_show', {'candidature': candidature.id}) }}"
+                                   class="btn button btn-sm">Accéder</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
+            </div>
+            <div class="foot">
+                <a href="{{ path('candidatures_index') }}" class="btn btn-primary btn-lg square" role="button">
+                    Accéder aux {{ countCandidatures }} candidatures</a>
+            </div>
+        </div>
 
     </div>
 

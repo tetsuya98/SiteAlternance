@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\Date;
 use Yosimitso\WorkingForumBundle\Entity\Post;
 use Yosimitso\WorkingForumBundle\Entity\PostReport;
 use Yosimitso\WorkingForumBundle\Entity\PostVote;
@@ -69,17 +70,50 @@ class DefaultController extends Controller
     private function indexEtudiantAction() {
 
         $em = $this->getDoctrine();
+
+        // Récupération entretiens
+        $entretiens = $em->getRepository(Candidature::class)->createQueryBuilder('c')
+            ->select('c')->where('c.dateMeeting IS NOT NULL')->andWhere('c.etudiant = :etudiant')
+            ->andWhere('c.dateMeeting > :date')->orderBy('c.dateMeeting', 'ASC')
+            ->setParameter('etudiant', $this->getUser()->getUserEtudiant())
+            ->setParameter('date', new \DateTime())->getQuery()->getResult();
+        $countEntretiens = count($entretiens);
+        $agenda = null;
+        if ($countEntretiens > 0) {
+            $agenda = $entretiens[0];
+        }
+
+        // récupération des offres
+        $offres = $em->getRepository(Offre::class)->createQueryBuilder('o')
+            ->select('o')->orderBy('o.crdate', 'DESC')->setMaxResults(2)
+            ->getQuery()->getResult();
+
+        // récupération des candidatures
+        $candidatures = $em->getRepository(Candidature::class)->createQueryBuilder('c')
+            ->select('c')->where('c.etudiant = :etudiant')->orderBy('c.datePostule', 'DESC')
+            ->setParameter('etudiant', $this->getUser()->getUserEtudiant())->setMaxResults(2)
+            ->getQuery()->getResult();
+
         return $this->render('@App/Home/index_etudiant.html.twig', [
+            'countEntretiens' => $countEntretiens,
+            'offres' => $offres,
+            'agenda' => $agenda,
+            'candidatures' => $candidatures
         ]);
     }
 
     private function indexEntrepriseAction(){
         $em = $this->getDoctrine();
         return $this->render('@App/Home/index_entreprise.html.twig', [
-            'candidatures' => $em->getRepository(Candidature::class)->getCountCandidatures($this->getUser()),
+            'countCandidatures' => $em->getRepository(Candidature::class)->getCountCandidatures($this->getUser()),
             'vues' => $em->getRepository(Offre::class)->getCountVues($this->getUser()),
             'offres' => $em->getRepository(Offre::class)->getCountOffres($this->getUser()),
-            'best' => $em->getRepository(Offre::class)->getBestOffres($this->getUser())
+            'best' => $em->getRepository(Offre::class)->getBestOffres($this->getUser()),
+            'candidatures' => $em->getRepository(Candidature::class)->createQueryBuilder('c')
+                ->select('c')->leftJoin('c.offre', 'o')->where('o.user = :user')
+                ->orderBy('c.datePostule', 'DESC')->setParameter('user', $this->getUser())
+                ->setMaxResults(2)->getQuery()->getResult(),
+            'agenda' => $em->getRepository(Candidature::class)->getAgendaEntreprise($this->getUser(), 2)
         ]);
     }
 
