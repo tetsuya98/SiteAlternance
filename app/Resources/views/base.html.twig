@@ -39,20 +39,23 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            <li class="welcome_user">Bienvenue, {{ app.user.username }}</li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('workingforum_forum') }}>Forum</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('All_User') }}>All_User</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('editProfile') }} >edit profile</a></li>
-                           <li  class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
-
+                        {% if app.user and app.user.userEtudiant %}
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('offres_index') }}>Les offres</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('candidatures_index') }}>Vos candidatures</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('workingforum_forum') }}>Le forum</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('editProfile') }} >Mon compte</a></li>
+                            <li  class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                        {% elseif app.user and app.user.userEntreprise %}
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('offres_index') }}>Vos offres</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('candidatures_index') }}>Les candidatures</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('workingforum_forum') }}>Le forum</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href={{ path('editProfile') }} >Mon compte</a></li>
+                            <li  class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
                         {% else %}
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('fos_user_security_login') }}">Connexion</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('new_Student') }}">Creer un Compte Etudiant</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('new_Entreprise') }}">Creer un Compte Entreprise</a></li>
-
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('new_Student') }}">Creer un compte étudiant</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ path('new_Entreprise') }}">Creer un compte entreprise</a></li>
                         {% endif %}
-
                     </ul>
                 </div>
             </div>
