@@ -24,6 +24,7 @@
     <link href="{{ asset('theme/css/creative.css') }}" rel="stylesheet">
 
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
+    <script src="{{ asset('theme/vendor/jquery/jquery.min.js')}}"></script>
 
 
 </head>
@@ -61,18 +62,21 @@
             </div>
         </nav>
     {% endblock %}
-{% block body %}
 
-{% endblock %}
+    <div class="container-fluid d-flex">
+        {% block body %}
+
+        {% endblock %}
+    </div>
+
 <!-- Footer -->
 <footer class="bg-light py-5">
     <div class="container">
-        <div class="small text-center text-muted">Copyright &copy; 2019 - Start Bootstrap</div>
+        <div class="small text-center text-muted">Copyright &copy; 2020 - ZACC Production</div>
     </div>
 </footer>
 
 <!-- Bootstrap core JavaScript -->
-<script src="{{ asset('theme/vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('theme/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 <!-- Plugin JavaScript -->
@@ -81,6 +85,11 @@
 
 <!-- Custom scripts for this template -->
 <script src="{{ asset('theme/js/creative.min.js')}}"></script>
+
+<script src="https://kit.fontawesome.com/0f9a6979f1.js" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script src="{{ asset('assets/js/script.js') }}"></script>
 
 </body>
 

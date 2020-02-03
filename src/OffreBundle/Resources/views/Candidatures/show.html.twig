@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-{% include('OffreBundle:Default:_head.html.twig') %}
-<body>
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block body %}
 
-<div class="container">
     <div class="row col-12">
         <div class="col-8">
 
@@ -69,7 +67,5 @@
             </div>
         </div>
     </div>
-</div>
 
-</body>
-</html>
+{% endblock %}

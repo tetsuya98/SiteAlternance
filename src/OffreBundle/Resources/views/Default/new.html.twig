@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-{% include('OffreBundle:Default:_head.html.twig') %}
-<body>
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block body %}
 
-<div class="container">
-    <div class="row col-12">
-        <div class="col-8">
-            {% include 'OffreBundle:Offres:_form.html.twig' with {'title_block' : "Création de l'offre"} %}
-        </div>
-    </div>
+<div class="col-md-6 col-12 form-group side-container">
+    {% include 'OffreBundle:Offres:_form.html.twig' with {'title_block' : "Création de l'offre"} %}
 </div>
 
-</body>
-</html>
+{% endblock %}
